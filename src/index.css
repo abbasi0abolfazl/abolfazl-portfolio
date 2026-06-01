@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@font-face {
+  font-family: 'Nevera';
+  src: url('/src/assets/fonts/Nevera-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: 'Inter', sans-serif;
+    --font-nevera: 'Nevera', 'Nunito', sans-serif;
+    /* ── AI Gray/Silver Dark theme (only theme) ───────────── */
+    --background: 220 13% 9%;
+    --foreground: 210 20% 88%;
+    --card: 220 13% 13%;
+    --card-foreground: 210 20% 88%;
+    --popover: 220 13% 11%;
+    --popover-foreground: 210 20% 88%;
+    --primary: 213 94% 68%;
+    --primary-foreground: 220 13% 9%;
+    --secondary: 220 13% 16%;
+    --secondary-foreground: 210 20% 75%;
+    --muted: 220 13% 16%;
+    --muted-foreground: 215 14% 55%;
+    --accent: 142 69% 55%;
+    --accent-foreground: 220 13% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 20%;
+    --input: 220 13% 20%;
+    --ring: 213 94% 68%;
+    --radius: 0.75rem;
+    /* Blue & green accent tokens */
+    --blue: 213 94% 68%;
+    --blue-dim: 213 80% 55%;
+    --green: 142 69% 55%;
+    --green-dim: 142 55% 45%;
+    --silver: 215 20% 65%;
+    --sidebar-background: 220 13% 9%;
+    --sidebar-foreground: 210 20% 88%;
+    --sidebar-primary: 213 94% 68%;
+    --sidebar-primary-foreground: 220 13% 9%;
+    --sidebar-accent: 220 13% 16%;
+    --sidebar-accent-foreground: 210 20% 88%;
+    --sidebar-border: 220 13% 20%;
+    --sidebar-ring: 213 94% 68%;
+    --chart-1: 213 94% 68%;
+    --chart-2: 142 69% 55%;
+    --chart-3: 197 37% 45%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 270 60% 65%;
+  }
+
+  /* Keep .dark in sync */
+  .dark {
+    --background: 220 13% 9%;
+    --foreground: 210 20% 88%;
+    --card: 220 13% 13%;
+    --card-foreground: 210 20% 88%;
+    --popover: 220 13% 11%;
+    --popover-foreground: 210 20% 88%;
+    --primary: 213 94% 68%;
+    --primary-foreground: 220 13% 9%;
+    --secondary: 220 13% 16%;
+    --secondary-foreground: 210 20% 75%;
+    --muted: 220 13% 16%;
+    --muted-foreground: 215 14% 55%;
+    --accent: 142 69% 55%;
+    --accent-foreground: 220 13% 9%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 20%;
+    --input: 220 13% 20%;
+    --ring: 213 94% 68%;
+    --chart-1: 213 94% 68%;
+    --chart-2: 142 69% 55%;
+    --chart-3: 197 37% 45%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 270 60% 65%;
+    --sidebar-background: 220 13% 9%;
+    --sidebar-foreground: 210 20% 88%;
+    --sidebar-primary: 213 94% 68%;
+    --sidebar-primary-foreground: 220 13% 9%;
+    --sidebar-accent: 220 13% 16%;
+    --sidebar-accent-foreground: 210 20% 88%;
+    --sidebar-border: 220 13% 20%;
+    --sidebar-ring: 213 94% 68%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--background)); }
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary)); }
+
+/* ── Glassmorphism ───────────────────────────────────────── */
+.glass {
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] .glass,
+.light .glass {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ── Gradient text ───────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #60a5fa 0%, #34d399 50%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Nevera font for headings ────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-nevera);
+}
+
+/* ── Mesh gradient background ────────────────────────────── */
+.mesh-gradient {
+  background:
+    radial-gradient(at 20% 20%, rgba(96, 165, 250, 0.07) 0%, transparent 50%),
+    radial-gradient(at 80% 80%, rgba(52, 211, 153, 0.05) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(148, 163, 184, 0.03) 0%, transparent 50%);
+}
+
+/* ── Skeleton shimmer ────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 25%,
+    hsl(var(--border)) 50%,
+    hsl(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── Custom animations ───────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(245, 158, 11, 0.3); }
+  50%       { box-shadow: 0 0 20px rgba(245, 158, 11, 0.6); }
+}

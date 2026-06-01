@@ -1,0 +1,34 @@
+{
+  "name": "SiteSettings",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Unique settings key (e.g. 'main')"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "github_url": {
+      "type": "string"
+    },
+    "linkedin_url": {
+      "type": "string"
+    },
+    "about_me": {
+      "type": "string"
+    },
+    "short_bio": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "key"
+  ]
+}
