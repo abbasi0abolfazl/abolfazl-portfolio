@@ -4,7 +4,7 @@ import { ArrowLeft, Github, ExternalLink, Download, CheckCircle2 } from 'lucide-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { projects } from '@/lib/projectsData';
+import { projects, techFilters, typeFilters, yearFilters } from '@/data/projectsData';
 import { useLang } from '@/lib/LanguageContext';
 
 function Section({ title, children }) {

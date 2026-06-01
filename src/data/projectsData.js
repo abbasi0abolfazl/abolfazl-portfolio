@@ -1,3 +1,9 @@
+// Filter options
+export const techFilters = ["Python", "NLP", "Computer Vision", "Trading", "RAG", "LLM"];
+export const typeFilters = ["Web App", "API", "Desktop App", "Research"];
+export const yearFilters = ["2023", "2024", "2025"];
+
+// Projects data
 export const projects = [
   {
     id: 'social-botnet-intelligence',
@@ -10,7 +16,6 @@ export const projects = [
     github: 'https://github.com/abbasi0abolfazl',
     demo: null,
     color: 'from-blue-500/10 to-cyan-500/10',
-    // Detail page sections
     overview: 'A modular, scalable system for collecting and analyzing social media data across multiple platforms simultaneously using intelligent scheduling and async processing.',
     role: 'I designed the overall architecture, implemented the async scraping engine, and built the scheduling system that handles rate limiting and anti-ban strategies.',
     challenge: 'Collecting large volumes of social media data reliably while respecting rate limits, handling CAPTCHAs, and managing session state across multiple accounts and platforms.',
@@ -207,3 +212,6 @@ def semantic_search(query, product_embeddings, top_k=5):
     lessons: 'Semantic search alone isn\'t enough — combining it with LLM reranking and business rules (stock, margin) dramatically improves real-world relevance.',
   },
 ];
+
+// Default export for convenience
+export default projects;

@@ -7,12 +7,12 @@ import { Input } from '@/components/ui/input';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
-import { projects } from '@/lib/projectsData';
+import { projects, techFilters, typeFilters, yearFilters } from '@/data/projectsData';
 import { useLang } from '@/lib/LanguageContext';
 
-const TECH_FILTERS = ['Python', 'NLP', 'Computer Vision', 'Trading', 'RAG', 'LLM'];
-const TYPE_FILTERS = ['Web App', 'API', 'Desktop App', 'Research'];
-const YEAR_FILTERS = ['2023', '2024', '2025'];
+const TECH_FILTERS = techFilters;
+const TYPE_FILTERS = typeFilters;
+const YEAR_FILTERS = yearFilters;
 
 function FilterPill({ label, count, active, onClick }) {
   return (

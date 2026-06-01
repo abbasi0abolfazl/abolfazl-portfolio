@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Github } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
@@ -36,15 +36,16 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { tr } = useLang();
 
+  // حذف شد: nav_demos
   const navLinks = [
     { key: 'nav_home', href: '/#home' },
     { key: 'nav_about', href: '/#about' },
     { key: 'nav_skills', href: '/#skills' },
     { key: 'nav_experience', href: '/#experience' },
     { key: 'nav_projects', href: '/#projects' },
-    { key: 'nav_demos', href: '/demos' },
     { key: 'nav_blog', href: '/blog' },
     { key: 'nav_contact', href: '/#contact' },
   ];
@@ -59,16 +60,32 @@ export default function Navbar() {
     setIsOpen(false);
   }, [location]);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleNavClick = (href) => {
     setIsOpen(false);
+    
     if (href.startsWith('/#')) {
-      const id = href.substring(2);
+      const sectionId = href.substring(2);
+      
       if (location.pathname === '/') {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        // اگر در صفحه اصلی هستیم، مستقیم اسکرول کن
+        scrollToSection(sectionId);
       } else {
-        window.location.href = href;
+        // اگر در صفحه دیگری هستیم، به صفحه اصلی برو و بعد اسکرول کن
+        navigate('/');
+        setTimeout(() => {
+          scrollToSection(sectionId);
+        }, 100);
       }
+    } else {
+      // لینک‌های معمولی مثل /blog
+      navigate(href);
     }
   };
 
@@ -78,17 +95,10 @@ export default function Navbar() {
       ? 'text-left px-4 py-3 text-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-colors'
       : 'px-3 py-2 text-sm text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-primary/5';
 
-    if (link.href.startsWith('/#')) {
-      return (
-        <button onClick={() => handleNavClick(link.href)} className={cls}>
-          {label}
-        </button>
-      );
-    }
     return (
-      <Link to={link.href} className={cls}>
+      <button onClick={() => handleNavClick(link.href)} className={cls}>
         {label}
-      </Link>
+      </button>
     );
   };
 
@@ -99,9 +109,9 @@ export default function Navbar() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-2 group">
+            <button onClick={() => handleNavClick('/#home')} className="flex items-center gap-2 group">
               <PixelLogo />
-            </Link>
+            </button>
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-1">

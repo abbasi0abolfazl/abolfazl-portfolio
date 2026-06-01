@@ -3,18 +3,14 @@ import { motion } from 'framer-motion';
 import { ArrowDown, FileText, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ParticleBackground from './ParticleBackground';
-
-const titles = [
-  'AI Engineer & NLP Specialist',
-  'LLM Systems Developer',
-  'Financial Bot Developer',
-  'Machine Learning Engineer',
-];
+import { personalInfo } from '@/data/personalInfo';
 
 export default function Hero() {
   const [titleIndex, setTitleIndex] = useState(0);
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  const { fullName, titles, description, buttons } = personalInfo;
 
   useEffect(() => {
     const currentTitle = titles[titleIndex];
@@ -35,11 +31,19 @@ export default function Hero() {
     }
 
     return () => clearTimeout(timeout);
-  }, [text, isDeleting, titleIndex]);
+  }, [text, isDeleting, titleIndex, titles]);
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleButtonClick = (action) => {
+    if (action === 'download') {
+      console.log('Download CV');
+    } else {
+      scrollToSection(action);
+    }
   };
 
   return (
@@ -53,17 +57,8 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {/* <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="w-24 h-24 mx-auto mb-8 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center"
-          >
-            <span className="text-3xl font-bold gradient-text">AA</span>
-          </motion.div> */}
-
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground mb-4 tracking-tight">
-            Abolfazl Abbasi
+            {fullName}
           </h1>
 
           <div className="h-10 mb-6">
@@ -74,30 +69,31 @@ export default function Hero() {
           </div>
 
           <p className="text-muted-foreground text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-            Building intelligent systems with LLMs, NLP, and Algorithmic Trading
+            {description}
           </p>
 
           <div className="flex flex-wrap justify-center gap-4">
             <Button
-              onClick={() => scrollToSection('projects')}
+              onClick={() => handleButtonClick(buttons.viewProjects.action)}
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2.5 font-medium rounded-full"
             >
-              View Projects
+              {buttons.viewProjects.text}
             </Button>
             <Button
               variant="outline"
+              onClick={() => handleButtonClick(buttons.downloadCV.action)}
               className="border-primary/30 text-foreground hover:bg-primary/10 hover:border-primary/50 px-6 py-2.5 rounded-full"
             >
               <FileText className="w-4 h-4 mr-2" />
-              Download CV
+              {buttons.downloadCV.text}
             </Button>
             <Button
               variant="outline"
-              onClick={() => scrollToSection('contact')}
+              onClick={() => handleButtonClick(buttons.contactMe.action)}
               className="border-primary/30 text-foreground hover:bg-primary/10 hover:border-primary/50 px-6 py-2.5 rounded-full"
             >
               <Send className="w-4 h-4 mr-2" />
-              Contact Me
+              {buttons.contactMe.text}
             </Button>
           </div>
         </motion.div>

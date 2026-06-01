@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, X, FileText, Cpu } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 
-import { projects } from '@/lib/projectsData';
+import { projects, techFilters, typeFilters, yearFilters } from '@/data/projectsData';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function highlight(text, query) {
