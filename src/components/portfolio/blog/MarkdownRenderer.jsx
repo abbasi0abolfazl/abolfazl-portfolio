@@ -3,6 +3,9 @@ import ReactMarkdown from 'react-markdown';
 import CodeBlock from './CodeBlock';
 import ImageZoom from './ImageZoom';
 import Callout from './Callout';
+import remarkGfm from 'remark-gfm';
+import CustomTable from './CustomTable';
+
 
 /* ── Helpers ─────────────────────────────────────────────── */
 
@@ -72,7 +75,12 @@ const components = {
   h3: ({ children }) => <Heading level={3}>{children}</Heading>,
   h4: ({ children }) => <Heading level={4}>{children}</Heading>,
 
-  p({ children }) {
+  p({ children, node }) {
+    // بررسی می‌کنیم که آیا پاراگراف حاوی جدول است یا خیر
+    const rawContent = node?.children?.[0]?.value || '';
+    if (rawContent.includes('|') && rawContent.includes('---')) {
+      return <CustomTable markdown={rawContent} />;
+    }
     return <p className="text-[15px] leading-[1.7] text-foreground/80 my-3">{children}</p>;
   },
 
@@ -168,7 +176,12 @@ const components = {
 export default function MarkdownRenderer({ content }) {
   return (
     <div className="min-w-0 max-w-[680px] font-inter selection:bg-primary/20 mx-auto">
-      <ReactMarkdown components={components}>{content}</ReactMarkdown>
+      <ReactMarkdown 
+        remarkPlugins={[remarkGfm]}  // اضافه شود
+        components={components}
+      >
+        {content}
+      </ReactMarkdown>
     </div>
   );
 }

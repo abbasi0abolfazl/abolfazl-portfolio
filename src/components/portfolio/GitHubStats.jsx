@@ -4,10 +4,10 @@ import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 
 const languages = [
-  { name: 'Python', percentage: 60, color: 'bg-blue-500' },
-  { name: 'Jupyter', percentage: 20, color: 'bg-amber-500' },
-  { name: 'JavaScript', percentage: 15, color: 'bg-yellow-400' },
-  { name: 'Other', percentage: 5, color: 'bg-gray-500' },
+  { name: 'Python', percentage: 60, color: '#3776AB', bgColor: 'bg-[#3776AB]' },
+  { name: 'Jupyter', percentage: 20, color: '#F37626', bgColor: 'bg-[#F37626]' },
+  { name: 'JavaScript', percentage: 15, color: '#F7DF1E', bgColor: 'bg-[#F7DF1E]' },
+  { name: 'Other', percentage: 5, color: '#6B7280', bgColor: 'bg-[#6B7280]' },
 ];
 
 export default function GitHubStats() {
@@ -51,10 +51,16 @@ export default function GitHubStats() {
             <div className="space-y-4">
               {languages.map((lang) => (
                 <div key={lang.name} className="flex items-center gap-4">
-                  <span className="w-20 text-sm text-foreground">{lang.name}</span>
-                  <div className="flex-1 h-3 rounded-full bg-background/60 overflow-hidden">
+                  <div className="flex items-center gap-2 w-24">
+                    <div 
+                      className="w-3 h-3 rounded-full" 
+                      style={{ backgroundColor: lang.color }}
+                    />
+                    <span className="text-sm text-foreground">{lang.name}</span>
+                  </div>
+                  <div className="flex-1 h-3 rounded-full bg-muted/30 overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${lang.color} transition-all duration-1000`}
+                      className={`h-full rounded-full transition-all duration-1000 ${lang.bgColor}`}
                       style={{ width: `${lang.percentage}%` }}
                     />
                   </div>

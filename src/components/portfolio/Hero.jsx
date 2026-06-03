@@ -10,7 +10,7 @@ export default function Hero() {
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   
-  const { fullName, titles, description, buttons } = personalInfo;
+  const { firstName, lastName, titles, description, buttons } = personalInfo;
 
   useEffect(() => {
     const currentTitle = titles[titleIndex];
@@ -57,40 +57,65 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground mb-4 tracking-tight">
-            {fullName}
-          </h1>
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground mb-4 tracking-tight"
+          >
+            {firstName}
+          </motion.h1>
 
-          <div className="h-10 mb-6">
+          <div className="h-10 mb-4">
             <span className="text-xl md:text-2xl text-primary font-medium">
               {text}
               <span className="animate-pulse">|</span>
             </span>
           </div>
 
-          <p className="text-muted-foreground text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground/80 mb-6 tracking-tight"
+          >
+            {lastName}
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-muted-foreground text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed"
+          >
             {description}
-          </p>
+          </motion.p>
 
           <div className="flex flex-wrap justify-center gap-4">
+            {/* دکمه View Projects */}
             <Button
               onClick={() => handleButtonClick(buttons.viewProjects.action)}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2.5 font-medium rounded-full"
+              variant="outline"
+              className="border-2 border-primary/50 text-foreground bg-transparent hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full"
             >
               {buttons.viewProjects.text}
             </Button>
+
+            {/* دکمه Download CV */}
             <Button
               variant="outline"
               onClick={() => handleButtonClick(buttons.downloadCV.action)}
-              className="border-primary/30 text-foreground hover:bg-primary/10 hover:border-primary/50 px-6 py-2.5 rounded-full"
+              className="border-2 border-primary/50 text-foreground bg-transparent hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full"
             >
               <FileText className="w-4 h-4 mr-2" />
               {buttons.downloadCV.text}
             </Button>
+
+            {/* دکمه Contact Me */}
             <Button
               variant="outline"
               onClick={() => handleButtonClick(buttons.contactMe.action)}
-              className="border-primary/30 text-foreground hover:bg-primary/10 hover:border-primary/50 px-6 py-2.5 rounded-full"
+              className="border-2 border-primary/50 text-foreground bg-transparent hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full"
             >
               <Send className="w-4 h-4 mr-2" />
               {buttons.contactMe.text}

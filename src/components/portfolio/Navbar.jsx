@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Github } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ThemeToggle from './ThemeToggle';
-import GlobalSearch from './GlobalSearch';
 import { useLang } from '@/lib/LanguageContext';
 
 // Minimal pixelated "AA" logo
@@ -39,7 +37,6 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { tr } = useLang();
 
-  // حذف شد: nav_demos
   const navLinks = [
     { key: 'nav_home', href: '/#home' },
     { key: 'nav_about', href: '/#about' },
@@ -74,17 +71,14 @@ export default function Navbar() {
       const sectionId = href.substring(2);
       
       if (location.pathname === '/') {
-        // اگر در صفحه اصلی هستیم، مستقیم اسکرول کن
         scrollToSection(sectionId);
       } else {
-        // اگر در صفحه دیگری هستیم، به صفحه اصلی برو و بعد اسکرول کن
         navigate('/');
         setTimeout(() => {
           scrollToSection(sectionId);
         }, 100);
       }
     } else {
-      // لینک‌های معمولی مثل /blog
       navigate(href);
     }
   };
@@ -109,11 +103,12 @@ export default function Navbar() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
+            {/* لوگو در سمت چپ */}
             <button onClick={() => handleNavClick('/#home')} className="flex items-center gap-2 group">
               <PixelLogo />
             </button>
 
-            {/* Desktop Nav */}
+            {/* بقیه موارد در سمت راست */}
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => <NavItem key={link.key} link={link} />)}
               <a
@@ -124,14 +119,10 @@ export default function Navbar() {
               >
                 <Github className="w-5 h-5" />
               </a>
-              <GlobalSearch />
-              <ThemeToggle />
             </div>
 
-            {/* Mobile controls */}
+            {/* دکمه منوی موبایل در سمت راست */}
             <div className="md:hidden flex items-center gap-1">
-              <GlobalSearch />
-              <ThemeToggle />
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 text-muted-foreground hover:text-primary transition-colors"

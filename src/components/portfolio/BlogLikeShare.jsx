@@ -1,35 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, Share2, Linkedin, Twitter, Link2, Check } from 'lucide-react';
 import { useLang } from '@/lib/LanguageContext';
-
-function useLike(slug) {
-  const key = `like-${slug}`;
-  const [liked, setLiked] = useState(() => localStorage.getItem(key) === '1');
-  const [count, setCount] = useState(() => parseInt(localStorage.getItem(`${key}-count`) || '0', 10));
-
-  const toggle = () => {
-    if (liked) {
-      localStorage.removeItem(key);
-      const next = Math.max(0, count - 1);
-      localStorage.setItem(`${key}-count`, next);
-      setCount(next);
-      setLiked(false);
-    } else {
-      localStorage.setItem(key, '1');
-      const next = count + 1;
-      localStorage.setItem(`${key}-count`, next);
-      setCount(next);
-      setLiked(true);
-    }
-  };
-
-  return { liked, count, toggle };
-}
+import { getLikeCount, hasUserLiked, toggleLike } from '@/lib/localBlogService';
 
 export default function BlogLikeShare({ slug, title }) {
   const { tr } = useLang();
-  const { liked, count, toggle } = useLike(slug);
+  const [liked, setLiked] = useState(false);
+  const [count, setCount] = useState(0);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    setLiked(hasUserLiked(slug));
+    setCount(getLikeCount(slug));
+  }, [slug]);
+
+  const handleToggleLike = () => {
+    const result = toggleLike(slug);
+    setLiked(result.liked);
+    setCount(result.count);
+  };
 
   const url = window.location.href;
 
@@ -47,7 +36,7 @@ export default function BlogLikeShare({ slug, title }) {
     <div className="flex flex-wrap items-center gap-3 py-6 border-y border-border/50 my-8">
       {/* Like */}
       <button
-        onClick={toggle}
+        onClick={handleToggleLike}
         className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all duration-200
           ${liked
             ? 'bg-red-500/10 border-red-500/30 text-red-500'

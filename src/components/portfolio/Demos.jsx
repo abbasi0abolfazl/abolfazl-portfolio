@@ -1,19 +1,26 @@
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { MessageSquare, TrendingUp, Eye, Code } from 'lucide-react';
+import { MessageSquare, TrendingUp, Eye, BookOpen } from 'lucide-react';
 import ChatbotDemo from './demos/ChatbotDemo';
 import TradingDemo from './demos/TradingDemo';
 import YoloDemo from './demos/YoloDemo';
-import CodeViewer from './demos/CodeViewer';
+// import ResearchInsights from './demos/ResearchInsights'; // فعلاً غیرفعال
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
+
+// فعال/غیرفعال کردن تب Research
+const SHOW_RESEARCH_TAB = false; // برای فعال‌سازی بعداً true کنید
 
 const demos = [
   { id: 'chatbot', label: 'Chatbot', icon: MessageSquare, component: ChatbotDemo },
   { id: 'trading', label: 'Trading Bot', icon: TrendingUp, component: TradingDemo },
   { id: 'yolo', label: 'YOLO Detector', icon: Eye, component: YoloDemo },
-  { id: 'code', label: 'Code Snippets', icon: Code, component: CodeViewer },
 ];
+
+// اگر SHOW_RESEARCH_TAB true بود، تب Research را اضافه کن
+if (SHOW_RESEARCH_TAB) {
+  demos.push({ id: 'research', label: 'Research', icon: BookOpen, component: () => <div>Research content coming soon...</div> });
+}
 
 export default function Demos() {
   return (
@@ -31,7 +38,7 @@ export default function Demos() {
                 <TabsTrigger
                   key={demo.id}
                   value={demo.id}
-                  className="flex-1 min-w-[120px] gap-2 py-2.5 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg"
+                  className="flex-1 min-w-[100px] gap-2 py-2.5 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg"
                 >
                   <demo.icon className="w-4 h-4" />
                   <span className="hidden sm:inline">{demo.label}</span>

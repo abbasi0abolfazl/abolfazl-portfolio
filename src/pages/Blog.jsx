@@ -1,16 +1,12 @@
-
-
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-
 import { Calendar, ArrowRight, Clock, BookOpen, Search, X, Tag } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { format } from 'date-fns';
 import AnimatedSection from '../components/portfolio/AnimatedSection';
 import SectionHeading from '../components/portfolio/SectionHeading';
 import { SkeletonBlogCard } from '../components/portfolio/SkeletonCard';
-import { getReadingTime } from '@/lib/readingTime';
+import { getAllPosts, getReadingTime } from '@/lib/blogUtils';
 import { useDebounce } from '@/hooks/useDebounce';
 
 function highlight(text, term) {
@@ -27,17 +23,32 @@ function highlight(text, term) {
 export default function Blog() {
   const [rawSearch, setRawSearch] = useState('');
   const [activeTags, setActiveTags] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const search = useDebounce(rawSearch, 300);
 
-  const { data: posts = [], isLoading } = useQuery({
-    queryKey: ['blog-posts'],
-    queryFn: () => db.entities.BlogPost.filter({ published: true }, '-created_date'),
-  });
+  // بارگذاری پست‌ها
+  useEffect(() => {
+    getAllPosts().then(allPosts => {
+      setPosts(allPosts);
+      setIsLoading(false);
+    }).catch(error => {
+      console.error('Error loading posts:', error);
+      setIsLoading(false);
+    });
+  }, []);
 
   // Build tag counts
   const tagCounts = useMemo(() => {
     const counts = {};
-    posts.forEach((p) => p.tags?.forEach((t) => { counts[t] = (counts[t] || 0) + 1; }));
+    posts.forEach((p) => {
+      // بررسی کنید tags وجود دارد و آرایه است
+      if (p.tags && Array.isArray(p.tags)) {
+        p.tags.forEach((t) => { 
+          counts[t] = (counts[t] || 0) + 1; 
+        });
+      }
+    });
     return Object.entries(counts).sort((a, b) => b[1] - a[1]);
   }, [posts]);
 
@@ -153,13 +164,13 @@ export default function Blog() {
             {filtered.map((post, index) => {
               const reading = getReadingTime(post.content);
               return (
-                <AnimatedSection key={post.id} delay={index * 0.06}>
+                <AnimatedSection key={post.slug} delay={index * 0.06}>
                   <Link to={`/blog/${post.slug}`}>
                     <article className="group p-6 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5">
                       <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-3">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-3.5 h-3.5" />
-                          {format(new Date(post.created_date), 'MMM d, yyyy')}
+                          {format(new Date(post.date), 'MMM d, yyyy')}
                         </span>
                         <span className="flex items-center gap-1">
                           <Clock className="w-3.5 h-3.5 text-primary" />

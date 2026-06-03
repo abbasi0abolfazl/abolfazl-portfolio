@@ -1,9 +1,5 @@
-
-
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, BookOpen } from 'lucide-react';
 import { format } from 'date-fns';
 import ReadingProgressBar from '../components/portfolio/ReadingProgressBar';
@@ -11,25 +7,29 @@ import BlogComments from '../components/portfolio/BlogComments';
 import BlogLikeShare from '../components/portfolio/BlogLikeShare';
 import TableOfContents from '../components/portfolio/blog/TableOfContents';
 import MarkdownRenderer from '../components/portfolio/blog/MarkdownRenderer';
-import { getReadingTime } from '@/lib/readingTime';
+import { getPostBySlug, getReadingTime } from '@/lib/blogUtils';
 import { useLang } from '@/lib/LanguageContext';
 
 export default function BlogPost() {
-  const slug = window.location.pathname.split('/blog/')[1];
+  const { slug } = useParams();
   const { tr } = useLang();
+  const [post, setPost] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { data: posts = [], isLoading } = useQuery({
-    queryKey: ['blog-post', slug],
-    queryFn: () => db.entities.BlogPost.filter({ slug }),
-  });
+  useEffect(() => {
+    getPostBySlug(slug).then(foundPost => {
+      setPost(foundPost);
+      setIsLoading(false);
+    }).catch(error => {
+      console.error('Error loading post:', error);
+      setIsLoading(false);
+    });
+  }, [slug]);
 
-  const post = posts[0];
-  const reading = post ? getReadingTime(post.content) : null;
-
+  // نمایش لودینگ
   if (isLoading) {
     return (
       <main className="pt-24 pb-16 px-4 min-h-screen">
-        <ReadingProgressBar />
         <div className="max-w-3xl mx-auto animate-pulse space-y-4">
           <div className="h-4 w-20 shimmer rounded" />
           <div className="h-8 w-4/5 shimmer rounded" />
@@ -44,6 +44,7 @@ export default function BlogPost() {
     );
   }
 
+  // اگر پست وجود نداشت
   if (!post) {
     return (
       <main className="pt-24 pb-16 px-4 min-h-screen flex items-center justify-center">
@@ -57,6 +58,8 @@ export default function BlogPost() {
       </main>
     );
   }
+
+  const reading = getReadingTime(post.content);
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
@@ -81,7 +84,7 @@ export default function BlogPost() {
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-5">
             <span className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-primary" />
-              {format(new Date(post.created_date), 'MMMM d, yyyy')}
+              {format(new Date(post.date), 'MMMM d, yyyy')}
             </span>
             <span className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-primary" />
@@ -91,7 +94,6 @@ export default function BlogPost() {
               <BookOpen className="w-3.5 h-3.5 text-primary" />
               {reading.wordCount.toLocaleString()} words
             </span>
-
           </div>
 
           {post.tags?.length > 0 && (
@@ -126,7 +128,6 @@ export default function BlogPost() {
               <Link to="/blog" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
                 <ArrowLeft className="w-4 h-4" /> {tr('blog_back')}
               </Link>
-
             </div>
           </article>
         </div>

@@ -1,14 +1,11 @@
-
-
-import React, { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
+import React, { useState, useEffect } from 'react';
 import { MessageCircle, Send, User, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
+import { getComments, addComment } from '@/lib/localBlogService';
 
 function CommentItem({ comment }) {
   return (
@@ -31,24 +28,20 @@ function CommentItem({ comment }) {
 }
 
 export default function BlogComments({ slug }) {
-  const queryClient = useQueryClient();
+  const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [form, setForm] = useState({ author_name: '', author_email: '', content: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { data: comments = [], isLoading } = useQuery({
-    queryKey: ['comments', slug],
-    queryFn: () => db.entities.Comment.filter({ post_slug: slug, published: true }, 'created_date'),
-  });
-
-  const mutation = useMutation({
-    mutationFn: (data) => db.entities.Comment.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['comments', slug] });
-      setForm({ author_name: '', author_email: '', content: '' });
-      setSubmitted(true);
-    },
-    onError: () => toast.error('Failed to submit comment. Please try again.'),
-  });
+  useEffect(() => {
+    const loadComments = () => {
+      const loadedComments = getComments(slug);
+      setComments(loadedComments);
+      setIsLoading(false);
+    };
+    loadComments();
+  }, [slug]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +49,21 @@ export default function BlogComments({ slug }) {
       toast.error('Please fill in your name and comment.');
       return;
     }
-    mutation.mutate({ ...form, post_slug: slug, published: false });
+    
+    setIsSubmitting(true);
+    try {
+      addComment(slug, form);
+      setForm({ author_name: '', author_email: '', content: '' });
+      setSubmitted(true);
+      // Reload comments
+      const updatedComments = getComments(slug);
+      setComments(updatedComments);
+      toast.success('Comment submitted for moderation!');
+    } catch (error) {
+      toast.error('Failed to submit comment. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -142,9 +149,9 @@ export default function BlogComments({ slug }) {
           </div>
           <div className="flex items-center justify-between">
             <p className="text-xs text-muted-foreground">Comments are moderated before publishing.</p>
-            <Button type="submit" size="sm" disabled={mutation.isPending} className="gap-2">
+            <Button type="submit" size="sm" disabled={isSubmitting} className="gap-2">
               <Send className="w-3.5 h-3.5" />
-              {mutation.isPending ? 'Submitting…' : 'Submit'}
+              {isSubmitting ? 'Submitting…' : 'Submit'}
             </Button>
           </div>
         </form>
