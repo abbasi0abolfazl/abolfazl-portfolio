@@ -1,38 +1,70 @@
 export const skillsData = {
-    title: "Technical Skills",
-    subtitle: "Technologies and tools I work with",
-    categories: [
-      {
-        title: "Languages",
-        icon: "Code",
-        skills: ["Python", "asyncio", "Pandas", "NumPy"]
-      },
-      {
-        title: "AI / ML",
-        icon: "Brain",
-        skills: ["LLMs (HuggingFace)", "Transformers", "Fine-tuning", "Prompt Engineering"]
-      },
-      {
-        title: "NLP",
-        icon: "MessageSquare",
-        skills: ["Text Classification", "Semantic Search", "RAG", "Sentiment Analysis"]
-      },
-      {
-        title: "Data",
-        icon: "Database",
-        skills: ["MongoDB", "Redis", "PostgreSQL", "Web Scraping"]
-      },
-      {
-        title: "DevOps",
-        icon: "GitBranch",
-        skills: ["Git / GitHub", "Docker", "Linux", "CI/CD"]
-      },
-      {
-        title: "Trading",
-        icon: "TrendingUp",
-        skills: ["MetaTrader", "YOLOv8", "Algorithmic Trading", "Risk Management"]
-      }
-    ]
-  };
-  
-  export default skillsData;
+  title: "Technical Skills",
+  subtitle: "Technologies and tools I work with",
+  categories: [
+    {
+      title: "Languages & Libraries",
+      icon: "Code",
+      skills: [
+        "Python",
+        "Rust",
+        "Javascript",
+        "Asyncio"
+      ]
+    },
+    {
+      title: "AI/ML & NLP",
+      icon: "Brain",
+      skills: [
+        "LLMs",
+        "Text Classification",
+        "Semantic Search",
+        "Prompt Engineering",
+        "Model Evaluation",
+        "Fine-tuning",
+        "RAG"
+      ]
+    },
+    {
+      title: "Data Engineering",
+      icon: "Database",
+      skills: [
+        "MongoDB",
+        "Redis",
+        "MariaDB",
+        "Web Scraping",
+        "Data Pipelines",
+        "Data Preprocessing"
+      ]
+    },
+    {
+      title: "DevOps & Tools",
+      icon: "GitBranch",
+      skills: [
+        "Git/GitHub",
+        "Docker",
+        "Linux",
+        "vim"
+      ]
+    },
+    {
+      title: "Computer Vision",
+      icon: "Eye",
+      skills: [
+        "YOLOv8",
+        "OpenCV",
+        "Object Detection",
+        "Chart Pattern Detection"
+      ]
+    },
+    {
+      title: "Trading & Finance",
+      icon: "TrendingUp",
+      skills: [
+        "Algorithmic Trading",
+        "MetaTrader EA",
+        "Risk Management",
+      ]
+    }
+  ]
+};

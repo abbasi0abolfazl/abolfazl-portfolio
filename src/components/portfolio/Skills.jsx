@@ -1,5 +1,5 @@
 import React from 'react';
-import { Code, Brain, MessageSquare, Database, GitBranch, TrendingUp } from 'lucide-react';
+import { Code, Brain, Database, GitBranch, TrendingUp, Eye } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 import { skillsData } from '@/data/skillsData';
@@ -8,10 +8,10 @@ import { skillsData } from '@/data/skillsData';
 const iconMap = {
   Code: Code,
   Brain: Brain,
-  MessageSquare: MessageSquare,
   Database: Database,
   GitBranch: GitBranch,
   TrendingUp: TrendingUp,
+  Eye: Eye,
 };
 
 export default function Skills() {

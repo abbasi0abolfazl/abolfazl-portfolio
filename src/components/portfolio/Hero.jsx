@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, FileText, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner'; 
 import ParticleBackground from './ParticleBackground';
 import { personalInfo } from '@/data/personalInfo';
 
@@ -38,9 +39,34 @@ export default function Hero() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const downloadCV = () => {
+    try {
+      const cvFileName = 'Abolfazl_Abbasi_CV.pdf';
+      const cvUrl = `/${cvFileName}`;
+      
+      const link = document.createElement('a');
+      link.href = cvUrl;
+      link.download = cvFileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      toast.success('دانلود شروع شد!', {
+        description: 'فایل رزومه در حال دانلود است...',
+        duration: 3000,
+      });
+    } catch (error) {
+      console.error('Error downloading CV:', error);
+      toast.error('خطا در دانلود', {
+        description: 'لطفاً دوباره تلاش کنید یا بعداً مراجعه کنید.',
+        duration: 4000,
+      });
+    }
+  };
+
   const handleButtonClick = (action) => {
     if (action === 'download') {
-      console.log('Download CV');
+      downloadCV();
     } else {
       scrollToSection(action);
     }
