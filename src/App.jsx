@@ -1,7 +1,8 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import { ThemeProvider } from '@/lib/ThemeContext';
@@ -16,6 +17,24 @@ import Analytics from './pages/Analytics';
 import ProjectDetail from './pages/ProjectDetail';
 import Dashboard from './pages/Dashboard';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }, 100);
+      return;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname]);
+
+  return null;
+}
+
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError } = useAuth();
 
@@ -27,29 +46,22 @@ const AuthenticatedApp = () => {
     );
   }
 
-  // در حالت پورتفولیو، authError را نادیده می‌گیریم
-  // if (authError) {
-  //   if (authError.type === 'user_not_registered') {
-  //     return <UserNotRegisteredError />;
-  //   } else if (authError.type === 'auth_required') {
-  //     navigateToLogin();
-  //     return null;
-  //   }
-  // }
-
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route path="/demos" element={<Demos />} />
-        <Route path="/analytics" element={<Analytics />} />
-        <Route path="/projects/:id" element={<ProjectDetail />} />
-      </Route>
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/demos" element={<Demos />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
+        </Route>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </>
   );
 };
 

@@ -58,7 +58,7 @@ export const skillsData = {
       ]
     },
     {
-      title: "Trading & Finance",
+      title: "Quantitative Finance",
       icon: "TrendingUp",
       skills: [
         "Algorithmic Trading",

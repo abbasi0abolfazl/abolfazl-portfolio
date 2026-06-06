@@ -11,8 +11,6 @@ import { useLang } from '@/lib/LanguageContext';
 
 export default function Projects() {
   const { tr } = useLang();
-  
-  // فقط پروژه‌های featured را نشان بده
   const featuredProjects = projects.filter(p => p.featured !== false);
 
   return (
@@ -57,29 +55,26 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  <div className="flex gap-2 flex-wrap items-center justify-between">
+                  <div className="flex gap-2 flex-wrap items-center">
                     <div className="flex gap-2">
-                      {/* دکمه Code - GitHub با hover رنگی مناسب */}
+                      {/* دکمه GitHub Repository */}
                       <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="border-border/50 text-muted-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-200 text-xs h-7 px-2.5"
+                          className="border-border/50 text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all duration-200 text-xs h-7 px-2.5"
                         >
                           <Github className="w-3.5 h-3.5 mr-1" /> {tr('projects_code')}
                         </Button>
                       </a>
+                      
+                      {/* دکمه View Details */}
                       <Link to={`/projects/${project.id}`}>
                         <Button size="sm" className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground text-xs h-7 px-2.5 border border-primary/20">
                           <ArrowRight className="w-3.5 h-3.5 mr-1" /> {tr('projects_view_details')}
                         </Button>
                       </Link>
                     </div>
-                    
-                    {/* تگ type */}
-                    <span className="px-2 py-1 text-[10px] rounded-full bg-card border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-200 cursor-default">
-                      {project.type}
-                    </span>
                   </div>
                 </div>
               </div>

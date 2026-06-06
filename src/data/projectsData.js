@@ -1,41 +1,51 @@
-// Filter options
 export const techFilters = ["Python", "NLP", "Computer Vision", "Trading", "RAG", "LLM"];
-export const typeFilters = ["Web App", "API", "Desktop App", "Research"];
 export const yearFilters = ["2023", "2024", "2025"];
 
-// Projects data
 export const projects = [
   {
-    id: 'social-botnet-intelligence',
-    title: 'Social Botnet Intelligence System',
-    description: 'Modular social media scraping system for data collection from X, Facebook, and Instagram with intelligent scheduling.',
-    tags: ['Python', 'Selenium', 'Asyncio', 'Flask'],
+    id: 'social-media-intelligence-platform',
+    title: 'Social Media Intelligence Platform',
+    description: 'Modular social media data collection system for X, Facebook, and Instagram with intelligent scheduling and rate limiting.',
+    tags: ['Python', 'Selenium', 'Asyncio', 'Flask', 'Redis', 'Requests', 'BeautifulSoup4', 'MariaDB'],
     tech: ['Python'],
-    type: 'API',
     year: '2023',
-    github: 'https://github.com/abbasi0abolfazl',
+    github: 'https://github.com/abbasi0abolfazl/social-media-intelligence-platform-demo',
     demo: null,
+    featured: true,
     color: 'from-blue-500/10 to-cyan-500/10',
-    overview: 'A modular, scalable system for collecting and analyzing social media data across multiple platforms simultaneously using intelligent scheduling and async processing.',
+    overview: 'A modular, scalable system for collecting and analyzing social media data across multiple platforms using intelligent scheduling and async processing. Designed for research, brand monitoring, and market intelligence.',
     role: 'I designed the overall architecture, implemented the async scraping engine, and built the scheduling system that handles rate limiting and anti-ban strategies.',
-    challenge: 'Collecting large volumes of social media data reliably while respecting rate limits, handling CAPTCHAs, and managing session state across multiple accounts and platforms.',
-    solution: 'Built a modular pipeline with per-platform adapters, exponential backoff, proxy rotation, and a Redis-based job queue. Each scraper runs as an isolated async worker.',
+    challenge: 'Collecting large volumes of social media data reliably while respecting rate limits and managing session state across multiple accounts and platforms.',
+    solution: 'Built a modular pipeline with per-platform adapters, exponential backoff, proxy rotation, and a Redis-based job queue.',
     results: [
       'Processed 50K+ data points per day reliably',
-      'Reduced ban rate by 90% with adaptive scheduling',
+      'Reduced block rate by 90% with adaptive scheduling',
       'Supported 3 platforms with a single shared pipeline',
     ],
-    codeSnippet: `async def scrape_with_retry(url, max_retries=3):
-    for attempt in range(max_retries):
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url, timeout=10) as resp:
-                    return await resp.json()
-        except Exception as e:
-            if attempt == max_retries - 1:
-                raise
-            await asyncio.sleep(2 ** attempt)`,
-    lessons: 'Designing for failure from day one is critical in scraping systems. Modular adapters saved significant time when adding new platforms.',
+    codeSnippet: `# Base Scraper Abstract Class
+from abc import ABC, abstractmethod
+
+class BaseScraper(ABC):
+    @abstractmethod
+    async def fetch(self, url: str) -> dict:
+        pass
+    
+    @abstractmethod
+    async def parse(self, data: dict) -> dict:
+        pass
+
+class TwitterScraper(BaseScraper):
+    async def fetch(self, url: str) -> dict:
+        async with self.session.get(url) as resp:
+            return await resp.json()
+    
+    async def parse(self, data: dict) -> dict:
+        return {
+            'id': data['id_str'],
+            'text': data['text'],
+            'user': data['user']['screen_name'],
+        }`,
+    lessons: 'Designing for failure from day one is critical in data collection systems. Modular adapters saved significant time when adding new platforms.',
   },
   {
     id: 'sentiment-emotion-detection',
@@ -43,10 +53,10 @@ export const projects = [
     description: 'Multi-class emotion classification system fine-tuned on BERT for Persian text, achieving high accuracy across 8 emotion categories.',
     tags: ['BERT', 'HuggingFace', 'ChatGPT API', 'Python'],
     tech: ['Python', 'NLP', 'LLM'],
-    type: 'Research',
     year: '2023',
     github: 'https://github.com/abbasi0abolfazl',
     demo: null,
+    featured: true,
     color: 'from-purple-500/10 to-pink-500/10',
     overview: 'A fine-tuned BERT model for Persian text that classifies emotions across 8 categories, enabling nuanced sentiment analysis for downstream applications.',
     role: 'I collected and cleaned the training dataset, fine-tuned the ParsBERT model, and designed the evaluation pipeline comparing against GPT-4 baselines.',
@@ -77,10 +87,10 @@ def predict_emotion(text):
     description: 'Persian legal document assistant using RAG architecture with vector search for intelligent document retrieval and reasoning.',
     tags: ['RAG', 'ChromaDB', 'LangChain', 'Streamlit'],
     tech: ['Python', 'NLP', 'RAG', 'LLM'],
-    type: 'Web App',
     year: '2024',
     github: 'https://github.com/abbasi0abolfazl',
     demo: null,
+    featured: true,
     color: 'from-green-500/10 to-emerald-500/10',
     overview: 'A Retrieval-Augmented Generation chatbot for Persian legal documents that answers user queries by retrieving and reasoning over relevant legal articles.',
     role: 'I built the document ingestion pipeline, designed the chunking strategy for legal texts, integrated ChromaDB for vector storage, and built the LangChain reasoning chain.',
@@ -112,10 +122,10 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 5})`,
     description: 'Computer vision model for detecting financial chart patterns with 97% accuracy using YOLOv8 architecture.',
     tags: ['YOLOv8', 'Computer Vision', 'Trading', 'Python'],
     tech: ['Python', 'Computer Vision', 'Trading'],
-    type: 'Research',
     year: '2024',
     github: 'https://github.com/abbasi0abolfazl',
     demo: null,
+    featured: true,
     color: 'from-amber-500/10 to-orange-500/10',
     overview: 'A real-time computer vision system that detects classic technical analysis chart patterns (head & shoulders, triangles, flags) from live trading charts.',
     role: 'I created the training dataset by annotating 3K+ chart images, trained and validated the YOLOv8 model, and built the real-time inference pipeline.',
@@ -148,10 +158,10 @@ detections = model.predict("chart.png", conf=0.5)`,
     description: 'Real-time trading system with comprehensive risk management, news-based suspension, and multi-strategy support.',
     tags: ['MetaTrader', 'Redis', 'PostgreSQL', 'Python'],
     tech: ['Python', 'Trading'],
-    type: 'Desktop App',
     year: '2024',
     github: 'https://github.com/abbasi0abolfazl',
     demo: null,
+    featured: true,
     color: 'from-red-500/10 to-rose-500/10',
     overview: 'An automated Forex trading system that executes multiple strategies simultaneously with real-time risk management, news event detection, and position tracking.',
     role: 'I designed the risk management engine, implemented the strategy runner with hot-swappable modules, and built the news-based trading suspension system.',
@@ -183,10 +193,10 @@ detections = model.predict("chart.png", conf=0.5)`,
     description: 'Intelligent shopping assistant using RAG and semantic search for product recommendations and customer support.',
     tags: ['OpenAI API', 'RAG', 'Semantic Search', 'Python'],
     tech: ['Python', 'NLP', 'RAG', 'LLM'],
-    type: 'Web App',
     year: '2025',
     github: 'https://github.com/abbasi0abolfazl',
     demo: null,
+    featured: true,
     color: 'from-teal-500/10 to-cyan-500/10',
     overview: 'An AI-powered shopping assistant that understands natural language queries, recommends products using semantic search, and handles customer support through RAG.',
     role: 'I built the semantic product search engine, designed the conversation flow, integrated the OpenAI API with a structured tool-calling system, and optimized retrieval latency.',

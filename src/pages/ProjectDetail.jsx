@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Github, ExternalLink, Download, CheckCircle2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { projects, techFilters, typeFilters, yearFilters } from '@/data/projectsData';
+import { projects } from '@/data/projectsData';
 import { useLang } from '@/lib/LanguageContext';
 
 function Section({ title, children }) {
@@ -26,17 +26,35 @@ function Section({ title, children }) {
 
 export default function ProjectDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { tr } = useLang();
   const project = projects.find((p) => p.id === id);
+
+  // وقتی صفحه لود می‌شود، به بالای صفحه اسکرول کن
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleBackToProjects = () => {
+    // به صفحه اصلی برو
+    navigate('/');
+    // بعد از اینکه صفحه لود شد، به بخش projects اسکرول کن
+    setTimeout(() => {
+      const projectsSection = document.getElementById('projects');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
 
   if (!project) {
     return (
       <main className="pt-24 pb-16 px-4 min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-foreground mb-2">Project Not Found</h1>
-          <Link to="/#projects" className="text-primary hover:underline flex items-center justify-center gap-2 mt-4">
+          <button onClick={handleBackToProjects} className="text-primary hover:underline flex items-center justify-center gap-2 mt-4">
             <ArrowLeft className="w-4 h-4" /> {tr('detail_back')}
-          </Link>
+          </button>
         </div>
       </main>
     );
@@ -45,16 +63,16 @@ export default function ProjectDetail() {
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
       <div className="max-w-3xl mx-auto">
-        {/* Back */}
-        <Link
-          to="/#projects"
+        {/* Back button */}
+        <button
+          onClick={handleBackToProjects}
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 text-sm"
         >
           <ArrowLeft className="w-4 h-4" />
           {tr('detail_back')}
-        </Link>
+        </button>
 
-        {/* Header */}
+        {/* Header - تگ type حذف شد */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,7 +81,6 @@ export default function ProjectDetail() {
           <div className={`h-1.5 rounded-full bg-gradient-to-r ${project.color} mb-6`} />
           <div className="flex flex-wrap items-center gap-3 mb-3">
             <Badge variant="secondary" className="bg-muted text-muted-foreground text-xs">{project.year}</Badge>
-            <Badge variant="secondary" className="bg-primary/5 text-primary border-primary/20 text-xs">{project.type}</Badge>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
             {project.title}
@@ -79,18 +96,20 @@ export default function ProjectDetail() {
           className="flex flex-wrap gap-3 mb-12"
         >
           <a href={project.github} target="_blank" rel="noopener noreferrer">
-            <Button size="sm" variant="outline" className="border-border/50 hover:border-primary/40 hover:text-primary">
+            <Button size="sm" variant="outline" className="border-border/50 text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all duration-200">
               <Github className="w-4 h-4 mr-1.5" /> {tr('detail_github')}
             </Button>
           </a>
+          
           {project.demo && (
             <a href={project.demo} target="_blank" rel="noopener noreferrer">
-              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/80 transition-all duration-200">
                 <ExternalLink className="w-4 h-4 mr-1.5" /> {tr('detail_demo')}
               </Button>
             </a>
           )}
-          <Button size="sm" variant="outline" className="border-border/50 hover:border-primary/40 hover:text-primary">
+          
+          <Button size="sm" variant="outline" className="border-border/50 text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all duration-200">
             <Download className="w-4 h-4 mr-1.5" /> {tr('detail_case_study')}
           </Button>
         </motion.div>
@@ -156,11 +175,11 @@ export default function ProjectDetail() {
 
         {/* Footer nav */}
         <div className="pt-8 border-t border-border/50 flex items-center justify-between">
-          <Link to="/#projects" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+          <button onClick={handleBackToProjects} className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" /> {tr('detail_back')}
-          </Link>
+          </button>
           {project.github && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline flex items-center gap-1.5">
+            <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:text-primary/70 transition-colors flex items-center gap-1.5">
               <Github className="w-4 h-4" /> GitHub
             </a>
           )}
