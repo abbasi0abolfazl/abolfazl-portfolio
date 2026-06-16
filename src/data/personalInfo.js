@@ -8,6 +8,13 @@ export const personalInfo = {
     "Machine Learning Engineer"
   ],
   description: "Building intelligent systems with LLMs, NLP, and Algorithmic Trading",
+  email: "a.abbasi5775@gmail.com",
+  phone: "+989334441301",
+  location: "Iran (Open to Remote)",
+  social: {
+    github: "https://github.com/abbasi0abolfazl",
+    linkedin: "", // TODO: add LinkedIn URL later
+  },
   buttons: {
     viewProjects: {
       text: "View Projects",

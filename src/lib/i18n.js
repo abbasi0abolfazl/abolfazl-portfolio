@@ -20,7 +20,7 @@ export const translations = {
     about_title: 'About Me',
     about_subtitle: 'AI Engineer focused on NLP and intelligent systems',
     about_available: 'Available for remote work',
-    about_location: 'Tehran, Iran',
+    about_location: 'Iran',
     // Skills
     skills_title: 'Skills & Technologies',
     skills_subtitle: 'Tools and frameworks I work with',

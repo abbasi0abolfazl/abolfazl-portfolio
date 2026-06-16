@@ -6,6 +6,7 @@ import { Search, X, FileText, Cpu } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 
 import { projects, techFilters, typeFilters, yearFilters } from '@/data/projectsData';
+import { getAllPosts } from '@/lib/blogUtils';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function highlight(text, query) {
@@ -30,7 +31,7 @@ export default function GlobalSearch() {
 
   const { data: posts = [] } = useQuery({
     queryKey: ['blog-posts-search'],
-    queryFn: () => db.entities.BlogPost.filter({ published: true }),
+    queryFn: getAllPosts,
     staleTime: 60_000,
   });
 

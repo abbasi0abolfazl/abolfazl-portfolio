@@ -46,8 +46,8 @@ export default function TableOfContents({ content }) {
 
   const TocList = () => (
     <ul className="space-y-0.5">
-      {headings.map(({ id, text, level }) => (
-        <li key={id} style={{ paddingLeft: `${(level - 1) * 12}px` }}>
+      {headings.map(({ id, text, level }, index) => (
+        <li key={`${id}-${index}`} style={{ paddingLeft: `${(level - 1) * 12}px` }}>
           <button
             onClick={() => scrollTo(id)}
             className={`text-left w-full text-xs py-1.5 px-2 rounded-lg transition-all duration-200 leading-snug

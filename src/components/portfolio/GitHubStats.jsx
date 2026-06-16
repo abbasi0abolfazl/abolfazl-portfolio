@@ -1,67 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Github, GitFork, Star, Users, Code2 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 import axios from 'axios';
 
 const GITHUB_USERNAME = 'abbasi0abolfazl';
 
+async function fetchGitHubData() {
+  // Short timeout so an unreachable/blocked api.github.com fails fast to the
+  // error state instead of leaving the section spinning for ~30s.
+  const reposResponse = await axios.get(
+    `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`,
+    { timeout: 8000 }
+  );
+  return reposResponse.data;
+}
+
 export default function GitHubStats() {
-  const [userData, setUserData] = useState(null);
-  const [repos, setRepos] = useState([]);
-  const [languages, setLanguages] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const {
+    data: repos = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ['github-repos', GITHUB_USERNAME],
+    queryFn: fetchGitHubData,
+    staleTime: 1000 * 60 * 60, // cache for 1h to avoid GitHub's 60 req/hr unauthenticated limit
+    gcTime: 1000 * 60 * 60 * 24,
+    retry: 1,
+  });
 
-  useEffect(() => {
-    fetchGitHubData();
-  }, []);
-
-  const fetchGitHubData = async () => {
-    setIsLoading(true);
-    setError(null);
-    
-    try {
-      // دریافت اطلاعات کاربر
-      const userResponse = await axios.get(`https://api.github.com/users/${GITHUB_USERNAME}`);
-      setUserData(userResponse.data);
-      
-      // دریافت repositories
-      const reposResponse = await axios.get(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
-      const allRepos = reposResponse.data;
-      setRepos(allRepos);
-      
-      // محاسبه آمار زبان‌ها
-      const languageStats = {};
-      allRepos.forEach(repo => {
-        if (repo.language) {
-          languageStats[repo.language] = (languageStats[repo.language] || 0) + 1;
-        }
-      });
-      
-      // تبدیل به آرایه و مرتب‌سازی
-      const total = Object.values(languageStats).reduce((a, b) => a + b, 0);
-      const languageArray = Object.entries(languageStats)
-        .map(([name, count]) => ({
-          name,
-          percentage: Math.round((count / total) * 100),
-          color: getLanguageColor(name)
-        }))
-        .sort((a, b) => b.percentage - a.percentage)
-        .slice(0, 5); // فقط 5 زبان اول
-      
-      setLanguages(languageArray);
-      
-    } catch (err) {
-      console.error('Error fetching GitHub data:', err);
-      setError('Unable to load GitHub data. Please try again later.');
-    } finally {
-      setIsLoading(false);
+  // محاسبه آمار زبان‌ها
+  const languageStats = {};
+  repos.forEach((repo) => {
+    if (repo.language) {
+      languageStats[repo.language] = (languageStats[repo.language] || 0) + 1;
     }
-  };
+  });
+  const totalLangs = Object.values(languageStats).reduce((a, b) => a + b, 0) || 1;
+  const languages = Object.entries(languageStats)
+    .map(([name, count]) => ({
+      name,
+      percentage: Math.round((count / totalLangs) * 100),
+      color: getLanguageColor(name),
+    }))
+    .sort((a, b) => b.percentage - a.percentage)
+    .slice(0, 5);
 
   // تابع تعیین رنگ برای هر زبان
-  const getLanguageColor = (language) => {
+  function getLanguageColor(language) {
     const colors = {
       'Python': '#3776AB',
       'JavaScript': '#F7DF1E',
@@ -82,7 +70,7 @@ export default function GitHubStats() {
       'SQL': '#E38C00',
     };
     return colors[language] || '#6B7280';
-  };
+  }
 
   // محاسبه آمار کلی
   const totalStars = repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0);
@@ -111,9 +99,9 @@ export default function GitHubStats() {
           <SectionHeading title="GitHub Activity" subtitle="My open source contributions and projects" />
           <div className="p-8 rounded-xl bg-card/50 border border-border/50">
             <div className="text-center py-12">
-              <p className="text-muted-foreground">{error}</p>
+              <p className="text-muted-foreground">Unable to load GitHub data. Please try again later.</p>
               <button
-                onClick={fetchGitHubData}
+                onClick={() => refetch()}
                 className="mt-4 px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors"
               >
                 Try Again

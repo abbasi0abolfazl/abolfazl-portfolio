@@ -9,32 +9,38 @@ import { toast } from 'sonner';
 
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
+import { personalInfo } from '@/data/personalInfo';
 
 const contactInfo = [
-  { icon: Mail, label: 'a.abbasi5775@gmail.com', href: 'mailto:a.abbasi5775@gmail.com' },
-  { icon: Phone, label: '+989334441301', href: 'tel:+989334441301' },
-  { icon: MapPin, label: 'Qom, Iran (Open to Remote)', href: null },
+  { icon: Mail, label: personalInfo.email, href: `mailto:${personalInfo.email}` },
+  { icon: Phone, label: personalInfo.phone, href: `tel:${personalInfo.phone}` },
+  { icon: MapPin, label: personalInfo.location, href: null },
 ];
 
 const socialLinks = [
-  { icon: Github, label: 'GitHub', href: 'https://github.com/abbasi0abolfazl' },
-  { icon: Linkedin, label: 'LinkedIn', href: '#' },
-  { icon: Mail, label: 'Email', href: 'mailto:a.abbasi5775@gmail.com' },
+  { icon: Github, label: 'GitHub', href: personalInfo.social.github },
+  ...(personalInfo.social.linkedin
+    ? [{ icon: Linkedin, label: 'LinkedIn', href: personalInfo.social.linkedin }]
+    : []),
+  { icon: Mail, label: 'Email', href: `mailto:${personalInfo.email}` },
 ];
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sending, setSending] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       toast.error('Please fill in all fields');
       return;
     }
     setSending(true);
-    await db.entities.ContactMessage.create(form);
-    toast.success('Message sent successfully! I will get back to you soon.');
+    // No backend on this static site — open the visitor's email client with a prefilled message.
+    const subject = encodeURIComponent(`Portfolio contact from ${form.name}`);
+    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
+    window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
+    toast.success('Opening your email app…');
     setForm({ name: '', email: '', message: '' });
     setSending(false);
   };

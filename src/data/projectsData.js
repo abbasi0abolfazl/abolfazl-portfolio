@@ -5,47 +5,35 @@ export const projects = [
   {
     id: 'social-media-intelligence-platform',
     title: 'Social Media Intelligence Platform',
-    description: 'Modular social media data collection system for X, Facebook, and Instagram with intelligent scheduling and rate limiting.',
-    tags: ['Python', 'Selenium', 'Asyncio', 'Flask', 'Redis', 'Requests', 'BeautifulSoup4', 'MariaDB'],
+    description: 'A resilient X (Twitter) crawler that runs unattended for hours — with database-driven selectors, self-healing browser automation, ban detection, and live Telegram monitoring. The working core of a broader multi-platform aggregator.',
+    tags: ['Python', 'Selenium', 'BeautifulSoup4', 'MySQL', 'Telegram Bot API', 'Linux/systemd'],
     tech: ['Python'],
     year: '2023',
-    github: 'https://github.com/abbasi0abolfazl/social-media-intelligence-platform-demo',
+    github: 'https://github.com/abbasi0abolfazl/social_media_data_aggregator',
     demo: null,
     featured: true,
     color: 'from-blue-500/10 to-cyan-500/10',
-    overview: 'A modular, scalable system for collecting and analyzing social media data across multiple platforms using intelligent scheduling and async processing. Designed for research, brand monitoring, and market intelligence.',
-    role: 'I designed the overall architecture, implemented the async scraping engine, and built the scheduling system that handles rate limiting and anti-ban strategies.',
-    challenge: 'Collecting large volumes of social media data reliably while respecting rate limits and managing session state across multiple accounts and platforms.',
-    solution: 'Built a modular pipeline with per-platform adapters, exponential backoff, proxy rotation, and a Redis-based job queue.',
+    overview: 'A long-running system that collects public data from X (Twitter) without an official API. The real engineering is not the scraping itself, but everything built around it to keep a browser, a login session, and an account healthy through multi-hour unattended runs on a platform that actively discourages automation.',
+    role: 'I designed and built the whole system end to end: the crawler orchestrator, an isolated self-healing browser layer, session persistence and login checks, ban/limit detection, resource monitoring, structured data extraction, and Telegram-based observability — deployed as a managed Linux service.',
+    challenge: 'Three problems at once: the platform constantly changes its page structure (so hard-coded locators rot), aggressive or predictable behavior gets the account banned, and the job must run on its own for hours without a human watching it.',
+    solution: 'Treated the fragile parts as configuration instead of code — storing element selectors in the database so layout changes are a one-line update, not a redeploy. Wrapped the browser in a layer that detects bad sessions and restarts cleanly, paced activity to stay under rate limits with active ban detection, persisted login sessions to minimize risky re-logins, and streamed live run status to Telegram.',
     results: [
-      'Processed 50K+ data points per day reliably',
-      'Reduced block rate by 90% with adaptive scheduling',
-      'Supported 3 platforms with a single shared pipeline',
+      'Runs unattended for hours as a managed Linux service with automatic recovery',
+      'Adapts to platform layout changes via DB-stored selectors — no redeploy needed',
+      'Active ban/limit detection plus session persistence to protect accounts',
+      'Live run monitoring through a Telegram channel for full observability',
     ],
-    codeSnippet: `# Base Scraper Abstract Class
-from abc import ABC, abstractmethod
-
-class BaseScraper(ABC):
-    @abstractmethod
-    async def fetch(self, url: str) -> dict:
-        pass
-    
-    @abstractmethod
-    async def parse(self, data: dict) -> dict:
-        pass
-
-class TwitterScraper(BaseScraper):
-    async def fetch(self, url: str) -> dict:
-        async with self.session.get(url) as resp:
-            return await resp.json()
-    
-    async def parse(self, data: dict) -> dict:
-        return {
-            'id': data['id_str'],
-            'text': data['text'],
-            'user': data['user']['screen_name'],
-        }`,
-    lessons: 'Designing for failure from day one is critical in data collection systems. Modular adapters saved significant time when adding new platforms.',
+    codeSnippet: `# Selectors live in the database, not the code —
+# so a platform layout change is a one-line UPDATE, not a redeploy.
+def select_selectors() -> dict:
+    """Load Selenium selectors from the DB into a lookup dict."""
+    query = "SELECT name, selector_type, selector_value FROM twitter_xpath;"
+    rows = db_manager.select(query)
+    return {
+        name: (selector_type, selector_value)
+        for name, selector_type, selector_value in rows
+    }`,
+    lessons: 'Anything that changes more often than your release cycle belongs in settings, not code — storing selectors in the database removed most of the maintenance pain. And in long-running automation, failure is the normal state, so self-recovery and observability have to be features from day one.',
   },
   {
     id: 'sentiment-emotion-detection',

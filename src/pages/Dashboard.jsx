@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Lock } from 'lucide-react';
 import DashboardShell from '../components/dashboard/DashboardShell';
 
-const PASSWORD = 'admin2025';
+// Set VITE_DASHBOARD_PASSWORD in a local .env file (never commit it).
+// NOTE: this is a client-side gate only and is not real security — it merely
+// hides the admin UI. This route is currently not registered in App.jsx.
+const PASSWORD = import.meta.env.VITE_DASHBOARD_PASSWORD || '';
 
 export default function Dashboard() {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem('dash_auth') === '1');
@@ -11,7 +14,7 @@ export default function Dashboard() {
 
   const login = (e) => {
     e.preventDefault();
-    if (input === PASSWORD) {
+    if (PASSWORD && input === PASSWORD) {
       sessionStorage.setItem('dash_auth', '1');
       setAuthed(true);
     } else {

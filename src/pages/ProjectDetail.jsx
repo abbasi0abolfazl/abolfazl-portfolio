@@ -30,15 +30,12 @@ export default function ProjectDetail() {
   const { tr } = useLang();
   const project = projects.find((p) => p.id === id);
 
-  // وقتی صفحه لود می‌شود، به بالای صفحه اسکرول کن
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const handleBackToProjects = () => {
-    // به صفحه اصلی برو
     navigate('/');
-    // بعد از اینکه صفحه لود شد، به بخش projects اسکرول کن
     setTimeout(() => {
       const projectsSection = document.getElementById('projects');
       if (projectsSection) {
