@@ -24,10 +24,13 @@ export default function ParticleBackground() {
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.3;
-        this.speedY = (Math.random() - 0.5) * 0.3;
-        this.opacity = Math.random() * 0.5 + 0.1;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.08; // کاهش سرعت از 0.3 به 0.08
+        this.speedY = (Math.random() - 0.5) * 0.08;
+        this.baseOpacity = Math.random() * 0.3 + 0.2; // محدوده پایه
+        this.opacity = this.baseOpacity;
+        this.opacityPhase = Math.random() * Math.PI * 2;
+        this.opacitySpeed = 0.005 + Math.random() * 0.01; // سرعت تغییر شفافیت
       }
       update() {
         this.x += this.speedX;
@@ -35,16 +38,19 @@ export default function ParticleBackground() {
         if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
           this.reset();
         }
+        this.opacityPhase += this.opacitySpeed;
+        this.opacity = this.baseOpacity + Math.sin(this.opacityPhase) * 1;
+        this.opacity = Math.max(0, Math.min(1, this.opacity));
       }
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(245, 158, 11, ${this.opacity})`;
+        ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`; // طلایی
         ctx.fill();
       }
     }
 
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 50; i++) { // کاهش تعداد از 60 به 50
       particles.push(new Particle());
     }
 
@@ -60,7 +66,8 @@ export default function ParticleBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(245, 158, 11, ${0.05 * (1 - dist / 120)})`;
+            // خطوط اتصال با رنگ طلایی
+            ctx.strokeStyle = `rgba(255, 215, 0, ${0.03 * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

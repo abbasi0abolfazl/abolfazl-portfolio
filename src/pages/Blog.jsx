@@ -4,7 +4,6 @@ import { Calendar, ArrowRight, Clock, BookOpen, Search, X, Tag } from 'lucide-re
 import { Input } from '@/components/ui/input';
 import { format } from 'date-fns';
 import AnimatedSection from '../components/portfolio/AnimatedSection';
-import SectionHeading from '../components/portfolio/SectionHeading';
 import { SkeletonBlogCard } from '../components/portfolio/SkeletonCard';
 import { getAllPosts, getReadingTime } from '@/lib/blogUtils';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -42,7 +41,6 @@ export default function Blog() {
   const tagCounts = useMemo(() => {
     const counts = {};
     posts.forEach((p) => {
-      // بررسی کنید tags وجود دارد و آرایه است
       if (p.tags && Array.isArray(p.tags)) {
         p.tags.forEach((t) => { 
           counts[t] = (counts[t] || 0) + 1; 
@@ -75,7 +73,15 @@ export default function Blog() {
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
       <div className="max-w-4xl mx-auto">
-        <SectionHeading title="Blog" subtitle="Thoughts on AI, NLP, and building intelligent systems" />
+        {/* عنوان Blog با فونت Inter (standard) */}
+        <div className="text-center mb-12">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3 font-inter tracking-tight">
+            Blog
+          </h1>
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
+            Thoughts on AI, NLP, and building intelligent systems
+          </p>
+        </div>
 
         {/* Search bar */}
         <AnimatedSection className="mb-5">
@@ -182,7 +188,8 @@ export default function Blog() {
                         </span>
                       </div>
 
-                      <h2 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
+                      {/* تایتل کارت با فونت Inter */}
+                      <h2 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors mb-2 font-inter tracking-tight">
                         {highlight(post.title, search)}
                       </h2>
 

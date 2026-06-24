@@ -75,9 +75,9 @@ export default function BlogPost() {
           {tr('blog_back')}
         </Link>
 
-        {/* Article header */}
+        {/* Article header - تایتل با فونت Inter */}
         <header className="mb-8 max-w-3xl">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight font-inter tracking-tight">
             {post.title}
           </h1>
 

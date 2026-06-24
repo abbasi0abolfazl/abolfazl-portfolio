@@ -13,7 +13,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
           © {new Date().getFullYear()} Abolfazl Abbasi. Built with
-          <Heart className="w-3.5 h-3.5 text-primary fill-primary" />
+          <Heart className="w-3.5 h-3.5 text-orange-500 fill-orange-500" />
         </div>
         <div className="flex items-center gap-3">
           {socialLinks.map((link) => (

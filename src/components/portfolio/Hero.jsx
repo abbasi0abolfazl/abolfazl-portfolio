@@ -116,37 +116,34 @@ export default function Hero() {
           >
             {description}
           </motion.p>
+<div className="flex flex-wrap justify-center gap-4">
+  {/* دکمه اصلی - View Projects (پررنگ‌ترین) */}
+  <Button
+    onClick={() => handleButtonClick(buttons.viewProjects.action)}
+    className="bg-primary/20 backdrop-blur-sm border border-primary/40 text-primary hover:bg-primary/30 hover:border-primary/60 hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full font-medium tracking-wide shadow-lg shadow-primary/10"
+  >
+    {buttons.viewProjects.text}
+  </Button>
 
-          <div className="flex flex-wrap justify-center gap-4">
-            {/* دکمه View Projects */}
-            <Button
-              onClick={() => handleButtonClick(buttons.viewProjects.action)}
-              variant="outline"
-              className="border-2 border-primary/50 text-foreground bg-transparent hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full"
-            >
-              {buttons.viewProjects.text}
-            </Button>
+  {/* دکمه‌های ثانویه - شفاف‌تر */}
+  <Button
+    variant="outline"
+    onClick={() => handleButtonClick(buttons.downloadCV.action)}
+    className="border border-white/15 text-white/80 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:text-white hover:border-white/30 hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full font-light tracking-wide"
+  >
+    <FileText className="w-4 h-4 mr-2" />
+    {buttons.downloadCV.text}
+  </Button>
 
-            {/* دکمه Download CV */}
-            <Button
-              variant="outline"
-              onClick={() => handleButtonClick(buttons.downloadCV.action)}
-              className="border-2 border-primary/50 text-foreground bg-transparent hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full"
-            >
-              <FileText className="w-4 h-4 mr-2" />
-              {buttons.downloadCV.text}
-            </Button>
-
-            {/* دکمه Contact Me */}
-            <Button
-              variant="outline"
-              onClick={() => handleButtonClick(buttons.contactMe.action)}
-              className="border-2 border-primary/50 text-foreground bg-transparent hover:bg-primary hover:text-primary-foreground hover:border-primary hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full"
-            >
-              <Send className="w-4 h-4 mr-2" />
-              {buttons.contactMe.text}
-            </Button>
-          </div>
+  <Button
+    variant="outline"
+    onClick={() => handleButtonClick(buttons.contactMe.action)}
+    className="border border-white/15 text-white/80 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:text-white hover:border-white/30 hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full font-light tracking-wide"
+  >
+    <Send className="w-4 h-4 mr-2" />
+    {buttons.contactMe.text}
+  </Button>
+</div>
         </motion.div>
 
         <motion.div

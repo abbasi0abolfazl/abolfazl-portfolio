@@ -5,6 +5,31 @@ import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 import { aboutData } from '@/data/aboutData';
 
+// کامپوننت لوگوی پیکسلی AA
+function PixelLogo() {
+  const grid = [
+    [0,1,1,0,0,0,1,1,0],
+    [1,0,0,1,0,1,0,0,1],
+    [1,1,1,1,0,1,1,1,1],
+    [1,0,0,1,0,1,0,0,1],
+    [1,0,0,1,0,1,0,0,1],
+  ];
+  return (
+    <div className="flex flex-col gap-[3px]" style={{ lineHeight: 0 }}>
+      {grid.map((row, ri) => (
+        <div key={ri} className="flex gap-[3px]">
+          {row.map((cell, ci) => (
+            <div
+              key={ci}
+              className={`w-[6px] h-[6px] rounded-[1px] transition-colors duration-300 ${cell ? 'bg-primary' : 'bg-transparent'}`}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // Mapping icon names to components
 const iconMap = {
   Briefcase: Briefcase,
@@ -13,7 +38,7 @@ const iconMap = {
 };
 
 export default function About() {
-  const { title, subtitle, avatar, location, remoteStatus, bio, description, stats, coreTags } = aboutData;
+  const { title, subtitle, location, remoteStatus, bio, description, stats, coreTags } = aboutData;
 
   return (
     <section id="about" className="py-24 px-4">
@@ -21,10 +46,10 @@ export default function About() {
         <SectionHeading title={title} subtitle={subtitle} />
 
         <div className="grid md:grid-cols-3 gap-8">
-          {/* Avatar & Info */}
+          {/* Avatar & Info - جایگزینی با لوگوی پیکسلی */}
           <AnimatedSection className="md:col-span-1 flex flex-col items-center">
             <div className="w-36 h-36 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border-2 border-primary/30 flex items-center justify-center mb-6">
-              <span className="text-5xl font-bold gradient-text">{avatar}</span>
+              <PixelLogo />
             </div>
             <div className="flex items-center gap-2 text-muted-foreground mb-3">
               <MapPin className="w-4 h-4 text-primary" />

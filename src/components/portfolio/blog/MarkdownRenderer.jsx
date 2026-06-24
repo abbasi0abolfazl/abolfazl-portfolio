@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import CodeBlock from './CodeBlock';
 import ImageZoom from './ImageZoom';
 import Callout from './Callout';
-import remarkGfm from 'remark-gfm';
-import CustomTable from './CustomTable';
-
 
 /* ── Helpers ─────────────────────────────────────────────── */
 
@@ -55,7 +53,7 @@ function Heading({ level, children }) {
   return (
     <Tag
       id={id}
-      className={`group flex items-center gap-2 font-semibold font-nevera text-foreground scroll-mt-24 ${sizes[level] || ''} ${borders[level] || ''}`}
+      className={`group flex items-center gap-2 font-semibold font-inter text-foreground scroll-mt-24 ${sizes[level] || ''} ${borders[level] || ''}`}
     >
       {children}
       <a
@@ -81,15 +79,15 @@ const components = {
     if (rawContent.includes('|') && rawContent.includes('---')) {
       return <CustomTable markdown={rawContent} />;
     }
-    return <p className="text-[15px] leading-[1.7] text-foreground/80 my-3">{children}</p>;
+    return <p className="text-[15px] leading-[1.7] text-foreground/80 my-3 font-inter">{children}</p>;
   },
 
   strong({ children }) {
-    return <strong className="font-semibold text-foreground">{children}</strong>;
+    return <strong className="font-semibold text-foreground font-inter">{children}</strong>;
   },
 
   em({ children }) {
-    return <em className="italic text-foreground/70">{children}</em>;
+    return <em className="italic text-foreground/70 font-inter">{children}</em>;
   },
 
   code({ inline, className, children }) {
@@ -112,31 +110,31 @@ const components = {
     const callout = parseCallout(node);
     if (callout) return <Callout type={callout.type}>{callout.content}</Callout>;
     return (
-      <blockquote className="relative my-5 pl-5 border-l-[3px] border-primary/50 text-foreground/60 italic bg-primary/[0.03] rounded-r-xl py-3 pr-4">
+      <blockquote className="relative my-5 pl-5 border-l-[3px] border-primary/50 text-foreground/60 italic bg-primary/[0.03] rounded-r-xl py-3 pr-4 font-inter">
         {children}
       </blockquote>
     );
   },
 
   ul({ children }) {
-    return <ul className="my-4 space-y-1.5 pl-1">{children}</ul>;
+    return <ul className="my-4 space-y-1.5 pl-1 font-inter">{children}</ul>;
   },
 
   ol({ children }) {
-    return <ol className="my-4 space-y-1.5 pl-5 list-decimal marker:text-primary/60">{children}</ol>;
+    return <ol className="my-4 space-y-1.5 pl-5 list-decimal marker:text-primary/60 font-inter">{children}</ol>;
   },
 
   li({ children, checked }) {
     if (checked !== null && checked !== undefined) {
       return (
-        <li className="flex items-start gap-2.5 list-none">
+        <li className="flex items-start gap-2.5 list-none font-inter">
           <input type="checkbox" defaultChecked={checked} className="mt-1 accent-primary shrink-0" />
           <span className={`text-[15px] leading-relaxed ${checked ? 'line-through text-foreground/40' : 'text-foreground/80'}`}>{children}</span>
         </li>
       );
     }
     return (
-      <li className="flex items-start gap-2.5 list-none text-foreground/80 text-[15px] leading-relaxed">
+      <li className="flex items-start gap-2.5 list-none text-foreground/80 text-[15px] leading-relaxed font-inter">
         <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/60 shrink-0" />
         <span>{children}</span>
       </li>
@@ -151,33 +149,33 @@ const components = {
   table({ children }) {
     return (
       <div className="overflow-x-auto my-6 rounded-xl border border-border/50 shadow-sm">
-        <table className="min-w-full text-sm">{children}</table>
+        <table className="min-w-full text-sm font-inter">{children}</table>
       </div>
     );
   },
   thead({ children }) {
-    return <thead className="bg-card text-foreground font-semibold border-b border-border/50">{children}</thead>;
+    return <thead className="bg-card text-foreground font-semibold border-b border-border/50 font-inter">{children}</thead>;
   },
   tbody({ children }) {
-    return <tbody className="divide-y divide-border/20">{children}</tbody>;
+    return <tbody className="divide-y divide-border/20 font-inter">{children}</tbody>;
   },
   tr({ children }) {
-    return <tr className="even:bg-primary/[0.03] hover:bg-primary/[0.06] transition-colors">{children}</tr>;
+    return <tr className="even:bg-primary/[0.03] hover:bg-primary/[0.06] transition-colors font-inter">{children}</tr>;
   },
   th({ children }) {
-    return <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">{children}</th>;
+    return <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground font-inter">{children}</th>;
   },
   td({ children }) {
-    return <td className="px-4 py-2.5 text-foreground/70">{children}</td>;
+    return <td className="px-4 py-2.5 text-foreground/70 font-inter">{children}</td>;
   },
 };
 
 /* ── Main export ─────────────────────────────────────────── */
 export default function MarkdownRenderer({ content }) {
   return (
-    <div className="min-w-0 max-w-[680px] font-inter selection:bg-primary/20 mx-auto">
+    <div className="min-w-0 max-w-[680px] selection:bg-primary/20 mx-auto">
       <ReactMarkdown 
-        remarkPlugins={[remarkGfm]}  // اضافه شود
+        remarkPlugins={[remarkGfm]}
         components={components}
       >
         {content}
