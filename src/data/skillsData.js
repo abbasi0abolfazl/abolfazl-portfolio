@@ -9,61 +9,69 @@ export const skillsData = {
         "Python",
         "Rust",
         "Javascript",
-        "Asyncio"
+        "asyncio",
+        "scikit-learn",
+        "Transformers"
       ]
     },
     {
-      title: "AI/ML & NLP",
+      title: "AI / ML / NLP",
       icon: "Brain",
       skills: [
         "LLMs",
-        "Text Classification",
+        "HuggingFace",
+        "BERT Fine-tuning",
+        "YOLOv8",
+        "RAG",
         "Semantic Search",
         "Prompt Engineering",
-        "Model Evaluation",
-        "Fine-tuning",
-        "RAG"
+        "Model Evaluation"
       ]
     },
     {
       title: "Data Engineering",
       icon: "Database",
       skills: [
+        "MariaDB",
         "MongoDB",
         "Redis",
-        "MariaDB",
-        "Web Scraping",
-        "Data Pipelines",
-        "Data Preprocessing"
-      ]
+        "DuckDB",
+        "ETL Pipelines",
+        "Selenium"
+            ]
     },
     {
       title: "DevOps & Tools",
       icon: "GitBranch",
       skills: [
-        "Git/GitHub",
+        "Git / GitHub",
         "Docker",
         "Linux",
-        "vim"
+        "CI/CD",
+        "Vim"
       ]
     },
     {
-      title: "Computer Vision",
-      icon: "Eye",
-      skills: [
-        "YOLOv8",
-        "OpenCV",
-        "Object Detection",
-        "Chart Pattern Detection"
-      ]
-    },
-    {
-      title: "Quantitative Finance",
+      title: "Frameworks",
       icon: "TrendingUp",
       skills: [
-        "Algorithmic Trading",
-        "MetaTrader EA",
-        "Risk Management",
+        "ChromaDB",
+        "FastAPI",
+        "Streamlit",
+        "LangChain",
+        "LangGraph",
+        "PyQt"
+      ]
+    },
+    {
+      title: "Other",
+      icon: "Eye",
+      skills: [
+        "MetaTrader",
+        "Asterisk / Issabel",
+        "Cloudflare Workers",
+        "Firestore",
+        "Finance Risk Management",
       ]
     }
   ]

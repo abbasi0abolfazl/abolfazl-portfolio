@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Github, ExternalLink, Download, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Github, ExternalLink, CheckCircle2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -106,9 +106,6 @@ export default function ProjectDetail() {
             </a>
           )}
           
-          <Button size="sm" variant="outline" className="border-border/50 text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all duration-200">
-            <Download className="w-4 h-4 mr-1.5" /> {tr('detail_case_study')}
-          </Button>
         </motion.div>
 
         <div className="h-px bg-border/40 mb-10" />

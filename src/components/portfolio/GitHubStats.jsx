@@ -79,10 +79,10 @@ export default function GitHubStats() {
 
   if (isLoading) {
     return (
-      <section className="py-24 px-4">
+      <section className="py-24 px-4" style={{ minHeight: '500px' }}>
         <div className="max-w-4xl mx-auto">
           <SectionHeading title="GitHub Activity" subtitle="My open source contributions and projects" />
-          <div className="p-8 rounded-xl bg-card/50 border border-border/50">
+          <div className="p-8 rounded-xl bg-card/50 border border-border/50" style={{ minHeight: '300px' }}>
             <div className="flex items-center justify-center py-12">
               <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
             </div>
@@ -94,10 +94,10 @@ export default function GitHubStats() {
 
   if (error) {
     return (
-      <section className="py-24 px-4">
+      <section className="py-24 px-4" style={{ minHeight: '500px' }}>
         <div className="max-w-4xl mx-auto">
           <SectionHeading title="GitHub Activity" subtitle="My open source contributions and projects" />
-          <div className="p-8 rounded-xl bg-card/50 border border-border/50">
+          <div className="p-8 rounded-xl bg-card/50 border border-border/50" style={{ minHeight: '300px' }}>
             <div className="text-center py-12">
               <p className="text-muted-foreground">Unable to load GitHub data. Please try again later.</p>
               <button
@@ -114,7 +114,7 @@ export default function GitHubStats() {
   }
 
   return (
-    <section className="py-24 px-4">
+    <section className="py-24 px-4" style={{ minHeight: '500px' }}>
       <div className="max-w-4xl mx-auto">
         <SectionHeading title="GitHub Activity" subtitle="My open source contributions and projects" />
 

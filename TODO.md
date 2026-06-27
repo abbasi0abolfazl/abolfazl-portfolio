@@ -1,46 +1,44 @@
-# TODO — موارد نیازمند بررسی
+# TODO — Items Requiring Review
 
-فهرست کارهایی که در جریان رفع باگ‌ها و به‌روزرسانی محتوا باقی مانده و **تصمیم یا اقدام تو** را لازم دارد.
-
----
-
-## 🔴 قبل از انتشار (Launch blockers)
-
-- [ ] **جایگزینی دامنه:** عبارت `YOUR-DOMAIN.com` را با دامنه‌ی واقعی سایت در این فایل‌ها عوض کن:
-  - `index.html` → متاتگ‌های `og:url`, `og:image`, `twitter:image`
-  - `public/robots.txt` → خط `Sitemap:`
-  - `public/sitemap.xml` → همه‌ی `<loc>`ها
-- [ ] **حذف پست‌های آزمایشی بلاگ:** `src/content/blog/posts/2025-01-01-test-post.md` (محتوای placeholder).
+List of items remaining after bug fixes and content updates that require **your decision or action**.
 
 ---
 
-## 🟠 آیکون و متادیتا (Favicon / OG)
+## 🔴 Before Launch (Launch blockers)
 
-- [ ] **خروجی PNG از og-image:** `public/og-image.svg` ساخته و با تم سایت (آبی/سبز) هماهنگ شد، ولی بعضی پلتفرم‌ها (واتساپ/تلگرام/برخی نسخه‌های قدیمی) SVG را برای پیش‌نمایش لینک رندر نمی‌کنند.
-  - یک `og-image.png` با ابعاد **1200×630** از روی SVG خروجی بگیر و در متاتگ‌های `index.html` جایگزین `.svg` کن.
-- [ ] **آیکون‌های raster:** برای مرورگرهای قدیمی و iOS:
-  - `favicon.ico` (۳۲×۳۲) و `apple-touch-icon.png` (۱۸۰×۱۸۰) از روی `public/favicon.svg` بساز و در `index.html` لینک بده.
-
-> تم استفاده‌شده برای همه‌ی آیکون‌ها: پس‌زمینه `#14161a`، گرادیان آبی `#60a5fa` → سبز `#34d399` (مطابق توکن‌های `src/index.css`).
-
----
-
-## 🟡 محتوا و پروژه‌ها
-
-- [ ] **دکمه‌ی «Download Case Study» مرده است.** در `src/pages/ProjectDetail.jsx:109` این دکمه نه `href` دارد نه `onClick` و برای همه‌ی پروژه‌ها نمایش داده می‌شود.
-  - **یادآوری: case study با پست بلاگ فرق دارد** — case study یک سند/PDF مستقل برای هر پروژه است، نه مقاله‌ی بلاگ.
-  - تصمیم بگیر: (الف) یک فیلد `caseStudy` (لینک/مسیر PDF) به هر پروژه در `projectsData.js` اضافه کن و دکمه را به آن وصل کن، یا (ب) فعلاً دکمه را حذف/مخفی کن تا وقتی سند آماده شود.
-- [ ] **هماهنگی عنوان:** کارت پروژه «Social Media Intelligence Platform» است ولی پست بلاگ «X (Twitter) Crawler Bot». اگر می‌خواهی یکی‌شان کن یا در توضیح پروژه به ارتباطشان اشاره کن.
-- [ ] **اتصال پروژه ↔ بلاگ:** (اختیاری) یک لینک «Read the write-up →» از صفحه‌ی جزئیات پروژه به پست بلاگ مرتبط اضافه شود.
-- [ ] **لینک لینکدین:** `social.linkedin` در `src/data/personalInfo.js` خالی است؛ هر وقت آماده شد پر کن (آیکون خودکار ظاهر می‌شود).
+- [x] **Domain replacement:** `YOUR-DOMAIN.com` replaced with `abolfazlabbasi.com` in:
+  - `index.html` → `og:url`, `og:image`, `twitter:image`
+  - `public/robots.txt` → `Sitemap:` line
+  - `public/sitemap.xml` → all `<loc>` entries
+- [ ] **Remove test blog post:** `src/content/blog/posts/2025-01-01-test-post.md` (placeholder content).
 
 ---
 
-## 🟢 فنی و پاک‌سازی
+## 🟠 Icons & Metadata (Favicon / OG)
 
-- [ ] **بخش GitHub Activity** از بعضی شبکه‌ها (ازجمله شبکه‌ی محلی تو) به `api.github.com` نمی‌رسد (`ERR_TIMED_OUT`). الان با timeout سریع به حالت خطا می‌رود. اگر می‌خواهی همیشه کار کند: آمار را موقع build یک‌بار fetch و استاتیک ذخیره کن یا از proxy رد کن.
-- [ ] **داشبورد/Analytics:** routeهای `/dashboard` و `/analytics` حذف شدند (به بک‌اند Base44 که دیگر نیست وابسته بودند) ولی فایل‌هایشان روی دیسک ماندند. تصمیم بگیر: نگه‌داری برای بعد یا حذف کامل (`src/pages/Dashboard.jsx`, `src/pages/Analytics.jsx`, `src/components/dashboard/*`).
-  - اگر بعداً فعال شد، رمز را در فایل `.env` با کلید `VITE_DASHBOARD_PASSWORD` بگذار (هاردکد نشود).
-- [ ] **i18n دوزبانه:** زیرساخت `LanguageContext`/`i18n.js` آماده است ولی فقط `en` دارد. اگر سایت دوزبانه شد، ترجمه‌ی فارسی + سوییچ زبان + `dir: 'rtl'` اضافه کن.
-- [ ] **حذف دپندنسی بلااستفاده:** پکیج `three` در `package.json` هست ولی هیچ‌جا import نشده → `npm remove three`.
-- [ ] **نام پروژه‌ی محلی:** پوشه‌های `didartalk_analyzer/` و `xbot/` داخل ریپوی پورتفولیو هستند؛ اگر نمی‌خواهی commit شوند به `.gitignore` اضافه‌شان کن.
+- [ ] **Export og-image.png:** `public/og-image.svg` is ready but some platforms (WhatsApp/Telegram/older browsers) don't render SVG for link previews.
+  - Export a `og-image.png` at **1200×630** from the SVG and replace `.svg` in `index.html` meta tags.
+- [ ] **Raster icons:** For older browsers and iOS:
+  - Generate `favicon.ico` (32×32) and `apple-touch-icon.png` (180×180) from `public/favicon.svg` and link them in `index.html`.
+
+> Theme for all icons: background `#14161a`, gradient blue `#60a5fa` → green `#34d399` (matching tokens in `src/index.css`).
+
+---
+
+## 🟡 Content & Projects
+
+- [x] **Dead "Download Case Study" button removed** from `src/pages/ProjectDetail.jsx`.
+- [ ] **Title alignment:** Project card says "Social Media Intelligence Platform" but blog post says "X (Twitter) Crawler Bot". Decide: unify them or add a cross-reference in the project description.
+- [ ] **Project ↔ Blog link:** (Optional) Add a "Read the write-up →" link from a project detail page to the related blog post.
+- [ ] **LinkedIn URL:** `social.linkedin` in `src/data/personalInfo.js` is empty — fill it when ready (the icon will appear automatically).
+
+---
+
+## 🟢 Technical & Cleanup
+
+- [ ] **GitHub Activity section:** Unreachable from some networks (`ERR_TIMED_OUT` on `api.github.com`). Current fix: fast timeout falls back to error state. For a permanent fix: fetch stats once at build time and store them statically, or proxy through your own backend.
+- [ ] **Unused pages:** Routes `/dashboard` and `/analytics` were removed but `src/pages/Dashboard.jsx`, `src/pages/Analytics.jsx`, and `src/components/dashboard/*` files remain on disk. Decide: keep for later or delete entirely.
+  - If re-enabled, store the password in `.env` as `VITE_DASHBOARD_PASSWORD` (never hardcode).
+- [ ] **i18n:** `LanguageContext`/`i18n.js` infrastructure is ready but only `en` is populated. If the site becomes bilingual: add Farsi translations + language switcher + `dir: 'rtl'`.
+- [ ] **Unused dependency:** Package `three` is in `package.json` but never imported → run `npm remove three`.
+- [ ] **Local project folders:** `didartalk_analyzer/` and `xbot/` are inside the portfolio repo. Add them to `.gitignore` if you don't want them committed.

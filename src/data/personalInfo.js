@@ -4,16 +4,17 @@ export const personalInfo = {
   titles: [
     "AI Engineer & NLP Specialist",
     "LLM Systems Developer",
-    "Financial Bot Developer",
-    "Machine Learning Engineer"
+    "Financial AI Developer",
+    "DevOps & Automation Engineer"
   ],
   description: "Building intelligent systems with LLMs, NLP, and Algorithmic Trading",
   email: "a.abbasi5775@gmail.com",
   phone: "+989334441301",
   location: "Iran (Open to Remote)",
+  website: "https://abolfazlabbasi.com",
   social: {
     github: "https://github.com/abbasi0abolfazl",
-    linkedin: "", // TODO: add LinkedIn URL later
+    linkedin: "",
   },
   buttons: {
     viewProjects: {

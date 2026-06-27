@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Replace with your deployed domain
-Sitemap: https://YOUR-DOMAIN.com/sitemap.xml
+Sitemap: https://abolfazlabbasi.com/sitemap.xml
