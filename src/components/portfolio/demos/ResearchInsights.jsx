@@ -44,6 +44,14 @@ const researchHighlights = [
 
 const publications = [
   {
+    title: "Improving Levenshtein Distance with Reinforcement Learning",
+    venue: "Research Publication",
+    year: "2025",
+    status: "Published",
+    url: null,
+    urlText: "Preprint Coming Soon",
+  },
+  {
     title: "Efficient RAG Systems for Low-Resource Languages",
     venue: "AI Journal (In Preparation)",
     year: "2025",

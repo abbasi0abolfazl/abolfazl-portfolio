@@ -333,6 +333,40 @@ token_id = (
 )`,
     lessons: 'Contributing to an SDK forces you to understand the underlying protocol at a deeper level than application-level usage — it is one of the best ways to build foundational knowledge.',
   },
+  {
+    id: 'cafebot',
+    title: 'Cafebot',
+    description: 'Conversational ordering chatbot for coffeeshops.',
+    tags: ['Python', 'LLMs', 'Streamlit'],
+    tech: ['Python', 'LLM'],
+    year: '2025',
+    github: 'https://github.com/abbasi0abolfazl',
+    demo: null,
+    featured: false,
+    color: 'from-amber-500/10 to-yellow-500/10',
+    overview: 'A conversational AI chatbot for coffeeshops that lets customers place orders through natural language interaction, built with LLMs and Streamlit.',
+    role: 'Designed and built the conversational ordering system, integrated LLM for natural language understanding of coffee orders, and deployed the Streamlit interface.',
+    challenge: 'Coffee orders can be complex (customizations, sizes, add-ons) and require the chatbot to understand nuanced natural language while maintaining a clear order state.',
+    solution: 'Used LLM-powered intent parsing to extract order details from free-form text, with a structured state machine to track order progress and confirm items before finalizing.',
+    results: [
+      'Natural language ordering with support for customizations',
+      'Streamlit-based interface for easy deployment',
+      'Modular design adaptable to other food/beverage domains',
+    ],
+    codeSnippet: `# Order intent extraction with LLM
+def parse_order(user_input: str) -> Order:
+    prompt = f"""Extract coffee order from: {user_input}
+    Return: {{drink, size, add_ons, quantity}}"""
+    response = llm.invoke(prompt)
+    return Order.parse(response)
+
+# State machine for order flow
+class OrderState:
+    LISTENING = "listening"
+    CONFIRMING = "confirming"
+    COMPLETED = "completed"`,
+    lessons: 'Conversational ordering works best when the LLM handles the flexible input but a deterministic state machine manages the transaction flow.',
+  },
 ];
 
 // Default export for convenience

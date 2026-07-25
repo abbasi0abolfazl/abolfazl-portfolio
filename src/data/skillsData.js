@@ -3,29 +3,35 @@ export const skillsData = {
   subtitle: "Technologies and tools I work with",
   categories: [
     {
-      title: "Languages & Libraries",
+      title: "Languages",
       icon: "Code",
       skills: [
         "Python",
         "Rust",
-        "Javascript",
-        "asyncio",
-        "scikit-learn",
-        "Transformers"
+        "JavaScript",
       ]
     },
     {
-      title: "AI / ML / NLP",
+      title: "NLP & LLMs",
       icon: "Brain",
       skills: [
-        "LLMs",
-        "HuggingFace",
+        "HuggingFace Transformers",
         "BERT Fine-tuning",
-        "YOLOv8",
         "RAG",
-        "Semantic Search",
+        "ChromaDB",
+        "LangChain",
+        "LangGraph",
         "Prompt Engineering",
-        "Model Evaluation"
+      ]
+    },
+    {
+      title: "Computer Vision",
+      icon: "Eye",
+      skills: [
+        "YOLO",
+        "OpenCV",
+        "Object Detection",
+        "Dataset Annotation",
       ]
     },
     {
@@ -37,41 +43,43 @@ export const skillsData = {
         "Redis",
         "DuckDB",
         "ETL Pipelines",
-        "Selenium"
-            ]
+        "Web Scraping (Selenium, BeautifulSoup)",
+      ]
     },
     {
-      title: "DevOps & Tools",
+      title: "DevOps & Tools & Cloud",
       icon: "GitBranch",
       skills: [
-        "Git / GitHub",
+        "Git",
         "Docker",
         "Linux",
-        "CI/CD",
-        "Vim"
+        "GitLab CI/CD",
+        "Nextcloud",
+        "Cloudflare Workers",
+        "Firestore",
       ]
     },
     {
       title: "Frameworks",
       icon: "TrendingUp",
       skills: [
-        "ChromaDB",
         "FastAPI",
+        "Flask",
         "Streamlit",
+        "Gradio",
         "LangChain",
+        "PyQt",
         "LangGraph",
-        "PyQt"
       ]
     },
     {
-      title: "Other",
-      icon: "Eye",
+      title: "Domain Knowledge",
+      icon: "Globe",
       skills: [
+        "Algorithmic Trading",
         "MetaTrader",
-        "Asterisk / Issabel",
-        "Cloudflare Workers",
-        "Firestore",
-        "Finance Risk Management",
+        "VoIP (Asterisk / Issabel)",
+        "Forex Analytics",
       ]
     }
   ]

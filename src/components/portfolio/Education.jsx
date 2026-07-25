@@ -10,7 +10,7 @@ const education = [
     period: '2024 – Present',
   },
   {
-    degree: 'Associate Software Engineering',
+    degree: 'A.S. Software Engineering',
     school: 'Technical Vocational College of Qom',
     period: '2022 – 2024',
   },

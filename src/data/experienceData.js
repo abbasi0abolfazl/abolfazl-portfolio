@@ -8,22 +8,21 @@ export const experienceData = {
         period: "Oct 2025 – Present",
         type: "Full-time",
         achievements: [
-          "Built an image search system with a custom REST API for fast visual product retrieval",
-          "Developed a RAG chatbot assistant for Sepidar accounting software, reducing support queries",
-          "Engineered a Telegram & Bale customer-support bot for real-time order management",
-          "Designed an Asterisk/Issabel VoIP pipeline: call routing → STT → summarization & intent classification",
-          "Deployed Nextcloud with Farsi/Jalali localization; configured GitLab CI/CD pipelines"
+          "Built an image search system with a REST API, enabling fast visual content retrieval across the product catalog.",
+          "Developed a RAG chatbot assistant for Sepidar accounting software, reducing user support queries.",
+          "Engineered a Telegram & Bale customer-support bot handling order management and product FAQs in real time.",
+          "Designed an Asterisk/Issabel VoIP pipeline: inbound call routing → speech-to-text → automated summarization, sentiment analysis, and intent classification.",
+          "Deployed and localized Nextcloud (Farsi/Jalali calendar); configured GitLab and end-to-end CI/CD pipelines; automated build and deployment workflows."
         ]
       },
       {
       "company": "Ultruffle",
       "role": "AI & Automation Developer",
       "period": "Nov 2024 – Apr 2025",
-      "type": "Freelance",
+      "type": "Contract",
       "achievements": [
-        "Developed a real-time AI voice agent integrating live ASR, LLM inference, and TTS",
-        "Engineered an import/export analytics platform with event-driven crawler and 3-layer ETL pipeline",
-        "Designed an interactive 6-panel BI dashboard with Admin REST API, enabling real-time certificate management and data-driven decision intelligence"
+        "Developed a real-time AI voice agent for phone-based sales and customer support, integrating live ASR, LLM inference, and TTS.",
+        "Built an import/export analytics platform with an event-driven crawler, 3-layer ETL pipeline, dashboard, and Admin API for realtime management."
       ]
     },
       {
@@ -32,30 +31,38 @@ export const experienceData = {
         period: "Jul 2023 – Apr 2025",
         type: "Full-time",
         achievements: [
-          "Redesigned social media scraping system into modular architecture covering X, Facebook, Instagram",
-          "Fine-tuned BERT for multi-label emotion classification (8 emotions, 3 polarities) with human-in-the-loop retraining",
-          "Architected a Persian legal-assistant chatbot using RAG + ChromaDB + few-/zero-shot prompting"
+          "Redesigned a social media scraping system into a modular, scalable architecture covering X (Twitter), Facebook, and Instagram.",
+          "Fine-tuned a BERT-based model for multi-label emotion classification (8 emotions, 3 polarities); implemented human-in-the-loop retraining cycle with senior analyst feedback.",
+          "Architected a Persian legal-assistant chatbot using RAG + ChromaDB vector search + few-/zero-shot prompting; deployed production interfaces via Streamlit and Gradio with Docker."
         ]
       },
       {
         company: "FintechPlus",
         role: "AI & Quantitative Trading Developer",
         period: "2023 – 2024",
-        type: "Freelance",
+        type: "Contract",
         achievements: [
-          "Fine-tuned YOLOv8 on custom candlestick chart dataset achieving 97% pattern detection accuracy",
-          "Engineered automated Forex bot with RSI divergence, adaptive lot sizing, and trailing stops",
-          "Built Redis-cached real-time news suspension system to pause trading during high-impact events"
+          "Created a custom-labeled candlestick chart dataset and fine-tuned YOLOv8 for technical pattern detection, achieving 97% accuracy; integrated detections into a live trading pipeline.",
+          "Engineered an automated Forex trading bot incorporating RSI divergence, price-action strategies, adaptive lot sizing, trailing stops, and Redis-cached real-time news suspension."
         ]
       },
       {
         company: "MaralBranding",
         role: "AI & Automation Developer",
         period: "2023 – 2024",
-        type: "Freelance",
+        type: "Contract",
         achievements: [
-          "Built RAG-powered e-commerce chatbot integrating product catalog with semantic search",
-          "Developed PyQt5 desktop app for extracting structured business data from Balad.ir for non-technical sales teams"
+          "Built a RAG-powered e-commerce chatbot integrating product catalog data with semantic search for context-aware customer support.",
+          "Developed a PyQt5 desktop application for extracting, filtering, and exporting structured business data from Balad.ir, targeting non-technical sales teams."
+        ]
+      },
+      {
+        company: "Secondary School",
+        role: "Python & Computer Science Instructor",
+        period: "Oct 2025 – May 2026",
+        type: "Part-time",
+        achievements: [
+          "Designed and delivered a year-long Python programming curriculum for students aged 16–17, covering fundamentals to applied problem-solving."
         ]
       }
     ]
