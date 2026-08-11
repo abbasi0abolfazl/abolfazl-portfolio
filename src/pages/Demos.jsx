@@ -1,9 +1,8 @@
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { MessageSquare, TrendingUp, Eye, Code } from 'lucide-react';
+import { MessageSquare, TrendingUp, Code } from 'lucide-react';
 import ChatbotDemo from '../components/portfolio/demos/ChatbotDemo';
 import TradingDemo from '../components/portfolio/demos/TradingDemo';
-import YoloDemo from '../components/portfolio/demos/YoloDemo';
 import CodeViewer from '../components/portfolio/demos/CodeViewer';
 import AnimatedSection from '../components/portfolio/AnimatedSection';
 import SectionHeading from '../components/portfolio/SectionHeading';
@@ -11,7 +10,6 @@ import SectionHeading from '../components/portfolio/SectionHeading';
 const demos = [
   { id: 'chatbot', label: 'Chatbot', icon: MessageSquare, component: ChatbotDemo },
   { id: 'trading', label: 'Trading Bot', icon: TrendingUp, component: TradingDemo },
-  { id: 'yolo', label: 'YOLO Detector', icon: Eye, component: YoloDemo },
   { id: 'code', label: 'Code Snippets', icon: Code, component: CodeViewer },
 ];
 

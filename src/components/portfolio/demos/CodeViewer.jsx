@@ -63,19 +63,19 @@ class ForexBot:
         # Execute order...`,
   },
   yolo: {
-    label: 'YOLOv8 Detection',
+    label: 'Pretrained YOLOv8 Inference',
     language: 'python',
-    code: `from ultralytics import YOLO
+    code: `from ultralyticsplus import YOLO
 import cv2
 
-# Load trained model
-model = YOLO("chart_patterns_v8.pt")
+# Load the public pretrained model used by the experiment
+model = YOLO("foduucom/stockmarket-pattern-detection-yolov8")
 
 def detect_patterns(image_path):
     """Detect chart patterns in financial charts"""
     results = model.predict(
         source=image_path,
-        conf=0.75,
+        conf=0.25,
         iou=0.45
     )
     

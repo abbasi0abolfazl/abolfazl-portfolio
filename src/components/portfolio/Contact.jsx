@@ -97,8 +97,12 @@ export default function Contact() {
 
           {/* Contact Form */}
           <AnimatedSection delay={0.1}>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" aria-label="Contact form">
               <Input
+                name="name"
+                aria-label="Your name"
+                autoComplete="name"
+                required
                 placeholder="Your Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -106,12 +110,19 @@ export default function Contact() {
               />
               <Input
                 type="email"
+                name="email"
+                aria-label="Your email"
+                autoComplete="email"
+                required
                 placeholder="Your Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="bg-card/50 border-border/50 focus:border-primary/50 h-12"
               />
               <Textarea
+                name="message"
+                aria-label="Your message"
+                required
                 placeholder="Your Message"
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
