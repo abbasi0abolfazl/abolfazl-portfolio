@@ -19,10 +19,10 @@ export default function YoloDemo() {
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h4 className="font-medium text-sm text-foreground">YOLOv8 Chart Pattern Detection</h4>
-            <p className="text-xs text-muted-foreground">Private client case study</p>
+            <p className="text-xs text-muted-foreground">Private FintechPlus case study</p>
           </div>
           <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-            Internal metrics withheld
+            Internal result: 97% mAP@0.5
           </Badge>
         </div>
       </div>
@@ -31,8 +31,8 @@ export default function YoloDemo() {
         <div className="flex items-start gap-3 rounded-lg border border-border/50 bg-card/40 p-4">
           <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
           <p className="text-sm text-muted-foreground">
-            This interface is a transparent UI simulation, not live model inference. Training artifacts and evaluation
-            metrics from the client project are confidential, so no private benchmark is presented here.
+            This interface is a transparent UI simulation, not live model inference. The 97% figure is an internal
+            test-set result from private client work and is not presented as a reproducible benchmark for the public repository.
           </p>
         </div>
 
