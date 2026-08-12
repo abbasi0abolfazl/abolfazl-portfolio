@@ -4,7 +4,6 @@ import { Github, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';
 import { projects } from '@/data/projectsData';
 import { useLang } from '@/lib/LanguageContext';
@@ -58,15 +57,17 @@ export default function Projects() {
                   <div className="flex gap-2 flex-wrap items-center">
                     <div className="flex gap-2">
                       {/* دکمه GitHub Repository */}
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="border-border/50 text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all duration-200 text-xs h-7 px-2.5"
-                        >
-                          <Github className="w-3.5 h-3.5 mr-1" /> {tr('projects_code')}
-                        </Button>
-                      </a>
+                      {project.github && (
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-border/50 text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all duration-200 text-xs h-7 px-2.5"
+                          >
+                            <Github className="w-3.5 h-3.5 mr-1" /> {tr('projects_code')}
+                          </Button>
+                        </a>
+                      )}
                       
                       {/* دکمه View Details */}
                       <Link to={`/projects/${project.id}`}>

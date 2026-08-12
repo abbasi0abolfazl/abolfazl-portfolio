@@ -1,81 +1,73 @@
 import React, { useState } from 'react';
-import { Upload, Eye, BarChart3 } from 'lucide-react';
+import { Eye, BarChart3, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 
-const mockDetections = [
-  { pattern: 'Head and Shoulders', confidence: 97.2, color: 'text-green-400' },
-  { pattern: 'Double Top', confidence: 89.5, color: 'text-blue-400' },
-  { pattern: 'Triangle', confidence: 72.1, color: 'text-amber-400' },
+const sampleDetections = [
+  { pattern: 'Head and Shoulders', confidence: 93, color: 'text-green-400' },
+  { pattern: 'Double Top', confidence: 86, color: 'text-blue-400' },
+  { pattern: 'Triangle', confidence: 74, color: 'text-amber-400' },
 ];
 
 export default function YoloDemo() {
-  const [analyzing, setAnalyzing] = useState(false);
-  const [results, setResults] = useState(null);
-
-  const handleAnalyze = () => {
-    setAnalyzing(true);
-    setResults(null);
-    setTimeout(() => {
-      setResults(mockDetections);
-      setAnalyzing(false);
-    }, 2000);
-  };
+  const [showSample, setShowSample] = useState(false);
 
   return (
     <div className="rounded-xl bg-background/80 border border-border/50 overflow-hidden">
       <div className="px-4 py-3 border-b border-border/50 bg-card/50">
-        <h4 className="font-medium text-sm text-foreground">YOLOv8 Chart Pattern Detector</h4>
-        <p className="text-xs text-muted-foreground">97% accuracy on financial charts</p>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h4 className="font-medium text-sm text-foreground">YOLOv8 Chart Pattern Detection</h4>
+            <p className="text-xs text-muted-foreground">Private FintechPlus case study</p>
+          </div>
+          <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+            Internal result: 97% mAP@0.5
+          </Badge>
+        </div>
       </div>
 
-      <div className="p-6">
-        {/* Upload Area */}
-        <div className="border-2 border-dashed border-border/50 rounded-xl p-8 text-center mb-4 hover:border-primary/30 transition-colors">
-          <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
-          <p className="text-sm text-muted-foreground mb-1">Upload a chart image for analysis</p>
-          <p className="text-xs text-muted-foreground">PNG, JPG up to 5MB</p>
+      <div className="p-6 space-y-4">
+        <div className="flex items-start gap-3 rounded-lg border border-border/50 bg-card/40 p-4">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+          <p className="text-sm text-muted-foreground">
+            This interface is a transparent UI simulation, not live model inference. The 97% figure is an internal
+            test-set result from private client work and is not presented as a reproducible benchmark for the public repository.
+          </p>
         </div>
 
         <Button
-          onClick={handleAnalyze}
-          disabled={analyzing}
-          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mb-4"
+          onClick={() => setShowSample((value) => !value)}
+          className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
         >
-          {analyzing ? (
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-              Analyzing...
-            </div>
-          ) : (
-            <>
-              <Eye className="w-4 h-4 mr-2" />
-              Run Demo Analysis
-            </>
-          )}
+          <Eye className="w-4 h-4 mr-2" />
+          {showSample ? 'Hide Sample Output' : 'View Sample Output'}
         </Button>
 
-        {/* Results */}
-        {results && (
+        {showSample && (
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-sm font-medium text-foreground">
               <BarChart3 className="w-4 h-4 text-primary" />
-              Detected Patterns
+              Illustrative detections
             </div>
-            {results.map((det) => (
-              <div key={det.pattern} className="p-3 rounded-lg bg-card/50 border border-border/30">
+            {sampleDetections.map((detection) => (
+              <div key={detection.pattern} className="p-3 rounded-lg bg-card/50 border border-border/30">
                 <div className="flex items-center justify-between mb-2">
-                  <span className={`text-sm font-medium ${det.color}`}>{det.pattern}</span>
+                  <span className={`text-sm font-medium ${detection.color}`}>{detection.pattern}</span>
                   <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-xs">
-                    {det.confidence}%
+                    Sample {detection.confidence}%
                   </Badge>
                 </div>
-                <Progress value={det.confidence} className="h-1.5" />
+                <Progress value={detection.confidence} className="h-1.5" />
               </div>
             ))}
           </div>
         )}
+
+        <p className="text-xs text-muted-foreground">
+          The linked public project is a separate experiment that uses the public
+          {' '}<code>foduucom/stockmarket-pattern-detection-yolov8</code> pretrained model.
+        </p>
       </div>
     </div>
   );

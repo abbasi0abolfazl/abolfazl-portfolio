@@ -3,8 +3,8 @@ import { Github, Mail, Linkedin, Heart } from 'lucide-react';
 
 const socialLinks = [
   { icon: Github, href: 'https://github.com/abbasi0abolfazl', label: 'GitHub' },
-  { icon: Mail, href: 'mailto:a.abbasi5775@gmail.com', label: 'Email' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
+  { icon: Mail, href: 'mailto:contact@abolfazlabbasi.com', label: 'Email' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/abolfazl-abbasi-35886a1aa/', label: 'LinkedIn' },
 ];
 
 export default function Footer() {
