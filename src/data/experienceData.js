@@ -42,7 +42,7 @@ export const experienceData = {
         period: "2023 – 2024",
         type: "Contract",
         achievements: [
-          "Created a custom-labeled candlestick chart dataset and fine-tuned YOLOv8 for technical pattern detection, achieving 97% accuracy; integrated detections into a live trading pipeline.",
+          "Built an experimental chart-pattern inference pipeline that generates candlestick images from OHLC data and applies a pretrained YOLOv8 model.",
           "Engineered an automated Forex trading bot incorporating RSI divergence, price-action strategies, adaptive lot sizing, trailing stops, and Redis-cached real-time news suspension."
         ]
       },

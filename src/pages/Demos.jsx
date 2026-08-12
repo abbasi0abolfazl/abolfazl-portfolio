@@ -11,7 +11,7 @@ import SectionHeading from '../components/portfolio/SectionHeading';
 const demos = [
   { id: 'chatbot', label: 'Chatbot', icon: MessageSquare, component: ChatbotDemo },
   { id: 'trading', label: 'Trading Bot', icon: TrendingUp, component: TradingDemo },
-  { id: 'yolo', label: 'YOLO Detector', icon: Eye, component: YoloDemo },
+  { id: 'yolo', label: 'YOLO Case Study', icon: Eye, component: YoloDemo },
   { id: 'code', label: 'Code Snippets', icon: Code, component: CodeViewer },
 ];
 
