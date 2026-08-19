@@ -4,8 +4,7 @@ export const personalInfo = {
   titles: [
     "AI Systems Engineer & Quant Developer",
     "LLM Systems Developer",
-    "Quantitative Systems Developer",
-    "DevOps & Automation Engineer"
+    "Quantitative Systems Developer"
   ],
   description: "Building production LLM/RAG systems and quantitative market intelligence",
   email: "contact@abolfazlabbasi.com",

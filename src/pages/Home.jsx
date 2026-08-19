@@ -8,10 +8,13 @@ import Demos from '../components/portfolio/Demos';
 import GitHubStats from '../components/portfolio/GitHubStats';
 import Education from '../components/portfolio/Education';
 import Contact from '../components/portfolio/Contact';
+import Seo from '../components/Seo';
+import { homeSeo } from '@/lib/seoData';
 
 export default function Home() {
   return (
     <main>
+      <Seo metadata={homeSeo()} />
       <Hero />
       <About />
       <Skills />

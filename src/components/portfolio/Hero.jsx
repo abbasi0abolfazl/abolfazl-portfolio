@@ -87,9 +87,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground mb-4 tracking-tight"
+            className="font-bold text-foreground mb-4 tracking-tight"
           >
-            {firstName}
+            <span className="block text-4xl sm:text-5xl md:text-7xl">{firstName}</span>
+            <span className="block text-3xl sm:text-4xl md:text-6xl text-foreground/80 mt-4">{lastName}</span>
+            <span className="sr-only"> — AI Systems Engineer &amp; Quant Developer</span>
           </motion.h1>
 
           <div className="h-10 mb-4">
@@ -98,15 +100,6 @@ export default function Hero() {
               <span className="animate-pulse">|</span>
             </span>
           </div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground/80 mb-6 tracking-tight"
-          >
-            {lastName}
-          </motion.h2>
 
           <motion.p
             initial={{ opacity: 0 }}

@@ -7,6 +7,8 @@ import AnimatedSection from '../components/portfolio/AnimatedSection';
 import { SkeletonBlogCard } from '../components/portfolio/SkeletonCard';
 import { getAllPosts, getReadingTime } from '@/lib/blogUtils';
 import { useDebounce } from '@/hooks/useDebounce';
+import Seo from '@/components/Seo';
+import { blogIndexSeo } from '@/lib/seoData';
 
 function highlight(text, term) {
   if (!term || !text) return text;
@@ -72,6 +74,7 @@ export default function Blog() {
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
+      <Seo metadata={blogIndexSeo()} />
       <div className="max-w-4xl mx-auto">
         {/* عنوان Blog با فونت Inter (standard) */}
         <div className="text-center mb-12">
