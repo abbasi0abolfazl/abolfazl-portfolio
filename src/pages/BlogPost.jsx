@@ -9,6 +9,8 @@ import TableOfContents from '../components/portfolio/blog/TableOfContents';
 import MarkdownRenderer from '../components/portfolio/blog/MarkdownRenderer';
 import { getPostBySlug, getReadingTime } from '@/lib/blogUtils';
 import { useLang } from '@/lib/LanguageContext';
+import Seo from '@/components/Seo';
+import { blogIndexSeo, postSeo } from '@/lib/seoData';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -30,6 +32,7 @@ export default function BlogPost() {
   if (isLoading) {
     return (
       <main className="pt-24 pb-16 px-4 min-h-screen">
+        <Seo metadata={blogIndexSeo()} />
         <div className="max-w-3xl mx-auto animate-pulse space-y-4">
           <div className="h-4 w-20 shimmer rounded" />
           <div className="h-8 w-4/5 shimmer rounded" />
@@ -48,6 +51,7 @@ export default function BlogPost() {
   if (!post) {
     return (
       <main className="pt-24 pb-16 px-4 min-h-screen flex items-center justify-center">
+        <Seo metadata={blogIndexSeo()} />
         <div className="text-center">
           <h1 className="text-2xl font-bold text-foreground mb-2">Post Not Found</h1>
           <p className="text-muted-foreground mb-6">The blog post you're looking for doesn't exist.</p>
@@ -63,6 +67,7 @@ export default function BlogPost() {
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
+      <Seo metadata={postSeo(post)} />
       <ReadingProgressBar />
 
       <div className="max-w-6xl mx-auto">

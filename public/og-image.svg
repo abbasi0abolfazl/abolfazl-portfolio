@@ -12,7 +12,7 @@
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect x="0" y="0" width="1200" height="8" fill="url(#accent)"/>
   <text x="80" y="300" font-family="Inter, Segoe UI, sans-serif" font-size="84" font-weight="800" fill="#dce1e8">Abolfazl Abbasi</text>
-  <text x="80" y="380" font-family="Inter, Segoe UI, sans-serif" font-size="44" font-weight="600" fill="url(#accent)">AI Engineer &amp; NLP Specialist</text>
-  <text x="80" y="450" font-family="Inter, Segoe UI, sans-serif" font-size="30" fill="#94a3b8">Building intelligent systems with LLMs, NLP &amp; Algorithmic Trading</text>
+  <text x="80" y="380" font-family="Inter, Segoe UI, sans-serif" font-size="44" font-weight="600" fill="url(#accent)">AI Systems Engineer &amp; Quant Developer</text>
+  <text x="80" y="450" font-family="Inter, Segoe UI, sans-serif" font-size="30" fill="#94a3b8">Production LLM/RAG systems and quantitative market intelligence</text>
   <text x="80" y="560" font-family="Inter, Segoe UI, sans-serif" font-size="26" fill="#64748b">github.com/abbasi0abolfazl</text>
 </svg>

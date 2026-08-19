@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Github, ExternalLink, CheckCircle2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { projects } from '@/data/projectsData';
 import { useLang } from '@/lib/LanguageContext';
+import Seo from '@/components/Seo';
+import { homeSeo, projectSeo } from '@/lib/seoData';
 
 function Section({ title, children }) {
   return (
@@ -47,6 +49,7 @@ export default function ProjectDetail() {
   if (!project) {
     return (
       <main className="pt-24 pb-16 px-4 min-h-screen flex items-center justify-center">
+        <Seo metadata={homeSeo()} />
         <div className="text-center">
           <h1 className="text-2xl font-bold text-foreground mb-2">Project Not Found</h1>
           <button onClick={handleBackToProjects} className="text-primary hover:underline flex items-center justify-center gap-2 mt-4">
@@ -59,6 +62,7 @@ export default function ProjectDetail() {
 
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
+      <Seo metadata={projectSeo(project)} />
       <div className="max-w-3xl mx-auto">
         {/* Back button */}
         <button

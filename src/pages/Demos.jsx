@@ -7,6 +7,8 @@ import YoloDemo from '../components/portfolio/demos/YoloDemo';
 import CodeViewer from '../components/portfolio/demos/CodeViewer';
 import AnimatedSection from '../components/portfolio/AnimatedSection';
 import SectionHeading from '../components/portfolio/SectionHeading';
+import Seo from '@/components/Seo';
+import { demosSeo } from '@/lib/seoData';
 
 const demos = [
   { id: 'chatbot', label: 'Chatbot', icon: MessageSquare, component: ChatbotDemo },
@@ -18,6 +20,7 @@ const demos = [
 export default function Demos() {
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
+      <Seo metadata={demosSeo()} />
       <div className="max-w-4xl mx-auto">
         <SectionHeading
           title="Project Demos"
