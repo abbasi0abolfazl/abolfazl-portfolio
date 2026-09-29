@@ -1,7 +1,39 @@
-export const techFilters = ["Python", "NLP", "Computer Vision", "Trading", "RAG", "LLM"];
-export const yearFilters = ["2023", "2024", "2025"];
+export const techFilters = ["Python", "NLP", "Computer Vision", "Trading", "RAG", "LLM", "Speech & Audio"];
+export const yearFilters = ["2023", "2024", "2025", "2026"];
 
 export const projects = [
+  {
+    id: 'ai-dubbing-studio',
+    title: 'AI Dubbing Studio (Autonomous Localization)',
+    description: 'An enterprise-grade, on-premise AI video dubbing suite that converts foreign speech to synchronized Persian audio in under 3 minutes. Features Faster-Whisper VAD segmentation, neural voice synthesis, dynamic Rubberband acoustic time-stretching, background music ducking, and subpath reverse proxy deployment.',
+    tags: ['Python', 'Faster-Whisper', 'Neural TTS', 'FFmpeg', 'React 18', 'Docker', 'Waitress', 'Nginx/Apache'],
+    tech: ['Python', 'NLP', 'LLM', 'Speech & Audio'],
+    year: '2026',
+    github: 'https://github.com/abbasi0abolfazl/ai-dubbing-studio',
+    demo: 'https://demo.arnikaware.com/studio',
+    featured: true,
+    color: 'from-indigo-500/10 to-violet-500/10',
+    overview: 'A complete on-premise AI localization suite that eliminates external API dependencies and costly per-minute cloud bills. The system performs automated millisecond-accurate speech extraction, chunked translation, character-based neural TTS synthesis, acoustic time-stretching (Rubberband), and audio ducking, delivered through an interactive browser-based NLE waveform editor with live SSE progress tracking.',
+    role: 'Sole Architect & Lead Engineer. Designed the distributed async processing pipeline, integrated Faster-Whisper with CUDA/fp16 and CTranslate2, engineered the FFmpeg multi-filter audio ducking engine, created the React waveform timeline editor, and implemented enterprise reverse proxy subpath routing with automated zero-downtime Docker CI/CD deployment.',
+    challenge: 'Three major engineering bottlenecks: 1) Synchronization drift between translated Persian speech and original English pacing, 2) Maintaining real-time feedback and video previews without GPU locking, and 3) Seamless enterprise reverse proxy deployment under a unified subpath (/studio) behind Nginx/Apache without breaking SPA routing, assets, or SSE streams.',
+    solution: 'Implemented acoustic speech rate matching with FFmpeg rubberband time-stretching and dynamic music ducking. Engineered background threading with atomic project storage and Server-Sent Events (SSE) for zero-latency progress streaming. Wrapped the WSGI layer with DispatcherMiddleware and ProxyFix, paired with dynamic Vite base routing to ensure zero-configuration subpath operation.',
+    results: [
+      'Reduced end-to-end video dubbing turnaround from 2 weeks to under 3 minutes',
+      '100% on-premise execution with zero external API fees or data leakage risk',
+      'Sub-second real-time progress streaming over Server-Sent Events',
+      'Seamless subpath routing and automated zero-downtime Docker CI/CD deployment',
+    ],
+    codeSnippet: `# WSGI Subpath Dispatcher & ProxyFix Integration:
+# Seamlessly serves root and /studio requests under enterprise reverse proxy
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+    "/studio": app.wsgi_app
+})
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)`,
+    lessons: 'In speech-to-speech pipelines, natural rhythm matters more than raw word-for-word accuracy — dynamic acoustic time-stretching combined with background audio ducking transforms synthetic dubbing into professional broadcast quality. Furthermore, architecting web applications with dynamic subpath routing from day one eliminates massive proxy integration friction.',
+  },
   {
     id: 'social-media-intelligence-platform',
     title: 'Social Media Intelligence Platform',
