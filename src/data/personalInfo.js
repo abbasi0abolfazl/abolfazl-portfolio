@@ -13,7 +13,7 @@ export const personalInfo = {
   website: "https://abolfazlabbasi.com",
   social: {
     github: "https://github.com/abbasi0abolfazl",
-    linkedin: "https://www.linkedin.com/in/abolfazl-abbasi-35886a1aa/",
+    linkedin: "https://www.linkedin.com/in/abbasi-abolfazl/",
   },
   buttons: {
     viewProjects: {
