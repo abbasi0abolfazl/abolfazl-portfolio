@@ -102,41 +102,6 @@ def predict_emotion(text):
     lessons: 'Data quality matters more than model size. Spending time on label consistency improved results more than scaling up the model.',
   },
   {
-    id: 'legal-reasoning-chatbot',
-    title: 'Legal Reasoning Chatbot',
-    description: 'Persian legal document assistant using RAG architecture with ChromaDB vector search, few-/zero-shot prompting, and Streamlit/Gradio production interfaces.',
-    tags: ['RAG', 'ChromaDB', 'LangChain', 'Streamlit', 'Docker'],
-    tech: ['Python', 'NLP', 'RAG', 'LLM'],
-    year: '2024',
-    github: null,
-    demo: null,
-    featured: true,
-    color: 'from-green-500/10 to-emerald-500/10',
-    overview: 'A Retrieval-Augmented Generation chatbot for Persian legal documents deployed in production via Streamlit and Gradio with Docker. Answers user queries by retrieving and reasoning over relevant legal articles.',
-    role: 'I built the document ingestion pipeline, designed the chunking strategy for legal texts, integrated ChromaDB for vector storage, and built the LangChain reasoning chain with few-/zero-shot prompting.',
-    challenge: 'Legal documents have complex hierarchical structures and cross-references. Simple chunking strategies lose context critical for accurate legal reasoning.',
-    solution: 'Implemented structure-aware chunking that preserves article hierarchy, with a hybrid retrieval approach combining dense and sparse search, and few-/zero-shot prompting for improved reasoning.',
-    results: [
-      'Retrieved relevant articles with 92% precision@5',
-      'Reduced hallucination rate by 60% vs. vanilla LLM',
-      'Deployed via Streamlit and Gradio with Docker in production',
-    ],
-    codeSnippet: `from langchain.vectorstores import Chroma
-from langchain.embeddings import HuggingFaceEmbeddings
-
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
-)
-vectorstore = Chroma.from_documents(
-    documents=chunks,
-    embedding=embeddings,
-    persist_directory="./legal_db"
-)
-
-retriever = vectorstore.as_retriever(search_kwargs={"k": 5})`,
-    lessons: 'Domain-specific chunking strategies are as important as model selection. Legal text requires understanding document structure before splitting.',
-  },
-  {
     id: 'chart-pattern-detector',
     title: 'Chart Pattern Detection Experiment',
     description: 'A reproducible proof of concept that generates candlestick images from OHLC data and applies a public pretrained YOLOv8 model to identify chart patterns.',
@@ -145,7 +110,7 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 5})`,
     year: '2024',
     github: 'https://github.com/abbasi0abolfazl/stock-market-pattern-detection',
     demo: null,
-    featured: true,
+    featured: false,
     color: 'from-amber-500/10 to-orange-500/10',
     overview: 'An experimental computer-vision pipeline that converts historical OHLC data into candlestick images, filters discontinuous time windows, and runs inference with the public foduucom/stockmarket-pattern-detection-yolov8 model.',
     role: 'I built the data preprocessing, multi-window chart generation, inference orchestration, and annotated-output workflow around the pretrained model.',
@@ -201,33 +166,27 @@ detections = model(chart_image)`,
   },
   {
     id: 'fxbrain',
-    title: 'FXBrain',
-    description: 'AI-powered financial market platform with trading signals, technical/fundamental analysis, smart volatility alerts, backtesting engine, and personalized dashboards.',
-    tags: ['Python', 'LLMs', 'REST API', 'PostgreSQL', 'Redis'],
-    tech: ['Python', 'Trading', 'LLM'],
+    title: 'FXBrain — Financial AI MVP',
+    description: 'An early-stage MVP for an AI-assisted Forex analysis platform, exploring product workflows for market analysis, trading signals, alerts, and decision-support tools.',
+    tags: ['Financial AI', 'Forex', 'Product MVP'],
+    tech: ['Trading', 'LLM'],
     year: '2025',
     github: 'https://github.com/abbasi0abolfazl/FXBrain',
     demo: null,
     featured: true,
     color: 'from-yellow-500/10 to-amber-500/10',
-    overview: 'A comprehensive AI-powered financial market platform combining LLM-driven analysis with quantitative trading signals, real-time volatility alerts, a backtesting engine, and personalized dashboards.',
-    role: 'Designed and built the full platform: LLM integration for market analysis, trading signal generation pipeline, backtesting engine, and the REST API backend.',
-    challenge: 'Financial markets require low-latency signal delivery combined with high-quality LLM analysis — balancing speed with depth of reasoning.',
-    solution: 'Separated signal generation (fast, rule-based) from LLM analysis (async, queued) and cached intermediate results in Redis to deliver both speed and quality.',
+    overview: 'FXBrain is currently an MVP focused on product design, user workflows, and validating the concept of an AI-assisted Forex analysis platform. The production data, trading, and AI backend are not implemented yet.',
+    role: 'Designed the initial product concept, interface, and workflow for combining market data, analysis, and AI-assisted decision support.',
+    challenge: 'The current challenge is validating which market-analysis and decision-support workflows are useful before investing in a production backend and AI pipeline.',
+    solution: 'Built the MVP around the product experience first, using it to define core use cases, user flows, and the boundaries of future data, trading, and AI components.',
     results: [
-      'Real-time trading signals with sub-second latency',
-      'Backtesting engine covering multiple strategies and timeframes',
-      'Personalized dashboards adapting to each user risk profile',
+      'Initial MVP and product workflow designed',
+      'Core use cases for market analysis and trading support defined',
+      'Backend and AI architecture remain future work',
     ],
-    codeSnippet: `# Signal pipeline: fast rule-based layer + async LLM analysis
-async def generate_signal(symbol: str) -> Signal:
-    technical = compute_technical_indicators(symbol)
-    if technical.confidence > THRESHOLD:
-        return Signal(source="technical", **technical)
-    # Enqueue LLM analysis for deeper reasoning
-    await llm_queue.put({"symbol": symbol, "context": technical})
-    return Signal(source="pending", symbol=symbol)`,
-    lessons: 'Separating fast rule-based signals from slow LLM analysis and combining them asynchronously gives the best of both worlds for financial applications.',
+    codeSnippet: `// Current status: product MVP
+// Production trading, data, and AI backend are not implemented yet.`,
+    lessons: 'Validating product workflows before building a complex backend reduces the risk of engineering features that do not solve the right problem.',
   },
   {
     id: 'interactive-cv-agent',
@@ -319,43 +278,6 @@ export default {
   }
 }`,
     lessons: 'Async job patterns are essential for LLM workloads on serverless platforms — never make the user wait synchronously for a 10-second LLM call.',
-  },
-  {
-    id: 'hiero-sdk-python',
-    title: 'Hedera SDK Contribution',
-    description: 'Open source contribution to the official Python SDK for Hedera Hashgraph: fungible & NFT token management, consensus transactions, and account/topic queries.',
-    tags: ['Python', 'Hedera Hashgraph', 'Blockchain'],
-    tech: ['Python'],
-    year: '2025',
-    github: 'https://github.com/abbasi0abolfazl/hiero-sdk-python',
-    demo: null,
-    featured: false,
-    color: 'from-violet-500/10 to-purple-500/10',
-    overview: 'Contributed to the official hiero-sdk-python (Python SDK for Hedera Hashgraph), adding support for fungible and NFT token management, consensus transactions, and account/topic queries.',
-    role: 'Implemented token management APIs, consensus transaction handling, and account/topic query methods; wrote tests and documentation.',
-    challenge: 'Blockchain SDKs require precise protocol implementation with no room for ambiguity — every transaction type has strict encoding and validation rules.',
-    solution: 'Followed the Hedera protobuf spec closely, wrote comprehensive tests against testnet, and aligned with existing SDK patterns for consistency.',
-    results: [
-      'Added fungible & NFT token management to the Python SDK',
-      'Implemented consensus transaction support',
-      'Merged into the official hiero-sdk-python repository',
-    ],
-    codeSnippet: `from hiero_sdk_python import Client, TokenCreateTransaction
-
-client = Client.for_testnet()
-client.set_operator(account_id, private_key)
-
-token_id = (
-    TokenCreateTransaction()
-    .set_token_name("MyToken")
-    .set_token_symbol("MTK")
-    .set_initial_supply(1000)
-    .set_treasury_account_id(account_id)
-    .execute(client)
-    .get_receipt(client)
-    .token_id
-)`,
-    lessons: 'Contributing to an SDK forces you to understand the underlying protocol at a deeper level than application-level usage — it is one of the best ways to build foundational knowledge.',
   },
   {
     id: 'cafebot',
