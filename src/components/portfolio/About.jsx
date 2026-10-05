@@ -70,18 +70,20 @@ export default function About() {
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {stats.map((stat) => {
-                const IconComponent = iconMap[stat.icon];
-                return (
-                  <div key={stat.label} className="text-center p-4 rounded-xl bg-card/50 border border-border/50">
-                    {IconComponent && <IconComponent className="w-5 h-5 text-primary mx-auto mb-2" />}
-                    <div className="text-2xl font-bold text-foreground">{stat.value}</div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
-                  </div>
-                );
-              })}
-            </div>
+            {stats.length > 0 && (
+              <div className="grid grid-cols-3 gap-4 mb-8">
+                {stats.map((stat) => {
+                  const IconComponent = iconMap[stat.icon];
+                  return (
+                    <div key={stat.label} className="text-center p-4 rounded-xl bg-card/50 border border-border/50">
+                      {IconComponent && <IconComponent className="w-5 h-5 text-primary mx-auto mb-2" />}
+                      <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+                      <div className="text-sm text-muted-foreground">{stat.label}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2">
