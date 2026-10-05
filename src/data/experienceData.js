@@ -33,13 +33,13 @@ export const experienceData = {
         achievements: [
           "Redesigned a social media scraping system into a modular, scalable architecture covering X (Twitter), Facebook, and Instagram.",
           "Fine-tuned a BERT-based model for multi-label emotion classification (8 emotions, 3 polarities); implemented human-in-the-loop retraining cycle with senior analyst feedback.",
-          "Architected a Persian legal-assistant chatbot using RAG + ChromaDB vector search + few-/zero-shot prompting; deployed production interfaces via Streamlit and Gradio with Docker."
+          "Built a Persian legal-assistant prototype using RAG, ChromaDB, LangChain, and Streamlit/Gradio interfaces. The project is being reworked before being presented as a portfolio case study."
         ]
       },
       {
         company: "FintechPlus",
         role: "AI & Quantitative Trading Developer",
-        period: "2024 – Present",
+        period: "Oct 2024 – Present",
         type: "Startup / Team of 3",
         achievements: [
           "Developed an experimental computer-vision pipeline for detecting ABCD market structures from candlestick data, including dataset generation and model-training experiments.",
