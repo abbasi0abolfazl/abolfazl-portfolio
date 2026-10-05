@@ -39,21 +39,11 @@ export const experienceData = {
       {
         company: "FintechPlus",
         role: "AI & Quantitative Trading Developer",
-        period: "2023 – 2024",
-        type: "Contract",
+        period: "2024 – Present",
+        type: "Startup / Team of 3",
         achievements: [
-          "Built an experimental chart-pattern inference pipeline that generates candlestick images from OHLC data and applies a pretrained YOLOv8 model.",
-          "Engineered an automated Forex trading bot incorporating RSI divergence, price-action strategies, adaptive lot sizing, trailing stops, and Redis-cached real-time news suspension."
-        ]
-      },
-      {
-        company: "MaralBranding",
-        role: "AI & Automation Developer",
-        period: "2023 – 2024",
-        type: "Contract",
-        achievements: [
-          "Built a RAG-powered e-commerce chatbot integrating product catalog data with semantic search for context-aware customer support.",
-          "Developed a PyQt5 desktop application for extracting, filtering, and exporting structured business data from Balad.ir, targeting non-technical sales teams."
+          "Developed an experimental computer-vision pipeline for detecting ABCD market structures from candlestick data, including dataset generation and model-training experiments.",
+          "Worked on automated Forex trading components including strategy logic, position sizing, trailing stops, and Redis-cached news-based trading suspension."
         ]
       },
       {
