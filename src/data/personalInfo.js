@@ -6,7 +6,7 @@ export const personalInfo = {
     "LLM Systems Developer",
     "Quantitative Systems Developer"
   ],
-  description: "Building production LLM/RAG systems and quantitative market intelligence",
+  description: "Building AI, data, and quantitative software systems for real-world problems",
   email: "contact@abolfazlabbasi.com",
   phone: "+989334441301",
   location: "Iran (Open to Remote)",
