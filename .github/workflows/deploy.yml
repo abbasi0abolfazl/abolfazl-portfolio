@@ -44,7 +44,7 @@ jobs:
           protocol: ftps
           security: ${{ secrets.FTP_SECURITY || 'loose' }}
           local-dir: dist/
-          server-dir: public_html/
+          server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
           exclude: |
             **/.git*
             **/.git*/**
