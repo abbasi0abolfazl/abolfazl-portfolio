@@ -29,20 +29,48 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       toast.error('Please fill in all fields');
       return;
     }
     setSending(true);
-    // No backend on this static site — open the visitor's email client with a prefilled message.
-    const subject = encodeURIComponent(`Portfolio contact from ${form.name}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
-    window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
-    toast.success('Opening your email app…');
-    setForm({ name: '', email: '', message: '' });
-    setSending(false);
+
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://api.abolfazlabbasi.com';
+
+    try {
+      const response = await fetch(`${apiUrl}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          message: form.message.trim(),
+        }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Failed to send message via relay service');
+      }
+
+      toast.success('Message sent successfully! I will get back to you shortly.');
+      setForm({ name: '', email: '', message: '' });
+    } catch (err) {
+      console.warn('API relay failed, falling back to mail client:', err);
+      // Graceful fallback to mail client if Worker is offline or not yet configured
+      const subject = encodeURIComponent(`Portfolio contact from ${form.name}`);
+      const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
+      window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
+      toast.info('Opening your email app as fallback…');
+      setForm({ name: '', email: '', message: '' });
+    } finally {
+      setSending(false);
+    }
   };
 
   return (

@@ -1,0 +1,8 @@
+name = "portfolio-telegram-relay"
+main = "index.js"
+compatibility_date = "2026-07-25"
+
+# Custom domain route definition:
+# routes = [
+#   { pattern = "api.abolfazlabbasi.com/*", zone_name = "abolfazlabbasi.com" }
+# ]
