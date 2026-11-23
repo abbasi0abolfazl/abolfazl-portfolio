@@ -42,10 +42,12 @@ export default function ParticleBackground() {
         this.opacity = this.baseOpacity + Math.sin(this.opacityPhase) * 1;
         this.opacity = Math.max(0, Math.min(1, this.opacity));
       }
-      draw() {
+      draw(isDark) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`; // طلایی
+        ctx.fillStyle = isDark
+          ? `rgba(255, 215, 0, ${this.opacity})` // طلایی در حالت دارک
+          : `rgba(37, 99, 235, ${this.opacity * 0.7})`; // آبی در حالت روشن
         ctx.fill();
       }
     }
@@ -55,8 +57,9 @@ export default function ParticleBackground() {
     }
 
     const animate = () => {
+      const isDark = document.documentElement.classList.contains('dark');
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
+      particles.forEach(p => { p.update(); p.draw(isDark); });
 
       // Draw connections
       for (let i = 0; i < particles.length; i++) {
@@ -66,8 +69,9 @@ export default function ParticleBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
             ctx.beginPath();
-            // خطوط اتصال با رنگ طلایی
-            ctx.strokeStyle = `rgba(255, 215, 0, ${0.03 * (1 - dist / 120)})`;
+            ctx.strokeStyle = isDark
+              ? `rgba(255, 215, 0, ${0.03 * (1 - dist / 120)})`
+              : `rgba(37, 99, 235, ${0.04 * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

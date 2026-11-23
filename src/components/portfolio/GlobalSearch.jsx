@@ -1,11 +1,11 @@
 
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, X, FileText, Cpu } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 
-import { projects, techFilters, typeFilters, yearFilters } from '@/data/projectsData';
+import { projects } from '@/data/projectsData';
 import { getAllPosts } from '@/lib/blogUtils';
 import { AnimatePresence, motion } from 'framer-motion';
 

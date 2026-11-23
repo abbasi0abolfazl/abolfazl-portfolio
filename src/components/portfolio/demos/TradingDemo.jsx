@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TrendingUp, TrendingDown, AlertCircle } from 'lucide-react';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 

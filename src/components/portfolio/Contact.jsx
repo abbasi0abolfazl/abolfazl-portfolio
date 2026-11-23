@@ -1,7 +1,8 @@
 
 
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Github, Send, Linkedin } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Mail, Phone, MapPin, Github, Send, Linkedin, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -77,6 +78,30 @@ export default function Contact() {
     <section id="contact" className="py-24 px-4">
       <div className="max-w-6xl mx-auto">
         <SectionHeading title="Get In Touch" subtitle="Let's build something amazing together" />
+
+        {/* Dedicated Standalone Page Showcase Link */}
+        <AnimatedSection className="mb-10">
+          <div className="p-4 sm:p-5 rounded-2xl glass border border-primary/25 bg-card/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <p className="text-sm font-semibold text-foreground">
+                  Dedicated Contact &amp; Sharing Showcase Available
+                </p>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Looking for a direct standalone link to share with colleagues or clients? Includes vCard contact export, social quick sharing, and direct Telegram relay.
+              </p>
+            </div>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-semibold shrink-0 transition-all shadow-md shadow-primary/10"
+            >
+              <span>Open Contact Page</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </AnimatedSection>
 
         <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Info */}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowDown, FileText, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,7 @@ import ParticleBackground from './ParticleBackground';
 import { personalInfo } from '@/data/personalInfo';
 
 export default function Hero() {
+  const navigate = useNavigate();
   const [titleIndex, setTitleIndex] = useState(0);
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -67,6 +69,8 @@ export default function Hero() {
   const handleButtonClick = (action) => {
     if (action === 'download') {
       downloadCV();
+    } else if (action === 'contact') {
+      navigate('/contact');
     } else {
       scrollToSection(action);
     }
@@ -118,11 +122,11 @@ export default function Hero() {
     {buttons.viewProjects.text}
   </Button>
 
-  {/* دکمه‌های ثانویه - شفاف‌تر */}
+  {/* دکمه‌های ثانویه - تطبیقی با تم روشن و تاریک */}
   <Button
     variant="outline"
     onClick={() => handleButtonClick(buttons.downloadCV.action)}
-    className="border border-white/15 text-white/80 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:text-white hover:border-white/30 hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full font-light tracking-wide"
+    className="border border-border text-foreground/85 bg-card/60 backdrop-blur-sm hover:bg-card hover:text-foreground hover:border-primary/40 hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full font-medium tracking-wide shadow-sm"
   >
     <FileText className="w-4 h-4 mr-2" />
     {buttons.downloadCV.text}
@@ -131,7 +135,7 @@ export default function Hero() {
   <Button
     variant="outline"
     onClick={() => handleButtonClick(buttons.contactMe.action)}
-    className="border border-white/15 text-white/80 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:text-white hover:border-white/30 hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full font-light tracking-wide"
+    className="border border-border text-foreground/85 bg-card/60 backdrop-blur-sm hover:bg-card hover:text-foreground hover:border-primary/40 hover:scale-105 transition-all duration-300 px-6 py-2.5 rounded-full font-medium tracking-wide shadow-sm"
   >
     <Send className="w-4 h-4 mr-2" />
     {buttons.contactMe.text}

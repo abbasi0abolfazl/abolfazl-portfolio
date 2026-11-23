@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, GitFork, Star, Users, Code2 } from 'lucide-react';
+import { Github, GitFork, Star, Code2 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import AnimatedSection from './AnimatedSection';
 import SectionHeading from './SectionHeading';

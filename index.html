@@ -1,7 +1,7 @@
 
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -26,8 +26,27 @@
     <meta data-seo="twitter:title" name="twitter:title" content="Abolfazl Abbasi | AI Systems Engineer &amp; Quant Developer" />
     <meta data-seo="twitter:description" name="twitter:description" content="Production AI systems, LLM/RAG engineering, and quantitative market intelligence." />
     <meta data-seo="twitter:image" name="twitter:image" content="https://abolfazlabbasi.com/og-image.png" />
-    <script data-seo="structured-data" type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Abolfazl Abbasi","url":"https://abolfazlabbasi.com/","jobTitle":"AI Systems Engineer and Quant Developer","email":"contact@abolfazlabbasi.com","sameAs":["https://github.com/abbasi0abolfazl","https://www.linkedin.com/in/abolfazl-abbasi-35886a1aa/"]}</script>
+    <script data-seo="structured-data" type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Abolfazl Abbasi","url":"https://abolfazlabbasi.com/","jobTitle":"AI Systems Engineer and Quant Developer","email":"contact@abolfazlabbasi.com","sameAs":["https://github.com/abbasi0abolfazl","https://www.linkedin.com/in/abbasi-abolfazl/"]}</script>
     <!-- seo:meta:end -->
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme = stored || 'dark';
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.style.colorScheme = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.style.colorScheme = 'light';
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

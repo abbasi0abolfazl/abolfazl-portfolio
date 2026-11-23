@@ -9,10 +9,19 @@ const ALLOWED_ORIGINS = [
   'https://www.abolfazlabbasi.com',
   'http://localhost:5173',
   'http://localhost:3000',
+  'http://localhost:4173',
 ];
 
+function isOriginAllowed(origin) {
+  if (!origin) return false;
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  if (origin.endsWith('.pages.dev')) return true;
+  if (/^http:\/\/localhost(:\d+)?$/.test(origin)) return true;
+  return false;
+}
+
 function getCorsHeaders(origin) {
-  const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  const allowed = isOriginAllowed(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     'Access-Control-Allow-Origin': allowed,
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',

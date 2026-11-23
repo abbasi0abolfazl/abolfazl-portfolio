@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from '../components/portfolio/Hero';
 import About from '../components/portfolio/About';
 import Skills from '../components/portfolio/Skills';
@@ -12,6 +12,19 @@ import Seo from '../components/Seo';
 import { homeSeo } from '@/lib/seoData';
 
 export default function Home() {
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.replace('#', '');
+      const timer = setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
     <main>
       <Seo metadata={homeSeo()} />

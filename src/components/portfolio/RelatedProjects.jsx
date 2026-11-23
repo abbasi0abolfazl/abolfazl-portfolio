@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 
 const STORAGE_KEY = 'recently_viewed_projects';
 const MAX_RECENT = 5;

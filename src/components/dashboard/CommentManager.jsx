@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { CheckCircle, XCircle, Trash2, Filter } from 'lucide-react';
+import { CheckCircle, XCircle, Trash2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 export default function CommentManager() {

@@ -1,4 +1,5 @@
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster as RadixToaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
@@ -17,6 +18,8 @@ const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
 const Demos = lazy(() => import('./pages/Demos'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const LinksPage = lazy(() => import('./pages/LinksPage'));
 
 const RouteFallback = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-background">
@@ -56,6 +59,8 @@ const AuthenticatedApp = () => {
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/demos" element={<Demos />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/links" element={<LinksPage />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
@@ -74,7 +79,8 @@ function App() {
               <Router>
                 <AuthenticatedApp />
               </Router>
-              <Toaster />
+              <RadixToaster />
+              <SonnerToaster richColors position="bottom-right" closeButton />
             </QueryClientProvider>
           </AuthProvider>
         </LanguageProvider>

@@ -14,6 +14,8 @@ const {
   demosSeo,
   projectSeo,
   postSeo,
+  contactSeo,
+  linksSeo,
 } = await import(pathToFileURL(path.join(projectDirectory, 'src', 'lib', 'seoData.js')).href);
 
 const escapeHtml = (value = '') => String(value)
@@ -203,6 +205,48 @@ function buildProjectDetailBody(project) {
   `;
 }
 
+function buildContactBody() {
+  return `
+    <header style="padding: 2rem 1rem; max-width: 900px; margin: auto;">
+      <nav><a href="/">&larr; Home</a> | <a href="/blog">Blog</a> | <a href="/links">Links</a></nav>
+      <h1>Contact Abolfazl Abbasi | AI Systems Engineer &amp; Quant Developer</h1>
+      <p>Direct contact and inquiry channels for engineering collaborations, AI systems consulting, and technical leadership.</p>
+    </header>
+    <main style="max-width: 900px; margin: auto; padding: 1rem;">
+      <section>
+        <h2>Direct Communication Channels</h2>
+        <ul>
+          <li><strong>Email:</strong> <a href="mailto:contact@abolfazlabbasi.com">contact@abolfazlabbasi.com</a></li>
+          <li><strong>Phone / WhatsApp / Telegram:</strong> <a href="tel:+989334441301">+98 933 444 1301</a></li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/abbasi0abolfazl" target="_blank" rel="noopener">@abbasi0abolfazl</a></li>
+          <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/abbasi-abolfazl/" target="_blank" rel="noopener">abbasi-abolfazl</a></li>
+          <li><strong>Location:</strong> Iran (Available for Remote Work Worldwide)</li>
+        </ul>
+      </section>
+    </main>
+  `;
+}
+
+function buildLinksBody() {
+  return `
+    <header style="padding: 2rem 1rem; max-width: 700px; margin: auto; text-align: center;">
+      <h1>Abolfazl Abbasi | Links &amp; Verified Profiles</h1>
+      <p>AI Systems Engineer &amp; Quant Developer</p>
+      <p><em>Unified links hub in development • Direct links active below</em></p>
+    </header>
+    <main style="max-width: 700px; margin: auto; padding: 1rem;">
+      <ul>
+        <li><a href="/">Official Portfolio &amp; Projects</a></li>
+        <li><a href="/contact">Contact Page &amp; Message Relay</a></li>
+        <li><a href="https://github.com/abbasi0abolfazl" target="_blank" rel="noopener">GitHub Profile</a></li>
+        <li><a href="https://www.linkedin.com/in/abbasi-abolfazl/" target="_blank" rel="noopener">LinkedIn Network</a></li>
+        <li><a href="/blog">Technical Notes &amp; Blog</a></li>
+        <li><a href="/demos">Interactive AI Demos</a></li>
+      </ul>
+    </main>
+  `;
+}
+
 async function writeRoute(template, pathname, metadata, bodyHtml) {
   const relativeDirectory = pathname === '/' ? '' : pathname.replace(/^\//, '');
   const destination = path.join(outputDirectory, relativeDirectory, 'index.html');
@@ -217,6 +261,8 @@ async function generateSitemap(allPosts, allProjects) {
 
   const urls = [
     { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly', lastmod: today },
+    { loc: `${baseUrl}/contact/`, priority: '0.9', changefreq: 'monthly', lastmod: today },
+    { loc: `${baseUrl}/links/`, priority: '0.8', changefreq: 'monthly', lastmod: today },
     { loc: `${baseUrl}/blog/`, priority: '0.9', changefreq: 'weekly', lastmod: today },
     { loc: `${baseUrl}/demos/`, priority: '0.7', changefreq: 'monthly', lastmod: today },
   ];
@@ -259,6 +305,8 @@ const template = await readFile(path.join(outputDirectory, 'index.html'), 'utf8'
 const posts = await getPosts();
 
 await writeRoute(template, '/', homeSeo(), buildHomeBody(projects, posts));
+await writeRoute(template, '/contact', contactSeo(), buildContactBody());
+await writeRoute(template, '/links', linksSeo(), buildLinksBody());
 await writeRoute(template, '/blog', blogIndexSeo(), buildBlogIndexBody(posts));
 await writeRoute(template, '/demos', demosSeo(), '');
 

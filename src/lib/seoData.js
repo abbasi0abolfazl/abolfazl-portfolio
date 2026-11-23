@@ -11,7 +11,7 @@ export const personSchema = {
   email: 'contact@abolfazlabbasi.com',
   sameAs: [
     'https://github.com/abbasi0abolfazl',
-    'https://www.linkedin.com/in/abolfazl-abbasi-35886a1aa/',
+    'https://www.linkedin.com/in/abbasi-abolfazl/',
   ],
   knowsAbout: [
     'Large Language Models',
@@ -114,6 +114,36 @@ export function postSeo(post) {
       author: personSchema,
       publisher: personSchema,
       keywords: post.tags?.join(', '),
+    },
+  });
+}
+
+export function contactSeo() {
+  return createSeo({
+    title: 'Contact Abolfazl Abbasi | AI Systems Engineer & Quant Developer',
+    description: 'Get in touch with Abolfazl Abbasi. Available for AI systems engineering, quantitative architectures, consulting, and technical collaboration.',
+    pathname: '/contact',
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'ContactPage',
+      name: 'Contact Abolfazl Abbasi',
+      url: canonicalUrl('/contact'),
+      author: personSchema,
+    },
+  });
+}
+
+export function linksSeo() {
+  return createSeo({
+    title: 'Links & Socials | Abolfazl Abbasi',
+    description: 'Direct links to Abolfazl Abbasi’s engineering portfolio, GitHub, LinkedIn, technical articles, and direct messaging channels.',
+    pathname: '/links',
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      name: 'Abolfazl Abbasi Links Hub',
+      url: canonicalUrl('/links'),
+      author: personSchema,
     },
   });
 }
