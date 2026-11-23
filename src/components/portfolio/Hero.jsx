@@ -53,14 +53,14 @@ export default function Hero() {
       link.click();
       document.body.removeChild(link);
       
-      toast.success('دانلود شروع شد!', {
-        description: 'فایل رزومه در حال دانلود است...',
+      toast.success('Resume download started!', {
+        description: 'Resume file is downloading...',
         duration: 3000,
       });
     } catch (error) {
       console.error('Error downloading CV:', error);
-      toast.error('خطا در دانلود', {
-        description: 'لطفاً دوباره تلاش کنید یا بعداً مراجعه کنید.',
+      toast.error('Failed to download resume file.', {
+        description: 'Please try again or visit later.',
         duration: 4000,
       });
     }

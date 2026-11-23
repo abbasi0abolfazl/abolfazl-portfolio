@@ -9,6 +9,7 @@ export const translations = {
     nav_projects: 'Projects',
     nav_blog: 'Blog',
     nav_demos: 'Demos',
+    nav_links: 'Links',
     nav_contact: 'Contact',
     // Hero
     hero_greeting: "Hi, I'm",

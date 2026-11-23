@@ -31,10 +31,10 @@ export default function LinksPage() {
     try {
       await navigator.clipboard.writeText(linksUrl);
       setCopied(true);
-      toast.success('لینک صفحه در کلیپ‌بورد کپی شد!');
+      toast.success('Page link copied to clipboard!');
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      toast.error('کپی انجام نشد.');
+      toast.error('Failed to copy link.');
     }
   };
 
@@ -47,9 +47,9 @@ export default function LinksPage() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      toast.success('دانلود رزومه آغاز شد!');
+      toast.success('Resume download started!');
     } catch {
-      toast.error('خطا در دانلود فایل رزومه.');
+      toast.error('Failed to download resume file.');
     }
   };
 
@@ -102,7 +102,7 @@ export default function LinksPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4">
+    <div className="min-h-screen pt-24 pb-20 px-4" dir="ltr">
       <Seo metadata={linksSeo()} />
 
       <div className="max-w-xl mx-auto space-y-8">
@@ -128,20 +128,20 @@ export default function LinksPage() {
           </div>
 
           {/* Coming Soon Notice Pill */}
-          <div className="p-4 sm:p-5 rounded-2xl glass border border-amber-500/30 bg-amber-500/5 relative overflow-hidden text-right" dir="rtl">
+          <div className="p-4 sm:p-5 rounded-2xl glass border border-amber-500/30 bg-amber-500/5 relative overflow-hidden text-left" dir="ltr">
             <div className="flex items-start gap-3">
               <div className="p-2 rounded-xl bg-amber-500/10 text-amber-500 shrink-0 mt-0.5">
                 <Clock className="w-5 h-5 animate-pulse" />
               </div>
               <div className="space-y-1 text-xs flex-1">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-bold text-foreground text-sm">صفحه تجمیع پیوندها در حال تکمیل است</span>
+                  <span className="font-bold text-foreground text-sm">Unified Links Hub in Progress</span>
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/20 text-amber-500 border border-amber-500/30">
                     Coming Soon
                   </span>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  هاب مرکزی تجمیع لینک‌ها و بیو با امکانات تعاملی پیشرفته به زودی فعال خواهد شد. در حال حاضر تمامی کانال‌های رسمی و مسیرهای ارتباطی تاییدشده در بخش زیر فعال و قابل استفاده هستند.
+                  A centralized, interactive bio and links hub is currently being enhanced. All official channels, verified repositories, and direct communication routes below are fully active.
                 </p>
               </div>
             </div>
@@ -247,7 +247,7 @@ export default function LinksPage() {
             className="rounded-xl border-border hover:bg-card gap-1.5 text-xs text-muted-foreground hover:text-foreground"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-            <span>{copied ? 'کپی شد' : 'کپی لینک این صفحه'}</span>
+            <span>{copied ? 'Copied!' : 'Copy Page Link'}</span>
           </Button>
 
           <Button
@@ -258,7 +258,7 @@ export default function LinksPage() {
           >
             <Link to="/contact">
               <Mail className="w-3.5 h-3.5 text-primary" />
-              <span>تماس مستقیم</span>
+              <span>Direct Contact</span>
             </Link>
           </Button>
         </div>

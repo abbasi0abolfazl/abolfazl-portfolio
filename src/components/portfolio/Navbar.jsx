@@ -45,6 +45,7 @@ export default function Navbar() {
     { key: 'nav_experience', href: '/#experience' },
     { key: 'nav_projects', href: '/#projects' },
     { key: 'nav_blog', href: '/blog' },
+    { key: 'nav_links', href: '/links' },
     { key: 'nav_contact', href: '/contact' },
   ];
 
@@ -86,9 +87,18 @@ export default function Navbar() {
 
   const NavItem = ({ link, mobile = false }) => {
     const label = tr(link.key);
+    const isActive = !link.href.startsWith('/#') && (
+      location.pathname === link.href || (link.href !== '/' && location.pathname.startsWith(link.href))
+    );
     const cls = mobile
-      ? 'text-left px-4 py-3 text-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-colors'
-      : 'px-3 py-2 text-sm text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-primary/5';
+      ? `text-left px-4 py-3 rounded-lg transition-colors ${
+          isActive
+            ? 'text-primary bg-primary/10 font-medium'
+            : 'text-foreground hover:text-primary hover:bg-primary/5'
+        }`
+      : `px-3 py-2 text-sm transition-colors rounded-md hover:bg-primary/5 ${
+          isActive ? 'text-primary font-medium bg-primary/5' : 'text-muted-foreground hover:text-primary'
+        }`;
 
     return (
       <button onClick={() => handleNavClick(link.href)} className={cls}>
@@ -104,12 +114,12 @@ export default function Navbar() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* لوگو در سمت چپ */}
+            {/* Brand Logo */}
             <button onClick={() => handleNavClick('/#home')} className="flex items-center gap-2 group">
               <PixelLogo />
             </button>
 
-            {/* بقیه موارد در سمت راست */}
+            {/* Desktop Navigation & Actions */}
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => <NavItem key={link.key} link={link} />)}
               <a
@@ -124,7 +134,7 @@ export default function Navbar() {
               <ThemeToggle className="ml-1" />
             </div>
 
-            {/* دکمه تم و منوی موبایل در سمت راست */}
+            {/* Mobile Actions */}
             <div className="md:hidden flex items-center gap-1">
               <ThemeToggle />
               <button

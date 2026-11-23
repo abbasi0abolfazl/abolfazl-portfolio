@@ -102,7 +102,7 @@ function buildHomeBody(allProjects, allPosts) {
       <h1>Abolfazl Abbasi | AI Systems Engineer &amp; Quant Developer</h1>
       <p>Building production LLM, RAG, market-data research infrastructure, and algorithmic trading systems.</p>
       <nav>
-        <a href="/#about">About</a> | <a href="/#projects">Projects</a> | <a href="/blog">Blog</a> | <a href="/demos">Demos</a> | <a href="/#contact">Contact</a>
+        <a href="/#about">About</a> | <a href="/#projects">Projects</a> | <a href="/blog">Blog</a> | <a href="/links">Links</a> | <a href="/contact">Contact</a>
       </nav>
     </header>
     <main style="max-width: 1200px; margin: auto; padding: 1rem;">
@@ -139,7 +139,7 @@ function buildBlogIndexBody(allPosts) {
     <header style="padding: 2rem 1rem; max-width: 1000px; margin: auto;">
       <h1>Technical Notes &amp; Blog | Abolfazl Abbasi</h1>
       <p>In-depth technical articles on AI engineering, LLM systems, Persian NLP, audio AI, and quant systems.</p>
-      <nav><a href="/">Home</a> | <a href="/blog">Blog</a> | <a href="/demos">Demos</a></nav>
+      <nav><a href="/">Home</a> | <a href="/blog">Blog</a> | <a href="/links">Links</a> | <a href="/contact">Contact</a></nav>
     </header>
     <main style="max-width: 1000px; margin: auto; padding: 1rem;">
       <section>
@@ -230,6 +230,7 @@ function buildContactBody() {
 function buildLinksBody() {
   return `
     <header style="padding: 2rem 1rem; max-width: 700px; margin: auto; text-align: center;">
+      <nav><a href="/">&larr; Home</a> | <a href="/blog">Blog</a> | <a href="/contact">Contact</a></nav>
       <h1>Abolfazl Abbasi | Links &amp; Verified Profiles</h1>
       <p>AI Systems Engineer &amp; Quant Developer</p>
       <p><em>Unified links hub in development • Direct links active below</em></p>

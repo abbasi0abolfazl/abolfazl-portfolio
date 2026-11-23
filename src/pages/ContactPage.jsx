@@ -39,12 +39,12 @@ export default function ContactPage() {
     try {
       await navigator.clipboard.writeText(contactUrl);
       setCopiedLink(true);
-      toast.success('لینک صفحه تماس در کلیپ‌بورد کپی شد!', {
-        description: 'می‌توانید آن را برای دیگران ارسال کنید.',
+      toast.success('Contact page link copied to clipboard!', {
+        description: 'You can now share it with others.',
       });
       setTimeout(() => setCopiedLink(false), 2500);
     } catch {
-      toast.error('کپی انجام نشد. لطفاً آدرس را دستی کپی کنید.');
+      toast.error('Failed to copy. Please copy the link manually.');
     }
   };
 
@@ -52,12 +52,12 @@ export default function ContactPage() {
     try {
       await navigator.clipboard.writeText(personalInfo.email);
       setCopiedEmail(true);
-      toast.success('آدرس ایمیل کپی شد!', {
+      toast.success('Email address copied to clipboard!', {
         description: personalInfo.email,
       });
       setTimeout(() => setCopiedEmail(false), 2500);
     } catch {
-      toast.error('کپی انجام نشد.');
+      toast.error('Failed to copy email address.');
     }
   };
 
@@ -89,8 +89,8 @@ export default function ContactPage() {
     document.body.removeChild(link);
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-    toast.success('کارت مخاطب (vCard) دانلود شد!', {
-      description: 'می‌توانید مستقیم آن را به مخاطبین تلفن خود اضافه کنید.',
+    toast.success('Contact card (vCard) downloaded!', {
+      description: 'You can add it directly to your phone contacts.',
     });
   };
 
@@ -102,7 +102,7 @@ export default function ContactPage() {
           text: 'Get in touch with Abolfazl Abbasi — AI Systems Engineer & Quant Developer.',
           url: contactUrl,
         });
-        toast.success('به اشتراک گذاشته شد!');
+        toast.success('Shared successfully!');
       } catch (err) {
         if (err.name !== 'AbortError') {
           handleCopyLink();
@@ -116,7 +116,7 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
-      toast.error('لطفاً همه فیلدهای ضروری را تکمیل کنید.');
+      toast.error('Please fill in all required fields.');
       return;
     }
 
@@ -140,12 +140,12 @@ export default function ContactPage() {
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok || !result.success) {
-        throw new Error(result.error || 'خطا در ارسال پیام از طریق سرور');
+        throw new Error(result.error || 'Failed to send message via server');
       }
 
       setSubmitted(true);
-      toast.success('پیام شما با موفقیت ارسال شد!', {
-        description: 'به‌زودی با شما تماس خواهم گرفت.',
+      toast.success('Your message has been sent successfully!', {
+        description: 'I will get back to you shortly.',
       });
       setForm({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
@@ -155,7 +155,7 @@ export default function ContactPage() {
       );
       const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
       window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
-      toast.info('نرم‌افزار ایمیل شما برای ارسال مستقیم باز شد.');
+      toast.info('Opening your email client to send message directly.');
       setSubmitted(true);
       setForm({ name: '', email: '', subject: '', message: '' });
     } finally {
@@ -164,7 +164,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4">
+    <div className="min-h-screen pt-24 pb-20 px-4" dir="ltr">
       <Seo metadata={contactSeo()} />
 
       <div className="max-w-5xl mx-auto space-y-12">
@@ -200,7 +200,7 @@ export default function ContactPage() {
           </p>
         </motion.div>
 
-        {/* Showcase & Sharing Hub (ویترین اشتراک‌گذاری) */}
+        {/* Showcase & Sharing Hub */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -210,14 +210,14 @@ export default function ContactPage() {
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
 
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
-            <div className="space-y-2 text-right" dir="rtl">
+            <div className="space-y-2 text-left" dir="ltr">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-primary" />
-                <h2 className="text-xl font-bold text-foreground">ویترین و کارت اشتراک‌گذاری ارتباط</h2>
+                <h2 className="text-xl font-bold text-foreground">Contact &amp; Connect Showcase</h2>
               </div>
               <p className="text-sm text-muted-foreground max-w-xl leading-relaxed">
-                می‌توانید کارت ارتباط و اطلاعات کامل من را برای همکاران، مدیران یا دوستان خود ارسال کنید
-                یا آن را مستقیماً به دفترچه تلفن همراه خود اضافه نمایید.
+                Share my verified contact profile and engineering credentials with colleagues, hiring managers, or your network,
+                or save them directly to your device contacts.
               </p>
             </div>
 
@@ -228,17 +228,17 @@ export default function ContactPage() {
                 className="flex-1 sm:flex-none border-border bg-card/60 hover:bg-card hover:text-primary transition-all rounded-xl gap-2 h-11"
               >
                 {copiedLink ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedLink ? 'کپی شد!' : 'کپی لینک صفحه'}</span>
+                <span>{copiedLink ? 'Copied!' : 'Copy Page Link'}</span>
               </Button>
 
               <Button
                 variant="outline"
                 onClick={handleDownloadVCard}
                 className="flex-1 sm:flex-none border-border bg-card/60 hover:bg-card hover:text-primary transition-all rounded-xl gap-2 h-11"
-                title="دانلود کارت مخاطب vCard برای ذخیره در گوشی"
+                title="Download contact card (vCard) to your device"
               >
                 <Download className="w-4 h-4" />
-                <span>ذخیره در مخاطبین (vCard)</span>
+                <span>Save Contact (vCard)</span>
               </Button>
 
               <Button
@@ -246,32 +246,32 @@ export default function ContactPage() {
                 className="flex-1 sm:flex-none bg-primary text-primary-foreground hover:bg-primary/90 transition-all rounded-xl gap-2 h-11"
               >
                 <Share2 className="w-4 h-4" />
-                <span>اشتراک‌گذاری سریع</span>
+                <span>Quick Share</span>
               </Button>
             </div>
           </div>
 
           {/* Social direct share links */}
           <div className="mt-6 pt-6 border-t border-border/50 flex flex-wrap items-center justify-between gap-4 text-xs text-muted-foreground">
-            <span className="font-medium">ارسال مستقیم از طریق:</span>
+            <span className="font-medium">Direct share via:</span>
             <div className="flex items-center gap-2">
               <a
-                href={`https://t.me/share/url?url=${encodeURIComponent(contactUrl)}&text=${encodeURIComponent('ارتباط با ابوالفضل عباسی - مهندس سیستم‌های هوش مصنوعی و توسعه‌دهنده کوانت')}`}
+                href={`https://t.me/share/url?url=${encodeURIComponent(contactUrl)}&text=${encodeURIComponent('Contact Abolfazl Abbasi — AI Systems Engineer & Quant Developer')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-1.5 rounded-lg bg-card border border-border/60 hover:border-primary/40 hover:text-primary transition-colors flex items-center gap-1.5"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-blue-400" />
-                تلگرام
+                Telegram
               </a>
               <a
-                href={`https://api.whatsapp.com/send?text=${encodeURIComponent('ارتباط با ابوالفضل عباسی:\n' + contactUrl)}`}
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent('Connect with Abolfazl Abbasi:\n' + contactUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-1.5 rounded-lg bg-card border border-border/60 hover:border-primary/40 hover:text-primary transition-colors flex items-center gap-1.5"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
-                واتساپ
+                WhatsApp
               </a>
               <a
                 href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(contactUrl)}`}
@@ -280,7 +280,7 @@ export default function ContactPage() {
                 className="px-3 py-1.5 rounded-lg bg-card border border-border/60 hover:border-primary/40 hover:text-primary transition-colors flex items-center gap-1.5"
               >
                 <Linkedin className="w-3.5 h-3.5 text-blue-500" />
-                لینکدین
+                LinkedIn
               </a>
             </div>
           </div>
@@ -307,7 +307,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                توسعه سیستم‌های آماده به تولید LLM، معماری‌های بازیابی پیشرفته (RAG)، پلتفرم‌های تحلیل بازار مالی و پایپ‌لاین‌های کوانت.
+                Building production LLM systems, advanced retrieval (RAG) architectures, financial market intelligence platforms, and quantitative pipelines.
               </p>
             </div>
 
@@ -330,7 +330,7 @@ export default function ContactPage() {
               <button
                 onClick={handleCopyEmail}
                 className="p-2 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
-                title="کپی ایمیل"
+                title="Copy email address"
               >
                 {copiedEmail ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
               </button>
@@ -356,7 +356,7 @@ export default function ContactPage() {
               <a
                 href={`tel:${personalInfo.phone}`}
                 className="p-2 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
-                title="تماس مستقیم"
+                title="Direct call"
               >
                 <ExternalLink className="w-4 h-4" />
               </a>
@@ -418,9 +418,9 @@ export default function ContactPage() {
                 <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
                   <div className="text-sm space-y-1">
-                    <p className="font-semibold text-foreground">پیام شما ثبت و دریافت شد!</p>
+                    <p className="font-semibold text-foreground">Message received successfully!</p>
                     <p className="text-muted-foreground text-xs">
-                      با تشکر از پیام شما، در اسرع وقت پاسخ خواهم داد. در صورت تمایل می‌توانید پیام دیگری ارسال کنید.
+                      Thank you for reaching out. I will review your inquiry and get back to you shortly. Feel free to send another message if needed.
                     </p>
                   </div>
                 </div>
@@ -430,7 +430,7 @@ export default function ContactPage() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label htmlFor="name" className="text-xs font-medium text-muted-foreground">
-                      نام و نام‌خانوادگی <span className="text-destructive">*</span>
+                      Full Name <span className="text-destructive">*</span>
                     </label>
                     <Input
                       id="name"
@@ -445,7 +445,7 @@ export default function ContactPage() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="email" className="text-xs font-medium text-muted-foreground">
-                      آدرس ایمیل <span className="text-destructive">*</span>
+                      Email Address <span className="text-destructive">*</span>
                     </label>
                     <Input
                       id="email"
@@ -462,7 +462,7 @@ export default function ContactPage() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="subject" className="text-xs font-medium text-muted-foreground">
-                    موضوع / نوع همکاری (اختیاری)
+                    Subject / Inquiry Type (Optional)
                   </label>
                   <Input
                     id="subject"
@@ -476,7 +476,7 @@ export default function ContactPage() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="message" className="text-xs font-medium text-muted-foreground">
-                    متن پیام <span className="text-destructive">*</span>
+                    Message <span className="text-destructive">*</span>
                   </label>
                   <Textarea
                     id="message"
@@ -497,12 +497,12 @@ export default function ContactPage() {
                   {sending ? (
                     <>
                       <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                      <span>در حال ارسال پیام...</span>
+                      <span>Sending message...</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>ارسال پیام</span>
+                      <span>Send Message</span>
                     </>
                   )}
                 </Button>

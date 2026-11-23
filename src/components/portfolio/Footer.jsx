@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Github, Mail, Linkedin, Heart } from 'lucide-react';
+import { personalInfo } from '@/data/personalInfo';
 
 const socialLinks = [
-  { icon: Github, href: 'https://github.com/abbasi0abolfazl', label: 'GitHub' },
-  { icon: Mail, href: 'mailto:contact@abolfazlabbasi.com', label: 'Email' },
-  { icon: Linkedin, href: 'https://www.linkedin.com/in/abolfazl-abbasi-35886a1aa/', label: 'LinkedIn' },
+  { icon: Github, href: personalInfo.social.github, label: 'GitHub' },
+  { icon: Mail, href: `mailto:${personalInfo.email}`, label: 'Email' },
+  { icon: Linkedin, href: personalInfo.social.linkedin, label: 'LinkedIn' },
 ];
 
 export default function Footer() {
@@ -22,7 +23,7 @@ export default function Footer() {
           <span className="text-border">•</span>
           <Link to="/contact" className="hover:text-primary transition-colors">Contact</Link>
           <span className="text-border">•</span>
-          <Link to="/links" className="hover:text-primary transition-colors">Links Hub</Link>
+          <Link to="/links" className="hover:text-primary transition-colors">Links</Link>
           <span className="text-border">•</span>
           <Link to="/blog" className="hover:text-primary transition-colors">Blog</Link>
           <span className="text-border">•</span>
