@@ -1,4 +1,4 @@
-name: Deploy Portfolio to cPanel VIP Hosting
+name: Deploy Portfolio to cPanel VIP Hosting & Global Edge Mirror
 
 on:
   push:
@@ -7,13 +7,13 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: deploy-cpanel
+  group: deploy-portfolio
   cancel-in-progress: false
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    name: Build & FTPS Deploy
+    name: Build & Dual Deploy (Iran VIP + Global Mirror)
 
     steps:
       - name: ⬇️ Checkout Repository
@@ -28,13 +28,13 @@ jobs:
       - name: 📦 Install Dependencies
         run: npm ci
 
-      - name: 🏗️ Build Project
+      - name: 🏗️ Build Project & Generate SEO Routes
         run: npm run build
         env:
           NODE_ENV: production
           NEXT_PUBLIC_API_URL: https://api.abolfazlabbasi.com
 
-      - name: 🚀 Deploy via Secure FTPS to cPanel
+      - name: 🚀 Deploy via Secure FTPS to cPanel VIP Hosting (Iran)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -51,3 +51,13 @@ jobs:
             **/node_modules/**
             .well-known/**
             cgi-bin/**
+
+      - name: 🌐 Deploy to Cloudflare Pages (Overseas Global Mirror)
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: 'abolfazl-portfolio'
+          directory: 'dist'
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
