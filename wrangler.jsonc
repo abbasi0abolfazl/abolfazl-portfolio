@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "abolfazl-portfolio",
+  "name": "mirror-abolfazl-portfolio",
   "compatibility_date": "2026-07-25",
   "assets": {
     "directory": "./dist",
