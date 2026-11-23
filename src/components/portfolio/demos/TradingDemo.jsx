@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { useLang } from '@/lib/LanguageContext';
 
 function generatePriceData() {
   const data = [];
@@ -19,6 +20,7 @@ function generatePriceData() {
 }
 
 export default function TradingDemo() {
+  const { tr, lang } = useLang();
   const [data, setData] = useState(() => generatePriceData());
   const [metrics, setMetrics] = useState({
     balance: 10250.00,
@@ -54,8 +56,8 @@ export default function TradingDemo() {
     <div className="rounded-xl bg-background/80 border border-border/50 overflow-hidden">
       <div className="px-4 py-3 border-b border-border/50 bg-card/50 flex items-center justify-between">
         <div>
-          <h4 className="font-medium text-sm text-foreground">EUR/USD Trading Bot</h4>
-          <p className="text-xs text-muted-foreground">Real-time simulation</p>
+          <h4 className="font-medium text-sm text-foreground">{tr('demos_trading_header')}</h4>
+          <p className="text-xs text-muted-foreground">{tr('demos_trading_sub')}</p>
         </div>
         <Badge className={`text-xs ${metrics.dailyPnL >= 0 ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>
           {metrics.dailyPnL >= 0 ? <TrendingUp className="w-3 h-3 mr-1" /> : <TrendingDown className="w-3 h-3 mr-1" />}
@@ -90,10 +92,10 @@ export default function TradingDemo() {
       {/* Metrics */}
       <div className="grid grid-cols-4 gap-px bg-border/30">
         {[
-          { label: 'Balance', value: `$${metrics.balance.toLocaleString()}` },
-          { label: 'Open Trades', value: metrics.openTrades },
-          { label: 'Win Rate', value: `${metrics.winRate}%` },
-          { label: 'Risk', value: metrics.riskLevel },
+          { label: tr('demos_metric_balance'), value: `$${metrics.balance.toLocaleString()}` },
+          { label: tr('demos_metric_trades'), value: metrics.openTrades },
+          { label: tr('demos_metric_winrate'), value: `${metrics.winRate}%` },
+          { label: tr('demos_metric_risk'), value: lang === 'fa' ? tr('demos_metric_risk_val') : metrics.riskLevel },
         ].map((m) => (
           <div key={m.label} className="p-3 bg-card/30 text-center">
             <div className="text-xs text-muted-foreground">{m.label}</div>

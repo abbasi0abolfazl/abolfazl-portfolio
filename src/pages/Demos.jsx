@@ -9,22 +9,45 @@ import AnimatedSection from '../components/portfolio/AnimatedSection';
 import SectionHeading from '../components/portfolio/SectionHeading';
 import Seo from '@/components/Seo';
 import { demosSeo } from '@/lib/seoData';
-
-const demos = [
-  { id: 'chatbot', label: 'Chatbot', icon: MessageSquare, component: ChatbotDemo },
-  { id: 'trading', label: 'Trading Bot', icon: TrendingUp, component: TradingDemo },
-  { id: 'yolo', label: 'YOLO Case Study', icon: Eye, component: YoloDemo },
-  { id: 'code', label: 'Code Snippets', icon: Code, component: CodeViewer },
-];
+import { useLang } from '@/lib/LanguageContext';
 
 export default function Demos() {
+  const { tr, lang } = useLang();
+
+  const demos = [
+    {
+      id: 'chatbot',
+      label: lang === 'fa' ? 'دستیار چت RAG' : 'Chatbot',
+      icon: MessageSquare,
+      component: ChatbotDemo
+    },
+    {
+      id: 'trading',
+      label: lang === 'fa' ? 'بات معاملاتی' : 'Trading Bot',
+      icon: TrendingUp,
+      component: TradingDemo
+    },
+    {
+      id: 'yolo',
+      label: lang === 'fa' ? 'بینایی ماشین YOLO' : 'YOLO Case Study',
+      icon: Eye,
+      component: YoloDemo
+    },
+    {
+      id: 'code',
+      label: lang === 'fa' ? 'نمونه کدهای سیستم' : 'Code Snippets',
+      icon: Code,
+      component: CodeViewer
+    },
+  ];
+
   return (
     <main className="pt-24 pb-16 px-4 min-h-screen">
       <Seo metadata={demosSeo()} />
       <div className="max-w-4xl mx-auto">
         <SectionHeading
-          title="Project Demos"
-          subtitle="Interactive demonstrations of my key projects"
+          title={tr('demos_title')}
+          subtitle={tr('demos_subtitle')}
         />
 
         <AnimatedSection>

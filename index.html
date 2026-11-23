@@ -5,6 +5,9 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#60a5fa" />
     <link rel="manifest" href="/manifest.json" />
@@ -44,6 +47,19 @@
             document.documentElement.setAttribute('data-theme', 'light');
             document.documentElement.style.colorScheme = 'light';
           }
+
+          var storedLang = localStorage.getItem('portfolio_lang');
+          var isIranTimezone = false;
+          try {
+            var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+            isIranTimezone = tz.indexOf('Tehran') !== -1;
+          } catch (e) {}
+          var isPersianNav = (navigator.languages && navigator.languages.some(function(l) { return l.indexOf('fa') === 0; })) ||
+                             (navigator.language && navigator.language.indexOf('fa') === 0);
+
+          var activeLang = storedLang || (isIranTimezone || isPersianNav ? 'fa' : 'en');
+          document.documentElement.setAttribute('lang', activeLang);
+          document.documentElement.setAttribute('dir', activeLang === 'fa' ? 'rtl' : 'ltr');
         } catch (e) {}
       })();
     </script>

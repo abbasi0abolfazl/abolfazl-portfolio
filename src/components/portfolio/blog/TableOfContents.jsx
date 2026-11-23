@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { List, ChevronDown, ChevronUp } from 'lucide-react';
+import { useLang } from '@/lib/LanguageContext';
 
 function extractHeadings(content) {
   const lines = content.split('\n');
@@ -17,6 +18,7 @@ function extractHeadings(content) {
 }
 
 export default function TableOfContents({ content }) {
+  const { tr } = useLang();
   const headings = extractHeadings(content);
   const [active, setActive] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -47,13 +49,13 @@ export default function TableOfContents({ content }) {
   const TocList = () => (
     <ul className="space-y-0.5">
       {headings.map(({ id, text, level }, index) => (
-        <li key={`${id}-${index}`} style={{ paddingLeft: `${(level - 1) * 12}px` }}>
+        <li key={`${id}-${index}`} style={{ paddingInlineStart: `${(level - 1) * 12}px` }}>
           <button
             onClick={() => scrollTo(id)}
-            className={`text-left w-full text-xs py-1.5 px-2 rounded-lg transition-all duration-200 leading-snug
+            className={`text-start w-full text-xs py-1.5 px-2 rounded-lg transition-all duration-200 leading-snug
               ${active === id
-                ? 'text-blue-400 bg-blue-500/10 font-semibold border-l-2 border-blue-400 pl-3 text-[13px]'
-                : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 border-l-2 border-transparent pl-3'
+                ? 'text-primary bg-primary/10 font-semibold border-s-2 border-primary ps-3 text-[13px]'
+                : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 border-s-2 border-transparent ps-3'
               }`}
           >
             {text}
@@ -67,9 +69,9 @@ export default function TableOfContents({ content }) {
     <>
       {/* Desktop: always-visible sticky sidebar */}
       <aside className="hidden lg:block w-52 shrink-0">
-        <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pr-1">
+        <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto px-1">
           <div className="flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-widest mb-3 pb-2 border-b border-border/40">
-            <List className="w-3 h-3" /> Contents
+            <List className="w-3 h-3" /> {tr('blog_contents')}
           </div>
           <TocList />
         </div>
@@ -81,7 +83,7 @@ export default function TableOfContents({ content }) {
           onClick={() => setMobileOpen((v) => !v)}
           className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-foreground"
         >
-          <span className="flex items-center gap-2"><List className="w-4 h-4 text-primary" /> Contents</span>
+          <span className="flex items-center gap-2"><List className="w-4 h-4 text-primary" /> {tr('blog_contents')}</span>
           {mobileOpen ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
         </button>
         {mobileOpen && (

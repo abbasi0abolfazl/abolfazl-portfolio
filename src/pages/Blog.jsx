@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, ArrowRight, Clock, BookOpen, Search, X, Tag } from 'lucide-react';
+import { Calendar, ArrowRight, ArrowLeft, Clock, BookOpen, Search, X, Tag } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { format } from 'date-fns';
 import AnimatedSection from '../components/portfolio/AnimatedSection';
@@ -9,6 +9,7 @@ import { getAllPosts, getReadingTime } from '@/lib/blogUtils';
 import { useDebounce } from '@/hooks/useDebounce';
 import Seo from '@/components/Seo';
 import { blogIndexSeo } from '@/lib/seoData';
+import { useLang } from '@/lib/LanguageContext';
 
 function highlight(text, term) {
   if (!term || !text) return text;
@@ -22,13 +23,17 @@ function highlight(text, term) {
 }
 
 export default function Blog() {
+  const { tr, dir } = useLang();
+  const isRtl = dir === 'rtl';
+  const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
+
   const [rawSearch, setRawSearch] = useState('');
   const [activeTags, setActiveTags] = useState([]);
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const search = useDebounce(rawSearch, 300);
 
-  // بارگذاری پست‌ها
+  // Load posts
   useEffect(() => {
     getAllPosts().then(allPosts => {
       setPosts(allPosts);
@@ -76,30 +81,29 @@ export default function Blog() {
     <main className="pt-24 pb-16 px-4 min-h-screen">
       <Seo metadata={blogIndexSeo()} />
       <div className="max-w-4xl mx-auto">
-        {/* عنوان Blog با فونت Inter (standard) */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3 font-inter tracking-tight">
-            Blog
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3 tracking-tight">
+            {tr('blog_title')}
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
-            Thoughts on AI, NLP, and building intelligent systems
+            {tr('blog_subtitle')}
           </p>
         </div>
 
         {/* Search bar */}
         <AnimatedSection className="mb-5">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Search className={`absolute ${isRtl ? 'right-3' : 'left-3'} top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground`} />
             <Input
               value={rawSearch}
               onChange={(e) => setRawSearch(e.target.value)}
-              placeholder="Search posts by title, content, or tag…"
-              className="pl-9 pr-9 h-10 bg-card/60 border-border/50 focus:border-primary/50"
+              placeholder={tr('blog_search')}
+              className={`${isRtl ? 'pr-9 pl-9' : 'pl-9 pr-9'} h-10 bg-card/60 border-border/50 focus:border-primary/50`}
             />
             {rawSearch && (
               <button
                 onClick={() => setRawSearch('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className={`absolute ${isRtl ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground`}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -112,7 +116,7 @@ export default function Blog() {
           <AnimatedSection delay={0.05} className="mb-6">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs text-muted-foreground flex items-center gap-1">
-                <Tag className="w-3 h-3" /> Popular tags:
+                <Tag className="w-3 h-3" /> {tr('blog_popular_tags')}
               </span>
               {tagCounts.slice(0, 10).map(([tag, count]) => (
                 <button
@@ -133,9 +137,9 @@ export default function Blog() {
               {activeTags.length > 0 && (
                 <button
                   onClick={() => setActiveTags([])}
-                  className="text-xs text-muted-foreground hover:text-primary flex items-center gap-1 ml-1"
+                  className="text-xs text-muted-foreground hover:text-primary flex items-center gap-1 ms-1"
                 >
-                  <X className="w-3 h-3" /> Clear
+                  <X className="w-3 h-3" /> {tr('projects_clear')}
                 </button>
               )}
             </div>
@@ -145,7 +149,7 @@ export default function Blog() {
         {/* Results count */}
         {hasFilters && !isLoading && (
           <p className="text-xs text-muted-foreground mb-4">
-            {filtered.length} result{filtered.length !== 1 ? 's' : ''} found
+            {tr('blog_results', { n: filtered.length })}
           </p>
         )}
 
@@ -157,14 +161,14 @@ export default function Blog() {
         ) : filtered.length === 0 ? (
           <AnimatedSection className="text-center py-20">
             <p className="text-muted-foreground text-lg mb-2">
-              {hasFilters ? 'No posts match your search.' : 'No blog posts yet. Check back soon!'}
+              {hasFilters ? tr('blog_no_match') : tr('blog_no_posts')}
             </p>
             {hasFilters && (
               <button
                 onClick={() => { setRawSearch(''); setActiveTags([]); }}
                 className="text-primary text-sm hover:underline"
               >
-                Clear search
+                {tr('blog_clear_search')}
               </button>
             )}
           </AnimatedSection>
@@ -187,12 +191,11 @@ export default function Blog() {
                         </span>
                         <span className="flex items-center gap-1">
                           <BookOpen className="w-3.5 h-3.5" />
-                          {reading.wordCount} words
+                          {reading.wordCount} {tr('blog_words')}
                         </span>
                       </div>
 
-                      {/* تایتل کارت با فونت Inter */}
-                      <h2 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors mb-2 font-inter tracking-tight">
+                      <h2 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors mb-2 tracking-tight">
                         {highlight(post.title, search)}
                       </h2>
 
@@ -218,8 +221,8 @@ export default function Blog() {
                             </span>
                           ))}
                         </div>
-                        <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all whitespace-nowrap ml-4">
-                          Read <ArrowRight className="w-3.5 h-3.5" />
+                        <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all whitespace-nowrap ms-4">
+                          {tr('blog_read')} <ArrowIcon className="w-3.5 h-3.5" />
                         </span>
                       </div>
                     </article>

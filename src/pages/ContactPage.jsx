@@ -15,6 +15,7 @@ import {
   ExternalLink,
   Sparkles,
   ArrowLeft,
+  ArrowRight,
   CheckCircle2,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -24,9 +25,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import Seo from '@/components/Seo';
 import { contactSeo } from '@/lib/seoData';
-import { personalInfo } from '@/data/personalInfo';
+import { personalInfo, getPersonalInfo } from '@/data/personalInfo';
+import { useLang } from '@/lib/LanguageContext';
 
 export default function ContactPage() {
+  const { tr, lang, dir } = useLang();
+  const isRtl = dir === 'rtl';
+  const BackArrow = isRtl ? ArrowRight : ArrowLeft;
+  const currentInfo = getPersonalInfo(lang);
+
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -39,12 +46,15 @@ export default function ContactPage() {
     try {
       await navigator.clipboard.writeText(contactUrl);
       setCopiedLink(true);
-      toast.success('Contact page link copied to clipboard!', {
-        description: 'You can now share it with others.',
-      });
+      toast.success(
+        lang === 'fa' ? 'لینک صفحه تماس کپی شد!' : 'Contact page link copied to clipboard!',
+        {
+          description: lang === 'fa' ? 'می‌توانید آن را با دیگران به اشتراک بگذارید.' : 'You can now share it with others.',
+        }
+      );
       setTimeout(() => setCopiedLink(false), 2500);
     } catch {
-      toast.error('Failed to copy. Please copy the link manually.');
+      toast.error(lang === 'fa' ? 'خطا در کپی پیوند' : 'Failed to copy. Please copy the link manually.');
     }
   };
 
@@ -52,12 +62,15 @@ export default function ContactPage() {
     try {
       await navigator.clipboard.writeText(personalInfo.email);
       setCopiedEmail(true);
-      toast.success('Email address copied to clipboard!', {
-        description: personalInfo.email,
-      });
+      toast.success(
+        lang === 'fa' ? 'نشانی ایمیل کپی شد!' : 'Email address copied to clipboard!',
+        {
+          description: personalInfo.email,
+        }
+      );
       setTimeout(() => setCopiedEmail(false), 2500);
     } catch {
-      toast.error('Failed to copy email address.');
+      toast.error(lang === 'fa' ? 'خطا در کپی ایمیل' : 'Failed to copy email address.');
     }
   };
 
@@ -67,7 +80,7 @@ export default function ContactPage() {
       'VERSION:3.0',
       'N:Abbasi;Abolfazl;;;',
       'FN:Abolfazl Abbasi',
-      'ORG:AI Systems & Quantitative Engineering',
+      'ORG:AI Systems & Quantitative Engineering (Keyhan)',
       'TITLE:AI Systems Engineer & Quant Developer',
       `EMAIL;type=INTERNET;type=WORK;type=pref:${personalInfo.email}`,
       `TEL;type=CELL;type=VOICE;type=pref:${personalInfo.phone}`,
@@ -75,7 +88,7 @@ export default function ContactPage() {
       'URL;type=Contact:https://abolfazlabbasi.com/contact',
       `URL;type=GitHub:${personalInfo.social.github}`,
       `URL;type=LinkedIn:${personalInfo.social.linkedin}`,
-      'NOTE:AI Systems Engineer and Quant Developer building production LLM, RAG, and algorithmic trading systems.',
+      'NOTE:AI Systems Engineer and Quant Developer building production LLM, RAG, audio AI, and algorithmic trading systems.',
       'END:VCARD',
     ].join('\r\n');
 
@@ -89,20 +102,23 @@ export default function ContactPage() {
     document.body.removeChild(link);
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-    toast.success('Contact card (vCard) downloaded!', {
-      description: 'You can add it directly to your phone contacts.',
-    });
+    toast.success(
+      lang === 'fa' ? 'شناسنامه تماس (vCard) دانلود شد!' : 'Contact card (vCard) downloaded!',
+      {
+        description: lang === 'fa' ? 'می‌توانید آن را مستقیماً به مخاطبین گوشی خود اضافه کنید.' : 'You can add it directly to your phone contacts.',
+      }
+    );
   };
 
   const handleNativeShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Abolfazl Abbasi | Contact & Connect',
-          text: 'Get in touch with Abolfazl Abbasi — AI Systems Engineer & Quant Developer.',
+          title: lang === 'fa' ? 'ابوالفضل عباسی | شناسنامه تماس و ارتباط' : 'Abolfazl Abbasi | Contact & Connect',
+          text: lang === 'fa' ? 'ارتباط مستقیم با ابوالفضل عباسی — مهندس سیستم‌های هوش مصنوعی و کوانت' : 'Get in touch with Abolfazl Abbasi — AI Systems Engineer & Quant Developer.',
           url: contactUrl,
         });
-        toast.success('Shared successfully!');
+        toast.success(lang === 'fa' ? 'با موفقیت به اشتراک گذاشته شد!' : 'Shared successfully!');
       } catch (err) {
         if (err.name !== 'AbortError') {
           handleCopyLink();
@@ -116,7 +132,7 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
-      toast.error('Please fill in all required fields.');
+      toast.error(lang === 'fa' ? 'لطفاً تمامی فیلدهای الزامی را تکمیل کنید.' : 'Please fill in all required fields.');
       return;
     }
 
@@ -144,9 +160,12 @@ export default function ContactPage() {
       }
 
       setSubmitted(true);
-      toast.success('Your message has been sent successfully!', {
-        description: 'I will get back to you shortly.',
-      });
+      toast.success(
+        lang === 'fa' ? 'پیام شما با موفقیت ارسال شد!' : 'Your message has been sent successfully!',
+        {
+          description: lang === 'fa' ? 'پیام شما فوراً به تلگرام و ایمیل رله گردید و به زودی پاسخ داده خواهد شد.' : 'I will get back to you shortly.',
+        }
+      );
       setForm({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
       console.warn('Worker relay failed, using mail client fallback:', err);
@@ -155,7 +174,7 @@ export default function ContactPage() {
       );
       const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
       window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
-      toast.info('Opening your email client to send message directly.');
+      toast.info(lang === 'fa' ? 'در حال باز کردن نرم‌افزار ایمیل جهت ارسال مستقیم…' : 'Opening your email client to send message directly.');
       setSubmitted(true);
       setForm({ name: '', email: '', subject: '', message: '' });
     } finally {
@@ -164,18 +183,18 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4" dir="ltr">
+    <div className="min-h-screen pt-24 pb-20 px-4" dir={dir}>
       <Seo metadata={contactSeo()} />
 
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Link to="/" className="inline-flex items-center gap-1 hover:text-primary transition-colors">
-            <ArrowLeft className="w-4 h-4" />
-            Home
+            <BackArrow className="w-4 h-4" />
+            <span>{tr('nav_home')}</span>
           </Link>
           <span>/</span>
-          <span className="text-foreground font-medium">Contact</span>
+          <span className="text-foreground font-medium">{tr('nav_contact')}</span>
         </div>
 
         {/* Page Header */}
@@ -185,18 +204,21 @@ export default function ContactPage() {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto space-y-4"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            Available for Projects &amp; Remote Consulting
+            <span>{tr('contact_badge')}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-            Get in <span className="gradient-text">Touch</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
+            {lang === 'fa' ? (
+              <>پل‌های <span className="gradient-text">ارتباط مستقیم</span></>
+            ) : (
+              <>Get in <span className="gradient-text">Touch</span></>
+            )}
           </h1>
 
-          <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-            Whether you are looking to discuss production AI systems, quantitative engineering architectures,
-            consulting, or potential collaborations — feel free to reach out directly or share this page.
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+            {tr('contact_subtitle')}
           </p>
         </motion.div>
 
@@ -207,17 +229,18 @@ export default function ContactPage() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="p-6 sm:p-8 rounded-2xl glass border border-border/80 shadow-xl relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+          <div className="absolute top-0 end-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none -me-20 -mt-20" />
 
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
-            <div className="space-y-2 text-left" dir="ltr">
+            <div className="space-y-2 text-start">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-primary" />
-                <h2 className="text-xl font-bold text-foreground">Contact &amp; Connect Showcase</h2>
+                <Sparkles className="w-5 h-5 text-primary shrink-0" />
+                <h2 className="text-lg sm:text-xl font-bold text-foreground">
+                  {tr('contact_showcase_title')}
+                </h2>
               </div>
-              <p className="text-sm text-muted-foreground max-w-xl leading-relaxed">
-                Share my verified contact profile and engineering credentials with colleagues, hiring managers, or your network,
-                or save them directly to your device contacts.
+              <p className="text-xs sm:text-sm text-muted-foreground max-w-xl leading-relaxed">
+                {tr('contact_showcase_desc')}
               </p>
             </div>
 
@@ -225,50 +248,50 @@ export default function ContactPage() {
               <Button
                 variant="outline"
                 onClick={handleCopyLink}
-                className="flex-1 sm:flex-none border-border bg-card/60 hover:bg-card hover:text-primary transition-all rounded-xl gap-2 h-11"
+                className="flex-1 sm:flex-none border-border bg-card/60 hover:bg-card hover:text-primary transition-all rounded-xl gap-2 h-11 text-xs sm:text-sm"
               >
                 {copiedLink ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedLink ? 'Copied!' : 'Copy Page Link'}</span>
+                <span>{copiedLink ? tr('contact_copied_link') : tr('contact_copy_link')}</span>
               </Button>
 
               <Button
                 variant="outline"
                 onClick={handleDownloadVCard}
-                className="flex-1 sm:flex-none border-border bg-card/60 hover:bg-card hover:text-primary transition-all rounded-xl gap-2 h-11"
-                title="Download contact card (vCard) to your device"
+                className="flex-1 sm:flex-none border-border bg-card/60 hover:bg-card hover:text-primary transition-all rounded-xl gap-2 h-11 text-xs sm:text-sm"
+                title={tr('contact_save_vcard')}
               >
                 <Download className="w-4 h-4" />
-                <span>Save Contact (vCard)</span>
+                <span>{tr('contact_save_vcard')}</span>
               </Button>
 
               <Button
                 onClick={handleNativeShare}
-                className="flex-1 sm:flex-none bg-primary text-primary-foreground hover:bg-primary/90 transition-all rounded-xl gap-2 h-11"
+                className="flex-1 sm:flex-none bg-primary text-primary-foreground hover:bg-primary/90 transition-all rounded-xl gap-2 h-11 text-xs sm:text-sm"
               >
                 <Share2 className="w-4 h-4" />
-                <span>Quick Share</span>
+                <span>{tr('contact_quick_share')}</span>
               </Button>
             </div>
           </div>
 
           {/* Social direct share links */}
           <div className="mt-6 pt-6 border-t border-border/50 flex flex-wrap items-center justify-between gap-4 text-xs text-muted-foreground">
-            <span className="font-medium">Direct share via:</span>
+            <span className="font-semibold">{tr('contact_direct_via')}</span>
             <div className="flex items-center gap-2">
               <a
-                href={`https://t.me/share/url?url=${encodeURIComponent(contactUrl)}&text=${encodeURIComponent('Contact Abolfazl Abbasi — AI Systems Engineer & Quant Developer')}`}
+                href={`https://t.me/share/url?url=${encodeURIComponent(contactUrl)}&text=${encodeURIComponent(lang === 'fa' ? 'ارتباط مستقیم با ابوالفضل عباسی — مهندس سیستم‌های هوش مصنوعی و کوانت' : 'Contact Abolfazl Abbasi — AI Systems Engineer & Quant Developer')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded-lg bg-card border border-border/60 hover:border-primary/40 hover:text-primary transition-colors flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-lg bg-card border border-border/60 hover:border-primary/40 hover:text-primary transition-colors flex items-center gap-1.5 font-medium"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-blue-400" />
                 Telegram
               </a>
               <a
-                href={`https://api.whatsapp.com/send?text=${encodeURIComponent('Connect with Abolfazl Abbasi:\n' + contactUrl)}`}
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent((lang === 'fa' ? 'ارتباط با ابوالفضل عباسی:\n' : 'Connect with Abolfazl Abbasi:\n') + contactUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded-lg bg-card border border-border/60 hover:border-primary/40 hover:text-primary transition-colors flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-lg bg-card border border-border/60 hover:border-primary/40 hover:text-primary transition-colors flex items-center gap-1.5 font-medium"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
                 WhatsApp
@@ -277,7 +300,7 @@ export default function ContactPage() {
                 href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(contactUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded-lg bg-card border border-border/60 hover:border-primary/40 hover:text-primary transition-colors flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-lg bg-card border border-border/60 hover:border-primary/40 hover:text-primary transition-colors flex items-center gap-1.5 font-medium"
               >
                 <Linkedin className="w-3.5 h-3.5 text-blue-500" />
                 LinkedIn
@@ -290,7 +313,7 @@ export default function ContactPage() {
         <div className="grid lg:grid-cols-12 gap-8 items-start">
           {/* Direct Channels Column (5 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="lg:col-span-5 space-y-4"
@@ -298,30 +321,35 @@ export default function ContactPage() {
             {/* Abolfazl Identity Card */}
             <div className="p-6 rounded-2xl glass border border-border/70 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-lg text-primary">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-lg text-primary shrink-0">
                   AA
                 </div>
                 <div>
-                  <h3 className="font-bold text-foreground text-lg">{personalInfo.firstName} {personalInfo.lastName}</h3>
-                  <p className="text-xs text-muted-foreground">{personalInfo.titles[0]}</p>
+                  <h3 className="font-bold text-foreground text-lg">
+                    {currentInfo.firstName} {currentInfo.lastName}
+                  </h3>
+                  <p className="text-xs text-muted-foreground font-mono">
+                    {currentInfo.titles[0]}
+                  </p>
                 </div>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Building production LLM systems, advanced retrieval (RAG) architectures, financial market intelligence platforms, and quantitative pipelines.
+                {currentInfo.description}
               </p>
             </div>
 
             {/* Email Card */}
             <div className="p-4 rounded-xl bg-card border border-border/70 hover:border-primary/30 transition-all flex items-center justify-between gap-3 group">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-lg bg-primary/10 text-primary">
+                <div className="p-2.5 rounded-lg bg-primary/10 text-primary shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Email</p>
+                  <p className="text-xs text-muted-foreground">{lang === 'fa' ? 'ایمیل مستقیم' : 'Direct Email'}</p>
                   <a
                     href={`mailto:${personalInfo.email}`}
-                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                    className="text-sm font-medium text-foreground hover:text-primary transition-colors font-mono"
+                    dir="ltr"
                   >
                     {personalInfo.email}
                   </a>
@@ -330,7 +358,7 @@ export default function ContactPage() {
               <button
                 onClick={handleCopyEmail}
                 className="p-2 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
-                title="Copy email address"
+                title={lang === 'fa' ? 'کپی ایمیل' : 'Copy email address'}
               >
                 {copiedEmail ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
               </button>
@@ -339,14 +367,14 @@ export default function ContactPage() {
             {/* Phone Card */}
             <div className="p-4 rounded-xl bg-card border border-border/70 hover:border-primary/30 transition-all flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-lg bg-primary/10 text-primary">
+                <div className="p-2.5 rounded-lg bg-primary/10 text-primary shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Phone / WhatsApp / Telegram</p>
+                  <p className="text-xs text-muted-foreground">{lang === 'fa' ? 'تماس / تلگرام / واتس‌اپ' : 'Phone / WhatsApp / Telegram'}</p>
                   <a
                     href={`tel:${personalInfo.phone}`}
-                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                    className="text-sm font-medium text-foreground hover:text-primary transition-colors font-mono"
                     dir="ltr"
                   >
                     {personalInfo.phone}
@@ -356,7 +384,7 @@ export default function ContactPage() {
               <a
                 href={`tel:${personalInfo.phone}`}
                 className="p-2 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
-                title="Direct call"
+                title={lang === 'fa' ? 'تماس مستقیم' : 'Direct call'}
               >
                 <ExternalLink className="w-4 h-4" />
               </a>
@@ -364,18 +392,20 @@ export default function ContactPage() {
 
             {/* Location Card */}
             <div className="p-4 rounded-xl bg-card border border-border/70 flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-primary/10 text-primary">
+              <div className="p-2.5 rounded-lg bg-primary/10 text-primary shrink-0">
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Location &amp; Availability</p>
-                <p className="text-sm font-medium text-foreground">{personalInfo.location}</p>
+                <p className="text-xs text-muted-foreground">{lang === 'fa' ? 'موقعیت و در دسترس بودن' : 'Location & Availability'}</p>
+                <p className="text-sm font-medium text-foreground">{currentInfo.location}</p>
               </div>
             </div>
 
             {/* Social Links Row */}
             <div className="p-4 rounded-xl bg-card border border-border/70 space-y-2">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Social &amp; Professional Profiles</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                {lang === 'fa' ? 'شبکه‌ها و مخازن عمومی' : 'Social & Professional Profiles'}
+              </p>
               <div className="flex items-center gap-3 pt-1">
                 <a
                   href={personalInfo.social.github}
@@ -401,16 +431,18 @@ export default function ContactPage() {
 
           {/* Interactive Contact Form Column (7 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: isRtl ? -20 : 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="lg:col-span-7"
           >
             <div className="p-6 sm:p-8 rounded-2xl glass border border-border/70 shadow-lg space-y-6">
               <div>
-                <h3 className="text-xl font-bold text-foreground">Send a Direct Message</h3>
+                <h3 className="text-xl font-bold text-foreground">
+                  {tr('contact_form_heading')}
+                </h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Messages are relayed directly to Telegram and email for instant notification.
+                  {tr('contact_form_sub')}
                 </p>
               </div>
 
@@ -418,9 +450,13 @@ export default function ContactPage() {
                 <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
                   <div className="text-sm space-y-1">
-                    <p className="font-semibold text-foreground">Message received successfully!</p>
-                    <p className="text-muted-foreground text-xs">
-                      Thank you for reaching out. I will review your inquiry and get back to you shortly. Feel free to send another message if needed.
+                    <p className="font-semibold text-foreground">
+                      {lang === 'fa' ? 'پیام شما دریافت شد!' : 'Message received successfully!'}
+                    </p>
+                    <p className="text-muted-foreground text-xs leading-relaxed">
+                      {lang === 'fa'
+                        ? 'سپاس از پیام شما. پیام فوراً رله شد و در اسرع وقت پاسخ داده خواهد شد.'
+                        : 'Thank you for reaching out. I will review your inquiry and get back to you shortly.'}
                     </p>
                   </div>
                 </div>
@@ -430,13 +466,13 @@ export default function ContactPage() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label htmlFor="name" className="text-xs font-medium text-muted-foreground">
-                      Full Name <span className="text-destructive">*</span>
+                      {tr('contact_name')} <span className="text-destructive">*</span>
                     </label>
                     <Input
                       id="name"
                       name="name"
                       required
-                      placeholder="Your Name"
+                      placeholder={tr('contact_name')}
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className="bg-card/70 border-border focus:border-primary h-12 rounded-xl text-foreground"
@@ -445,7 +481,7 @@ export default function ContactPage() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="email" className="text-xs font-medium text-muted-foreground">
-                      Email Address <span className="text-destructive">*</span>
+                      {tr('contact_email')} <span className="text-destructive">*</span>
                     </label>
                     <Input
                       id="email"
@@ -455,19 +491,20 @@ export default function ContactPage() {
                       placeholder="your.email@domain.com"
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="bg-card/70 border-border focus:border-primary h-12 rounded-xl text-foreground"
+                      className="bg-card/70 border-border focus:border-primary h-12 rounded-xl text-foreground font-mono"
+                      dir="ltr"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
                   <label htmlFor="subject" className="text-xs font-medium text-muted-foreground">
-                    Subject / Inquiry Type (Optional)
+                    {tr('contact_subject')}
                   </label>
                   <Input
                     id="subject"
                     name="subject"
-                    placeholder="e.g., AI System Consulting / Project Collaboration"
+                    placeholder={lang === 'fa' ? 'مثال: مشاوره معماری سیستم هوش مصنوعی / همکاری فنی' : 'e.g., AI System Consulting / Technical Architecture'}
                     value={form.subject}
                     onChange={(e) => setForm({ ...form, subject: e.target.value })}
                     className="bg-card/70 border-border focus:border-primary h-12 rounded-xl text-foreground"
@@ -476,13 +513,13 @@ export default function ContactPage() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="message" className="text-xs font-medium text-muted-foreground">
-                    Message <span className="text-destructive">*</span>
+                    {tr('contact_message')} <span className="text-destructive">*</span>
                   </label>
                   <Textarea
                     id="message"
                     name="message"
                     required
-                    placeholder="Describe your inquiry, project scope, or ideas..."
+                    placeholder={lang === 'fa' ? 'شرح نیازمندی، ابعاد پروژه یا پرسش خود را مطرح بفرمایید…' : 'Describe your inquiry, project scope, or architecture requirements...'}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className="bg-card/70 border-border focus:border-primary min-h-[160px] rounded-xl text-foreground resize-y"
@@ -497,12 +534,12 @@ export default function ContactPage() {
                   {sending ? (
                     <>
                       <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                      <span>Sending message...</span>
+                      <span>{tr('contact_sending')}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>Send Message</span>
+                      <span>{tr('contact_send')}</span>
                     </>
                   )}
                 </Button>

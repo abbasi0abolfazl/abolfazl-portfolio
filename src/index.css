@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
 
 @font-face {
   font-family: 'Nevera';
@@ -15,6 +15,7 @@
 @layer base {
   :root {
     --font-inter: 'Inter', sans-serif;
+    --font-vazirmatn: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-nevera: 'Nevera', 'Nunito', sans-serif;
 
     /* ── Light Mode Tokens ───────────── */
@@ -114,6 +115,26 @@
 
   body {
     @apply bg-background text-foreground font-inter;
+  }
+
+  [dir="rtl"],
+  [dir="rtl"] body,
+  [dir="rtl"] button,
+  [dir="rtl"] input,
+  [dir="rtl"] textarea,
+  [dir="rtl"] select,
+  [dir="rtl"] .font-inter {
+    font-family: var(--font-vazirmatn);
+  }
+
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4,
+  [dir="rtl"] h5,
+  [dir="rtl"] h6 {
+    font-family: var(--font-vazirmatn);
+    letter-spacing: normal;
   }
 
   html {

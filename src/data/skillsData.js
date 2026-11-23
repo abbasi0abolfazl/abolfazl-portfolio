@@ -4,83 +4,105 @@ export const skillsData = {
   categories: [
     {
       title: "Languages",
+      titleFa: "زبان‌های برنامه‌نویسی اصلی",
       icon: "Code",
-      skills: [
-        "Python",
-        "Rust",
-        "JavaScript",
-      ]
+      skills: ["Python", "Rust", "JavaScript", "SQL", "Bash", "C++"]
     },
     {
-      title: "NLP & LLMs",
+      title: "NLP & Agentic AI",
+      titleFa: "پردازش زبان طبیعی و ایجنت‌ها",
       icon: "Brain",
       skills: [
         "HuggingFace Transformers",
         "BERT Fine-tuning",
-        "RAG",
-        "ChromaDB",
-        "LangChain",
-        "LangGraph",
-        "Prompt Engineering",
+        "RAG Architecture",
+        "ChromaDB & Vector Stores",
+        "LangChain & LangGraph",
+        "Voice Agents (ASR + TTS)",
+        "Prompt Engineering"
       ]
     },
     {
       title: "Computer Vision",
+      titleFa: "بینایی ماشین و پردازش تصویر",
       icon: "Eye",
       skills: [
-        "YOLO",
+        "YOLOv8",
         "OpenCV",
         "Object Detection",
-        "Dataset Annotation",
+        "Candlestick Chart Pattern Detection",
+        "Dataset Annotation"
       ]
     },
     {
-      title: "Data Engineering",
+      title: "Data Engineering & Caching",
+      titleFa: "مهندسی داده، پایگاه‌داده و کش",
       icon: "Database",
       skills: [
-        "MariaDB",
-        "MongoDB",
-        "Redis",
+        "PostgreSQL / MariaDB",
         "DuckDB",
+        "Redis",
+        "MongoDB",
         "ETL Pipelines",
-        "Web Scraping (Selenium, BeautifulSoup)",
+        "Event-Driven Web Crawlers"
       ]
     },
     {
-      title: "DevOps & Tools & Cloud",
+      title: "DevOps & Production Infrastructure",
+      titleFa: "زیرساخت، استقرار و DevOps",
       icon: "GitBranch",
       skills: [
-        "Git",
-        "Docker",
-        "Linux",
+        "Docker & Containerization",
+        "Linux (systemd & security)",
         "GitLab CI/CD",
+        "Cloudflare Workers & Edge",
         "Nextcloud",
-        "Cloudflare Workers",
-        "Firestore",
+        "Zero-Downtime Deployment"
       ]
     },
     {
-      title: "Frameworks",
+      title: "Service Frameworks",
+      titleFa: "فریم‌ورک‌های وب و سرویس‌دهی",
       icon: "TrendingUp",
       skills: [
         "FastAPI",
         "Flask",
-        "Streamlit",
-        "Gradio",
-        "LangChain",
-        "PyQt",
-        "LangGraph",
+        "Server-Sent Events (SSE)",
+        "Streamlit & Gradio",
+        "React 18 & Vite"
       ]
     },
     {
-      title: "Domain Knowledge",
+      title: "Quantitative & Telephony Domain",
+      titleFa: "دانش تخصصی فایننس و سیستم‌های تلفنی",
       icon: "Globe",
       skills: [
-        "Algorithmic Trading",
-        "MetaTrader",
-        "VoIP (Asterisk / Issabel)",
-        "Forex Analytics",
+        "Algorithmic Trading & Risk Engines",
+        "MetaTrader / Forex Analytics",
+        "Asterisk / Issabel VoIP Pipeline",
+        "Call Analytics & Audio Processing"
       ]
     }
-  ]
+  ],
+
+  en: {
+    title: "Technical Arsenal & Stack",
+    subtitle: "Disciplined tools, frameworks, and infrastructure powering production pipelines",
+  },
+
+  fa: {
+    title: "جعبه‌ابزار و فناوری‌های مهندسی",
+    subtitle: "ابزارها، فریم‌ورک‌ها و فناوری‌های استقرار در سیستم‌های مقیاس‌پذیر",
+  }
 };
+
+export const getSkillsData = (lang = 'en') => ({
+  title: skillsData[lang]?.title || skillsData.title,
+  subtitle: skillsData[lang]?.subtitle || skillsData.subtitle,
+  categories: skillsData.categories.map((c) => ({
+    ...c,
+    title: lang === 'fa' ? c.titleFa || c.title : c.title,
+  })),
+});
+
+export default skillsData;

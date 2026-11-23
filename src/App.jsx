@@ -7,7 +7,7 @@ import { useEffect, lazy, Suspense } from 'react';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import { ThemeProvider } from '@/lib/ThemeContext';
-import { LanguageProvider } from '@/lib/LanguageContext';
+import { LanguageProvider, useLang } from '@/lib/LanguageContext';
 
 import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/portfolio/Layout';
@@ -69,6 +69,21 @@ const AuthenticatedApp = () => {
   );
 };
 
+function DynamicToaster() {
+  const { dir } = useLang();
+  return (
+    <>
+      <RadixToaster />
+      <SonnerToaster
+        richColors
+        position={dir === 'rtl' ? 'bottom-left' : 'bottom-right'}
+        dir={dir}
+        closeButton
+      />
+    </>
+  );
+}
+
 function App() {
   return (
     <ErrorBoundary>
@@ -79,8 +94,7 @@ function App() {
               <Router>
                 <AuthenticatedApp />
               </Router>
-              <RadixToaster />
-              <SonnerToaster richColors position="bottom-right" closeButton />
+              <DynamicToaster />
             </QueryClientProvider>
           </AuthProvider>
         </LanguageProvider>

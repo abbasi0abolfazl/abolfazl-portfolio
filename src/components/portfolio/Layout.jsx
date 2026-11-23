@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-inter">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <Outlet />
       <Footer />

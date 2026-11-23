@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, BookOpen } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calendar, Clock, BookOpen } from 'lucide-react';
 import { format } from 'date-fns';
 import ReadingProgressBar from '../components/portfolio/ReadingProgressBar';
 import BlogComments from '../components/portfolio/BlogComments';
@@ -14,7 +14,9 @@ import { blogIndexSeo, postSeo } from '@/lib/seoData';
 
 export default function BlogPost() {
   const { slug } = useParams();
-  const { tr } = useLang();
+  const { tr, dir } = useLang();
+  const isRtl = dir === 'rtl';
+  const BackArrow = isRtl ? ArrowRight : ArrowLeft;
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -53,10 +55,14 @@ export default function BlogPost() {
       <main className="pt-24 pb-16 px-4 min-h-screen flex items-center justify-center">
         <Seo metadata={blogIndexSeo()} />
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-2">Post Not Found</h1>
-          <p className="text-muted-foreground mb-6">The blog post you're looking for doesn't exist.</p>
+          <h1 className="text-2xl font-bold text-foreground mb-2">
+            {tr('blog_not_found_title')}
+          </h1>
+          <p className="text-muted-foreground mb-6">
+            {tr('blog_not_found_desc')}
+          </p>
           <Link to="/blog" className="text-primary hover:underline flex items-center justify-center gap-2">
-            <ArrowLeft className="w-4 h-4" /> {tr('blog_back')}
+            <BackArrow className="w-4 h-4" /> {tr('blog_back')}
           </Link>
         </div>
       </main>
@@ -76,7 +82,7 @@ export default function BlogPost() {
           to="/blog"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 text-sm"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <BackArrow className="w-4 h-4" />
           {tr('blog_back')}
         </Link>
 
@@ -97,7 +103,7 @@ export default function BlogPost() {
             </span>
             <span className="flex items-center gap-1.5">
               <BookOpen className="w-3.5 h-3.5 text-primary" />
-              {reading.wordCount.toLocaleString()} words
+              {reading.wordCount.toLocaleString()} {tr('blog_words')}
             </span>
           </div>
 
@@ -131,7 +137,7 @@ export default function BlogPost() {
 
             <div className="mt-12 pt-8 border-t border-border/50 flex items-center justify-between">
               <Link to="/blog" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                <ArrowLeft className="w-4 h-4" /> {tr('blog_back')}
+                <BackArrow className="w-4 h-4" /> {tr('blog_back')}
               </Link>
             </div>
           </article>

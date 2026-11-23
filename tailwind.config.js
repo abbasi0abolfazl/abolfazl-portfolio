@@ -7,6 +7,7 @@ module.exports = {
   		fontFamily: {
   			inter: ['var(--font-inter)'],
   			nevera: ['var(--font-nevera)'],
+  			vazirmatn: ['var(--font-vazirmatn)'],
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

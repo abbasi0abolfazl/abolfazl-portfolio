@@ -3,10 +3,12 @@ import { Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { toast } from 'sonner';
+import { useLang } from '@/lib/LanguageContext';
 
 const codeSnippets = {
   rag: {
     label: 'RAG Pipeline',
+    labelFa: 'پایپ‌لاین RAG',
     language: 'python',
     code: `from langchain.vectorstores import Chroma
 from langchain.embeddings import HuggingFaceEmbeddings
@@ -36,6 +38,7 @@ result = qa_chain("What does Article 148 say?")`,
   },
   trading: {
     label: 'Trading Bot',
+    labelFa: 'موتور بات معاملاتی',
     language: 'python',
     code: `import MetaTrader5 as mt5
 import redis
@@ -64,6 +67,7 @@ class ForexBot:
   },
   yolo: {
     label: 'Pretrained YOLOv8 Inference',
+    labelFa: 'استنتاج YOLOv8',
     language: 'python',
     code: `from ultralyticsplus import YOLO
 import cv2
@@ -97,12 +101,13 @@ def detect_patterns(image_path):
 };
 
 export default function CodeViewer() {
+  const { tr, lang } = useLang();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = (code) => {
     navigator.clipboard.writeText(code);
     setCopied(true);
-    toast.success('Code copied to clipboard');
+    toast.success(tr('demos_code_copied'));
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -113,7 +118,7 @@ export default function CodeViewer() {
           <TabsList className="bg-background/60 h-8">
             {Object.entries(codeSnippets).map(([key, snippet]) => (
               <TabsTrigger key={key} value={key} className="text-xs h-7 data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
-                {snippet.label}
+                {lang === 'fa' ? snippet.labelFa || snippet.label : snippet.label}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -126,11 +131,11 @@ export default function CodeViewer() {
                 variant="ghost"
                 size="sm"
                 onClick={() => handleCopy(snippet.code)}
-                className="absolute top-3 right-3 h-7 text-xs text-muted-foreground hover:text-primary z-10"
+                className="absolute top-3 end-3 h-7 text-xs text-muted-foreground hover:text-primary z-10"
               >
                 {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
               </Button>
-              <pre className="p-4 overflow-x-auto text-xs leading-relaxed text-muted-foreground max-h-[350px]">
+              <pre className="p-4 overflow-x-auto text-xs leading-relaxed text-muted-foreground max-h-[350px]" dir="ltr">
                 <code>{snippet.code}</code>
               </pre>
             </div>

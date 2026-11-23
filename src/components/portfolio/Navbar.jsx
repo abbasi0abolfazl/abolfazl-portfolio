@@ -4,10 +4,10 @@ import { Menu, X, Github } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLang } from '@/lib/LanguageContext';
 import ThemeToggle from './ThemeToggle';
+import LanguageToggle from './LanguageToggle';
 
 // Minimal pixelated "AA" logo
 function PixelLogo() {
-  // Each row: 1=filled, 0=empty, pixel grid for "AA"
   const grid = [
     [0,1,1,0,0,0,1,1,0],
     [1,0,0,1,0,1,0,0,1],
@@ -36,7 +36,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { tr } = useLang();
+  const { tr, dir, lang } = useLang();
+  const isRtl = dir === 'rtl';
 
   const navLinks = [
     { key: 'nav_home', href: '/#home' },
@@ -91,7 +92,7 @@ export default function Navbar() {
       location.pathname === link.href || (link.href !== '/' && location.pathname.startsWith(link.href))
     );
     const cls = mobile
-      ? `text-left px-4 py-3 rounded-lg transition-colors ${
+      ? `text-start px-4 py-3 rounded-lg transition-colors ${
           isActive
             ? 'text-primary bg-primary/10 font-medium'
             : 'text-foreground hover:text-primary hover:bg-primary/5'
@@ -114,28 +115,41 @@ export default function Navbar() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Brand Logo */}
-            <button onClick={() => handleNavClick('/#home')} className="flex items-center gap-2 group">
+            {/* Brand Logo & Moniker */}
+            <button onClick={() => handleNavClick('/#home')} className="flex items-center gap-3 group text-start">
               <PixelLogo />
+              <div className="flex flex-col">
+                <span className="text-sm font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                  {lang === 'fa' ? 'ابوالفضل عباسی' : 'Abolfazl Abbasi'}
+                </span>
+                <span className="text-[10px] text-muted-foreground font-mono">
+                  {lang === 'fa' ? 'کیهان • سیستم‌های هوشمند' : 'KEYHAN • Systems'}
+                </span>
+              </div>
             </button>
 
             {/* Desktop Navigation & Actions */}
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => <NavItem key={link.key} link={link} />)}
-              <a
-                href="https://github.com/abbasi0abolfazl"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ml-2 p-2 text-muted-foreground hover:text-primary transition-colors"
-                aria-label="GitHub Profile"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <ThemeToggle className="ml-1" />
+              
+              <div className="flex items-center gap-1.5 ms-2 ps-2 border-s border-border/50">
+                <LanguageToggle />
+                <ThemeToggle />
+                <a
+                  href="https://github.com/abbasi0abolfazl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-muted-foreground hover:text-primary transition-colors"
+                  aria-label="GitHub Profile"
+                >
+                  <Github className="w-4 h-4" />
+                </a>
+              </div>
             </div>
 
             {/* Mobile Actions */}
-            <div className="md:hidden flex items-center gap-1">
+            <div className="md:hidden flex items-center gap-1.5">
+              <LanguageToggle />
               <ThemeToggle />
               <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -153,11 +167,11 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ x: '100%' }}
+            initial={{ x: isRtl ? '-100%' : '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            exit={{ x: isRtl ? '-100%' : '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed inset-y-0 right-0 w-72 z-50 glass shadow-2xl shadow-black/40 pt-20 px-6 flex flex-col justify-between pb-8"
+            className={`fixed inset-y-0 ${isRtl ? 'left-0' : 'right-0'} w-72 z-50 glass shadow-2xl shadow-black/40 pt-20 px-6 flex flex-col justify-between pb-8`}
           >
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => <NavItem key={link.key} link={link} mobile />)}
@@ -173,8 +187,11 @@ export default function Navbar() {
             </div>
 
             <div className="pt-4 border-t border-border/40 flex items-center justify-between px-2">
-              <span className="text-sm text-muted-foreground">Appearance</span>
-              <ThemeToggle />
+              <span className="text-sm text-muted-foreground">{tr('nav_contact')}</span>
+              <div className="flex items-center gap-2">
+                <LanguageToggle />
+                <ThemeToggle />
+              </div>
             </div>
           </motion.div>
         )}

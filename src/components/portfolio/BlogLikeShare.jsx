@@ -20,7 +20,7 @@ export default function BlogLikeShare({ slug, title }) {
     setCount(result.count);
   };
 
-  const url = window.location.href;
+  const url = typeof window !== 'undefined' ? window.location.href : 'https://abolfazlabbasi.com';
 
   const copyLink = () => {
     navigator.clipboard.writeText(url).then(() => {

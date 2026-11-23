@@ -65,6 +65,21 @@ export default {
       );
     }
 
+    // Geo-detection endpoint for client language routing
+    if (request.method === 'GET' && (url.pathname === '/geo' || url.pathname === '/api/geo')) {
+      const country = request.headers.get('cf-ipcountry') || 'Unknown';
+      return new Response(
+        JSON.stringify({
+          country,
+          isIran: country === 'IR',
+        }),
+        {
+          status: 200,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
     // Only allow POST for contact messages
     if (request.method !== 'POST') {
       return new Response(
